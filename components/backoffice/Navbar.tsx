@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { Avatar, Badge, Divider, MenuItem, ListItemIcon, IconButton, Tooltip, Menu, Typography, ListItemText, Chip } from '@mui/material';
+import { Avatar, Badge, Divider, MenuItem, ListItemIcon, IconButton, Tooltip, Menu, Typography, ListItemText, Chip, Zoom } from '@mui/material';
 import { LightMode, DarkMode, Notifications, Settings, Logout, LensBlur, TrendingDown, TrendingUp, Add, Close } from '@mui/icons-material';
 
 export default function Navbar() {
@@ -158,7 +158,7 @@ export default function Navbar() {
 					{ getTheme ? <LightMode fontSize='large' /> : <DarkMode fontSize='large' /> }
 				</button>
 				
-				<Tooltip title="Notifications">
+				<Tooltip title="Notifications" TransitionComponent={Zoom} followCursor>
 					<IconButton onClick={handleClickNotification} size="small" sx={{ ml: 2 }} aria-controls={openNotification ? 'account-menu' : undefined} aria-haspopup="true" aria-expanded={openNotification ? 'true' : undefined}>
 						<Badge color="info" badgeContent={4} max={99} overlap="rectangular">
 							<Notifications fontSize='large' className={`text-white`} />
@@ -193,7 +193,7 @@ export default function Navbar() {
 					}
 				</Menu>
 				
-				<Tooltip title="Account settings">
+				<Tooltip title="Account settings"  TransitionComponent={Zoom} followCursor>
 					<IconButton onClick={handleClickAvatar} size="small" sx={{ ml: 2 }} aria-controls={openAvatar ? 'account-menu' : undefined} aria-haspopup="true" aria-expanded={openAvatar ? 'true' : undefined}>
 						<Avatar alt="Remy Sharp" src={`https://mui.com/static/images/avatar/3.jpg`} sx={{ width: 40, height: 40 }} />
 					</IconButton>

@@ -4,7 +4,7 @@ import Link from 'next/link';
 import * as React from 'react';
 import MuiDrawer from '@mui/material/Drawer';
 import { usePathname } from 'next/navigation';
-import { List, Divider, IconButton, ListItem, ListItemButton, ListItemIcon, ListItemText, styled, Theme, CSSObject, ListSubheader } from '@mui/material';
+import { List, Divider, IconButton, ListItem, ListItemButton, ListItemIcon, ListItemText, styled, Theme, CSSObject, ListSubheader, Tooltip, Zoom } from '@mui/material';
 import { ChevronLeft, ChevronRight, Diversity1, Groups3, ReduceCapacity, Settings, ShoppingBasket, SpaceDashboard, Store, Storefront, Style,  } from '@mui/icons-material';
 
 
@@ -88,9 +88,11 @@ export default function Sidebar() {
 	return (
 		<Drawer PaperProps={{ sx: { backgroundColor: "#991b1b", color: "white", marginTop: '79px' }}} variant="permanent" open={open}>
 			<DrawerHeader>
-				<IconButton onClick={handleDrawerClose}>
-					{ open === false ? <ChevronRight className={`text-white`} /> : <ChevronLeft className={`text-white`} /> }
-				</IconButton>
+				<Tooltip title={ open === false ? "Expand" : "Collapse" } placement="right" TransitionComponent={Zoom} followCursor>
+					<IconButton onClick={handleDrawerClose}>
+						{ open === false ? <ChevronRight className={`text-white`} /> : <ChevronLeft className={`text-white`} /> }
+					</IconButton>
+				</Tooltip>
 			</DrawerHeader>
 
 			{
@@ -101,16 +103,18 @@ export default function Sidebar() {
 						{
 							items[Object.keys(items)[0]].map((item: any, indexx: number) =>
 								<List key={indexx}>
-									<Link href={item.path}>
-										<ListItem key={index} disablePadding sx={{ display: 'block' }} className={`${pathName === item.path ? 'bg-white text-red-600' : '' }`}>
-											<ListItemButton sx={{ minHeight: 48, justifyContent: open ? 'initial' : 'center', px: 2.5 }}>
-												<ListItemIcon sx={{ minWidth: 0, mr: open ? 3 : 'auto', justifyContent: 'center' }}>
-													{ item.icon }
-												</ListItemIcon>
-													<ListItemText primary={item.name} sx={{ opacity: open ? 1 : 0 }} />
-											</ListItemButton>
-										</ListItem>
-									</Link>
+									<Tooltip title={item.name} placement="right" TransitionComponent={Zoom} followCursor>
+										<Link href={item.path}>
+											<ListItem key={index} disablePadding sx={{ display: 'block' }} className={`${pathName === item.path ? 'bg-white text-red-600' : '' }`}>
+												<ListItemButton sx={{ minHeight: 48, justifyContent: open ? 'initial' : 'center', px: 2.5 }}>
+													<ListItemIcon sx={{ minWidth: 0, mr: open ? 3 : 'auto', justifyContent: 'center' }}>
+														{ item.icon }
+													</ListItemIcon>
+														<ListItemText primary={item.name} sx={{ opacity: open ? 1 : 0 }} />
+												</ListItemButton>
+											</ListItem>
+										</Link>
+									</Tooltip>
 								</List>
 							)
 						}
