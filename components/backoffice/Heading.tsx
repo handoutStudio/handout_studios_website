@@ -1,0 +1,1 @@
+export default function Heading( { title }: any) { return <h2 className={`text-2xl font-semibold text-red-600`}>{title}</h2> }
