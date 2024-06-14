@@ -1,19 +1,21 @@
 'use client';
 
 import * as React from 'react';
+import ThemeSwitcher from '../ThemeSwitcher';
+import { Notifications, Settings, Logout, LensBlur, TrendingDown, TrendingUp, Close } from '@mui/icons-material';
 import { Avatar, Badge, Divider, MenuItem, ListItemIcon, IconButton, Tooltip, Menu, Typography, ListItemText, Chip, Zoom } from '@mui/material';
-import { LightMode, DarkMode, Notifications, Settings, Logout, LensBlur, TrendingDown, TrendingUp, Add, Close } from '@mui/icons-material';
+import { useTheme } from 'next-themes';
 
 export default function Navbar() {
 
-	const [getTheme, setTheme] = React.useState(true);
+	const { theme, setTheme } = useTheme();
+
 	const [anchorElAvatar, setAnchorElAvatar] = React.useState<null | HTMLElement>(null);
 	const [anchorElNotifications, setAnchorElNotifications] = React.useState<null | HTMLElement>(null);
 
 	const openAvatar = Boolean(anchorElAvatar);
 	const handleCloseAvatar = () => setAnchorElAvatar(null);
 	const handleClickAvatar = (event: React.MouseEvent<HTMLElement>) => setAnchorElAvatar(event.currentTarget);
-	const handleThemeModes = () => { setTheme(!getTheme) }
 
 	const openNotification = Boolean(anchorElNotifications);
 	const handleCloseNotification = () => setAnchorElNotifications(null);
@@ -138,25 +140,23 @@ export default function Navbar() {
 	]
 
   	return (
-		<div className={`flex items-center justify-between bg-red-800 text-white h-20 px-8 py-4 fixed top-0 w-full z-10 pr-[1vw]`}>
+		<div className={`flex items-center justify-between bg-red-800 dark:bg-[#2d333a] text-white h-20 px-8 py-4 fixed top-0 w-full z-10 pr-[1vw] border-[#2d333a] border-b-[1px] dark:border-red-500`}>
 			
 			{/* Icon */}
 			<button>
 				<div className={`flex flex-row justify-center gap-2 items-center w-full`}>
-					<Avatar alt="Remy Sharp" className={`bg-transparent text-white w-10 h-10`}>
+					<Avatar alt="Remy Sharp" className={`bg-transparent text-white dark:text-red-500 w-10 h-10`}>
 						<LensBlur fontSize={"large"} />
 					</Avatar>
 					{' '}
-					<Typography variant={'h5'} component={'h5'}>Handout Studios</Typography>
+					<Typography className={`dark:text-red-500`} variant={'h5'} component={'h5'}>Handout Studios</Typography>
 				</div>
 			</button>
 			
 			{/* 3 Icons */}
 			<div className={`flex space-x-6`}>
 				
-				<button onClick={handleThemeModes}>
-					{ getTheme ? <LightMode fontSize='large' /> : <DarkMode fontSize='large' /> }
-				</button>
+				<ThemeSwitcher />
 				
 				<Tooltip title="Notifications" TransitionComponent={Zoom} followCursor>
 					<IconButton onClick={handleClickNotification} size="small" sx={{ ml: 2 }} aria-controls={openNotification ? 'account-menu' : undefined} aria-haspopup="true" aria-expanded={openNotification ? 'true' : undefined}>
