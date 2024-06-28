@@ -70,9 +70,9 @@ export default function CustomerDataTable() {
 	};
 
 	return (
-		<div className={`flex flex-col mt-10 justify-center bg-red-700 dark:bg-red-500 rounded-2xl p-4 mb-5`}>
-			<Typography variant={`h4`} component={'h4'}>Customer Data Table</Typography>
+		<div className={`flex flex-col mt-10 justify-center bg-[#7c0104] dark:bg-[#AF0106] rounded-2xl p-4 mb-5`}>
 			<Paper sx={{ width: '100%', overflow: 'hidden' }} className={`rounded-2xl`}>
+				<Typography className={`p-2 underline underline-offset-4 text-[#7c0104]`} variant={`h4`} component={'h4'}>Customer Data Table</Typography>
 				<TableContainer sx={{ maxHeight: 500 }}>
 					<Table stickyHeader aria-label="sticky table">
 						<TableHead>

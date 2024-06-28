@@ -17,15 +17,15 @@ export default function BestSellingProductChart() {
 		{ id: 7, value: 15, label: 'Product H' },
 		{ id: 8, value: 20, label: 'Product I' },
 		{ id: 9, value: 10, label: 'Product J' },
-		{ id: 10, value: 15, label: 'Product K' },
-		{ id: 11, value: 20, label: 'Product L' },
+		// { id: 10, value: 15, label: 'Product K' },
+		// { id: 11, value: 20, label: 'Product L' },
 	];
 	
 	const colors = ['#ea580c', '#16a34a', '#0284c7', '#4f46e5', '#db2777', '#0891b2', '#c026d3', '#7c3aed', '#e11d48', '#059669', '#9333ea', '#0d9488'];
 	
 	return (
 		<div className={`bg-white p-2 rounded-lg`}>
-			<Typography variant={'h5'} component={'h5'}>BestSellingProductChart</Typography>
+			<Typography className={`text-[#7c0104] p-2 underline underline-offset-4`} variant={'h5'} component={'h5'}>BestSellingProductChart</Typography>
 			<div className={`w-full h-full`}>
 				<PieChart
 					colors={ colors }
@@ -39,7 +39,7 @@ export default function BestSellingProductChart() {
 							startAngle: 0, 
 							endAngle: 360, 
 							highlightScope: { faded: 'global', highlighted: 'item' },
-							faded: { innerRadius: 30, additionalRadius: -30, color: '#2d333a' }
+							faded: { innerRadius: 30, additionalRadius: -30, color: '#2D333A' }
 						}
 					]}
 					slotProps={{ legend: { position: { horizontal: 'middle', vertical: 'top' }, direction: 'row' } }}

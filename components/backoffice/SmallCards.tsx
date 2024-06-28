@@ -9,33 +9,25 @@ export default function SmallCards() {
 		{
 			title: `Total Orders`,
 			sales: 500,
-			bgColor: 'bg-green-600',
-			bgIconColor: `bg-white`,
-			textIconColor: 'text-green-600',
+			IconcolorName: `text-green-600`,
 			icon: <ShoppingCart fontSize='medium' />
 		},
 		{
 			title: `Orders Pending`,
 			sales: 100,
-			bgColor: 'bg-orange-600',
-			bgIconColor: `bg-white`,
-			textIconColor: 'text-orange-600',
+			IconcolorName: `text-orange-600`,
 			icon: <Autorenew fontSize='medium' />
 		},
 		{
 			title: `Order Processing`,
 			sales: 200,
-			bgColor: 'bg-blue-600',
-			bgIconColor: `bg-white`,
-			textIconColor: 'text-blue-600',
+			IconcolorName: `text-blue-600`,
 			icon: <LocalShipping fontSize='medium' />
 		},
 		{
 			title: `Orders Delivered`,
 			sales: 3500,
-			bgColor: 'bg-cyan-600',
-			bgIconColor: `bg-white`,
-			textIconColor: 'text-cyan-600',
+			IconcolorName: `text-cyan-600`,
 			icon: <Check fontSize='medium' />
 		}
 	];

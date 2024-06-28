@@ -140,16 +140,16 @@ export default function Navbar() {
 	]
 
   	return (
-		<div className={`flex items-center justify-between bg-red-800 dark:bg-[#2d333a] text-white h-20 px-8 py-4 fixed top-0 w-full z-10 pr-[1vw] border-[#2d333a] border-b-[1px] dark:border-red-500`}>
+		<div className={`flex items-center justify-between bg-[#7c0104] dark:bg-[#2D333A] text-white h-20 px-8 py-4 fixed top-0 w-full z-10 pr-[1vw] border-dotted border-white border-b-[1px]`}>
 			
 			{/* Icon */}
 			<button>
 				<div className={`flex flex-row justify-center gap-2 items-center w-full`}>
-					<Avatar alt="Remy Sharp" className={`bg-transparent text-white dark:text-red-500 w-10 h-10`}>
+					<Avatar alt="Remy Sharp" className={`bg-transparent text-white w-10 h-10`}>
 						<LensBlur fontSize={"large"} />
 					</Avatar>
 					{' '}
-					<Typography className={`dark:text-red-500`} variant={'h5'} component={'h5'}>Handout Studios</Typography>
+					<Typography className={`text-white min-[600px]:text-2xl text-sm`} variant={'h5'} component={'h5'}>Handout Studios</Typography>
 				</div>
 			</button>
 			
@@ -160,8 +160,8 @@ export default function Navbar() {
 				
 				<Tooltip title="Notifications" TransitionComponent={Zoom} followCursor>
 					<IconButton onClick={handleClickNotification} size="small" sx={{ ml: 2 }} aria-controls={openNotification ? 'account-menu' : undefined} aria-haspopup="true" aria-expanded={openNotification ? 'true' : undefined}>
-						<Badge color="info" badgeContent={4} max={99} overlap="rectangular">
-							<Notifications fontSize='large' className={`text-white`} />
+						<Badge color='error' badgeContent={notificationData.length} max={99} overlap="rectangular">
+							<Notifications fontSize='large' className={`max-[600px]:text-xl text-white`} />
 						</Badge>
 					</IconButton>
 				</Tooltip>
@@ -195,7 +195,7 @@ export default function Navbar() {
 				
 				<Tooltip title="Account settings"  TransitionComponent={Zoom} followCursor>
 					<IconButton onClick={handleClickAvatar} size="small" sx={{ ml: 2 }} aria-controls={openAvatar ? 'account-menu' : undefined} aria-haspopup="true" aria-expanded={openAvatar ? 'true' : undefined}>
-						<Avatar alt="Remy Sharp" src={`https://mui.com/static/images/avatar/3.jpg`} sx={{ width: 40, height: 40 }} />
+						<Avatar alt="Remy Sharp" src={`https://mui.com/static/images/avatar/3.jpg`} className={`max-[600px]:w-7 max-[600px]:h-7 w-10 h-10`} />
 					</IconButton>
 				</Tooltip>
 				<Menu anchorEl={anchorElAvatar} id="account-menu" open={openAvatar} onClose={handleCloseAvatar} onClick={handleCloseAvatar} PaperProps={{ elevation: 0, sx: { overflow: 'visible', filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))', mt: 1.5, '& .MuiAvatar-root': { width: 32, height: 32, ml: -0.5, mr: 1 }, '&::before': { content: '""', display: 'block', position: 'absolute', top: 0, right: 14, width: 10, height: 10, bgcolor: 'background.paper', transform: 'translateY(-50%) rotate(45deg)', zIndex: 0 } }}} transformOrigin={{ horizontal: 'right', vertical: 'top' }} anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}>
@@ -205,13 +205,13 @@ export default function Navbar() {
 					<Divider />
 					<MenuItem onClick={handleCloseAvatar}>
 						<ListItemIcon>
-							<Settings fontSize={"medium"} className={`text-red-700`} />
+							<Settings fontSize={"medium"} className={`text-[#7c0104]`} />
 						</ListItemIcon>
 						Profile Settings
 					</MenuItem>
 					<MenuItem onClick={handleCloseAvatar}>
 						<ListItemIcon>
-							<Logout fontSize={"medium"} className={`text-red-700`} />
+							<Logout fontSize={"medium"} className={`text-[#7c0104]`} />
 						</ListItemIcon>
 						Logout
 					</MenuItem>

@@ -9,31 +9,26 @@ export default function LargeCards() {
 		{
 			period: `Today's Orders`,
 			sales: 110000,
-			color: `bg-green-700`,
-			icon: <ShoppingCart fontSize='large' className={`z-0`} />
+			icon: <ShoppingCart fontSize='large' />
 		},
 		{
 			period: `Yesterday's Orders`,
 			sales: 130000,
-			color: `bg-orange-700`,
 			icon: <ShoppingCart fontSize='large' />
 		},
 		{
 			period: `This Month`,
 			sales: 300000,
-			color: `bg-blue-700`,
 			icon: <CurrencyRupee fontSize='large' />
 		},
 		{
 			period: `Last Month`,
 			sales: 350000,
-			color: `bg-cyan-700`,
 			icon: <CurrencyRupee fontSize='large' />
 		},
 		{
 			period: `All - Time Sales`,
 			sales: 110000,
-			color: `bg-purple-700`,
 			icon: <CurrencyRupee fontSize='large' />
 		},
 	];

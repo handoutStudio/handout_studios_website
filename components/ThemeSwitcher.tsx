@@ -19,7 +19,7 @@ export default function ThemeSwitcher() {
 	return (
 		<button className={`w-fit p-2 rounded-md hover:scale-100 active:scale-50 duration-200 text-white`} onClick={ () => setTheme(theme === "dark" ? "light" : "dark") }>
 			<Tooltip title={ theme === 'light' ? 'I was born in Darkness...!' : 'Let there be Light...!' }>
-				{ theme === "light" ? <DarkMode fontSize='large' /> : <LightMode fontSize='large' /> }
+				{ theme === "light" ? <DarkMode fontSize='large' className={`max-[600px]:text-xl`} /> : <LightMode fontSize='large' className={`max-[600px]:text-xl`} /> }
 			</Tooltip>
 		</button>
 	)

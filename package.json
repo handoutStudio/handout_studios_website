@@ -13,13 +13,24 @@
     "@emotion/styled": "^11.11.5",
     "@mui/icons-material": "^5.15.19",
     "@mui/lab": "^5.0.0-alpha.170",
-    "@mui/material": "^5.15.19",
+    "@mui/material": "^5.15.20",
+    "@mui/styled-engine-sc": "^6.0.0-alpha.18",
+    "@mui/styles": "^5.15.20",
     "@mui/x-charts": "^7.6.2",
+    "@mui/x-date-pickers": "^7.7.1",
+    "dayjs": "^1.11.11",
+    "express": "^4.19.2",
+    "formidable": "^3.5.1",
+    "formidable-serverless": "^1.1.1",
+    "mui-file-dropzone": "^4.0.2",
+    "nanoid": "^5.0.7",
     "next": "14.2.3",
     "next-themes": "^0.3.0",
     "react": "^18",
     "react-dom": "^18",
-    "sass": "^1.77.4"
+    "sass": "^1.77.4",
+    "styled-components": "^6.1.11",
+    "xlsx": "^0.18.5"
   },
   "devDependencies": {
     "@types/node": "^20",
@@ -30,5 +41,10 @@
     "postcss": "^8",
     "tailwindcss": "^3.4.1",
     "typescript": "^5"
+  },
+  "browser": {
+    "fs": false,
+    "os": false,
+    "path": false
   }
 }

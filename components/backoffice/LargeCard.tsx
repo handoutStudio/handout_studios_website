@@ -3,7 +3,7 @@ import { Avatar, Paper, Typography } from '@mui/material';
 
 export default function LargeCard({ data }: any) {
 	return (
-		<Paper className={`${data.color} text-white rounded-lg p-8 flex flex-col gap-2 items-center justify-center`} elevation={2}>
+		<Paper className={`dark:bg-[#AF0106] bg-[#7C0107] text-white rounded-lg p-8 flex flex-col gap-2 items-center justify-center`} elevation={2}>
 			<Avatar alt="Remy Sharp" className={`bg-transparent text-white w-15 h-15`}>
 				{data.icon}
 			</Avatar>

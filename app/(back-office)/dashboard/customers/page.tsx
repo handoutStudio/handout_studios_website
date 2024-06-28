@@ -1,9 +1,13 @@
+'use client';
+
 import * as React from 'react';
+import { PageHeader } from '@/components/backoffice/PageHeader';
 
 export default function page() {
 	return (
 		<div>
-			<h2>Customers</h2>
+			{/* TODO: Header */}
+			<PageHeader pageTitle={'Customers'} link={'/dashboard/customers/addCustomers'} buttonText={'Add Customers'} />
 		</div>
 	)
 }
