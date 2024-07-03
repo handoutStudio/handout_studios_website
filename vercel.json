@@ -1,0 +1,13 @@
+{
+    "build": {
+      "env": {
+        "NODE_ENV": "production"
+      },
+      "npm": {
+        "args": [
+          "--legacy-peer-deps"
+        ]
+      }
+    }
+  }
+  
