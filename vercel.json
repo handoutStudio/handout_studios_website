@@ -1,13 +1,14 @@
 {
-    "build": {
-      "env": {
-        "NODE_ENV": "production"
-      },
-      "npm": {
-        "args": [
-          "--legacy-peer-deps"
-        ]
-      }
-    }
-  }
-  
+	"version": 2,
+	"builds": [
+		{
+			"src": "package.json",
+			"use": "@vercel/node"
+		}
+	],
+	"build": {
+		"env": {
+			"NPM_FLAGS": "--legacy-peer-deps"
+		}
+	}
+}
