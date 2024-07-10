@@ -3,9 +3,8 @@ import { NextResponse } from "next/server";
 export async function POST(request: any) {
     try
     {
-        const { title, description, slug,  image } = await request.json();
-        const newCategory = { title, description, slug,  image };
-        console.log(newCategory);
+        const { title, description, slug,  image, market } = await request.json();
+        const newCategory = { title, description, slug,  image, market };
         return NextResponse.json(newCategory, { status: 200 });
     }
     catch (error)

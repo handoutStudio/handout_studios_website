@@ -26,7 +26,7 @@ export function PageHeader({pageTitle, link, buttonText, dataRows, workSheetName
 	}
 
 	return (
-		<div className={`flex justify-between items-center`}>
+		<div className={`flex justify-between items-center py-3 px-5 w-full rounded-lg bg-red-300`}>
 			<Heading title={ pageTitle } />
 			<div className={`flex justify-center items-center gap-5`}>
 				{

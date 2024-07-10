@@ -2,13 +2,14 @@
 
 import * as React from 'react';
 import { PageHeader } from '@/components/backoffice/PageHeader';
+import TableBulkDelete from '@/components/backoffice/TableBulkDelete';
 
 export default function page() {
 	return (
 		<div>
 			<div>
 				{/* TODO: Header */}
-				<PageHeader pageTitle={'Markets'} link={'/dashboard/markets/addMarkets'} buttonText={'Add Markets'} />
+				<PageHeader pageTitle={'Sellers'} link={'/dashboard/sellers/addSellers'} buttonText={'Add Sellers'} />
 			</div>
 
 			<div>

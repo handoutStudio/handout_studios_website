@@ -6,7 +6,7 @@ import { useTheme } from 'next-themes';
 import MuiDrawer from '@mui/material/Drawer';
 import { usePathname } from 'next/navigation';
 import { List, ListItem, ListItemButton, ListItemIcon, ListItemText, styled, Theme, CSSObject, Tooltip, Zoom, ListSubheader, Divider, Collapse, IconButton, Typography, Avatar } from '@mui/material';
-import { Category, ChevronLeft, ChevronRight, ConfirmationNumberRounded, Diversity1, EditAttributesRounded, ExpandLessRounded, ExpandMoreRounded, Groups3, Inventory, LensBlur, LocalLibraryRounded, Loyalty, OpenInNew, ReduceCapacity, Settings, ShoppingBasket, SpaceDashboard, Store, Storefront, Style, WalletRounded,  } from '@mui/icons-material';
+import { Category, ChevronLeft, ChevronRight, ConfirmationNumberRounded, Diversity1, EditAttributesRounded, ExpandLessRounded, ExpandMoreRounded, Groups3, Inventory, LensBlur, LocalLibraryRounded, LocalShippingRounded, Loyalty, OpenInNew, ReduceCapacity, Settings, SpaceDashboard, Store, Storefront, Style, WalletRounded,  } from '@mui/icons-material';
 
 
 const drawerWidth = 240;
@@ -94,17 +94,17 @@ export default function Sidebar() {
 					],
 				},
 				{
-					name: 'Markets',
-					path: '/dashboard/markets',
-					icon: <Store className={`${pathName === '/dashboard/markets' ? 'dark:text-white text-[#7c0104]' : 'text-white'}`} />,
+					name: 'Sellers',
+					path: '/dashboard/sellers',
+					icon: <Groups3 className={`${pathName === '/dashboard/sellers' ? 'dark:text-white text-[#7c0104]' : 'text-white'}`} />,
 					iconEnd: '',
 					openFunction: '',
 					subList: [],
 				},
 				{
-					name: 'Farmers',
-					path: '/dashboard/farmers',
-					icon: <Groups3 className={`${pathName === '/dashboard/farmers' ? 'dark:text-white text-[#7c0104]' : 'text-white'}`} />,
+					name: 'Markets',
+					path: '/dashboard/markets',
+					icon: <Store className={`${pathName === '/dashboard/markets' ? 'dark:text-white text-[#7c0104]' : 'text-white'}`} />,
 					iconEnd: '',
 					openFunction: '',
 					subList: [],
@@ -124,7 +124,7 @@ export default function Sidebar() {
 				{
 					name: 'Orders',
 					path: '/dashboard/orders',
-					icon: <ShoppingBasket className={`${pathName === '/dashboard/orders' ? 'dark:text-white text-[#7c0104]' : 'text-white'}`} />,
+					icon: <LocalShippingRounded className={`${pathName === '/dashboard/orders' ? 'dark:text-white text-[#7c0104]' : 'text-white'}`} />,
 					iconEnd: '',
 					openFunction: '',
 					subList: [],

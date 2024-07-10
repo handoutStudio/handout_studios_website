@@ -96,7 +96,7 @@ export default function NewCoupons() {
 
 	return (
 		<div className={`flex flex-col justify-center items-center w-full gap-8`}>
-			<div className={`flex items-center justify-between py-3 px-5 w-full rounded-lg dark:bg-red-100 bg-red-300`}>
+			<div className={`flex items-center justify-between py-3 px-5 w-full rounded-lg bg-red-300`}>
 				<PageHeader pageTitle={'Add New Coupon'} link={null} buttonText={null} />
 			</div>
 			{/* 

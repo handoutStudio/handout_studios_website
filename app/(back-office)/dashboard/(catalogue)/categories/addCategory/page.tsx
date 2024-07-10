@@ -9,21 +9,22 @@ import { Buttons } from '@/components/Inputs/SubmitButton';
 import { Alert, AlertTitle, Snackbar } from '@mui/material';
 import { ImageUpload } from '@/components/Inputs/ImageUpload';
 import { PageHeader } from '@/components/backoffice/PageHeader';
-import { AddCircleRounded, CloseRounded, DescriptionRounded, StyleRounded } from '@mui/icons-material';
+import { AddCircleRounded, CloseRounded, DescriptionRounded, Store, StyleRounded } from '@mui/icons-material';
 
 
 export default function NewCategory() {
 	
 	const router = useRouter();
 	const fileRef = React.useRef();
-	const [getOpen, setOpen] = React.useState(false);
 	const [getTitle, setTitle] = React.useState('');
+	const [getOpen, setOpen] = React.useState(false);
+	const [getSelect, setSelect] = React.useState([]);
 	const [getError, setError] = React.useState(false);
 	const [getLoading, setLoading] = React.useState(false);
 	const [getApiResponse, setApiResponse] = React.useState({ message: '', color: '' });
 	const [getDescription, setDescription] = React.useState('');
 
-	const handleChange = (event: any) => { event.target.id === 'title' ? (setTitle(event.target.value), setError(false)) : (setDescription(event.target.value), setError(false)) };
+	const handleChange = (event: any) => { event.target.name === 'title' ? (setTitle(event.target.value), setError(false)) : event.target.name === 'description' ? (setDescription(event.target.value), setError(false)) : (setSelect(event.target.value), setError(false)) };
 	
 	const handleSubmit = async (e: any) => {
 		setLoading(!getLoading);
@@ -38,7 +39,7 @@ export default function NewCategory() {
 				.catch((error: any) => console.log(error));
 
 			const imagePath = response.substring(response.indexOf('/public'), response.length);
-			const categoryData = { title: getTitle, description: getDescription, slug: slug, image: imagePath };
+			const categoryData = { title: getTitle, description: getDescription, slug: slug, image: imagePath, market: getSelect };
 			const apiResponse = await makePostRequest('http://localhost:3000/api/categories', categoryData, 'Category');
 			setApiResponse(apiResponse!);
 			setOpen(!getOpen);
@@ -72,10 +73,13 @@ export default function NewCategory() {
 		catch(error: any) { console.log(error); }
 	}
 
+	const selectMenuData = ['One', 'Two', 'Three'];
+
+
 
 	return (
 		<div className={`flex flex-col justify-center items-center w-full gap-8`}>
-			<div className={`flex items-center justify-between py-3 px-5 w-full rounded-lg dark:bg-red-100 bg-red-300`}>
+			<div className={`flex items-center justify-between py-3 px-5 w-full rounded-lg bg-red-300`}>
 				<PageHeader pageTitle={'Add New Category'} link={null} buttonText={null} />
 			</div>
 			{/* 
@@ -83,13 +87,21 @@ export default function NewCategory() {
 				- title => userInput()
 				- slug => auto()
 				- description => userInput()
+				- market => userInput()
 				- image => userInput()
 			*/}
 			<div className={`flex w-5/6 rounded-lg bg-red-50`}>
 				<div className={`flex flex-col justify-center items-start w-full px-12 py-6 gap-5`}>
-					<TextInput handleChange={handleChange} getValue={getTitle} placeholder={'Category Title...!'} id={'title'} name={'title'} label={"Category"} component={'text'} icon={<StyleRounded />} />
+
+					<div className={`flex justify-center items-start w-full gap-5`}>
+						<TextInput handleChange={handleChange} getValue={getTitle} placeholder={'Category Title...!'} id={'title'} name={'title'} label={"Category"} component={'text'} icon={<StyleRounded />} />
+						<TextInput handleChange={handleChange} getValue={getSelect} placeholder={'Select Market...!'} id={'select'} name={'select'} label={"Select Market"} component={'select'} icon={<Store />} selectMenu={selectMenuData} />
+					</div>
+
 					<TextInput getValue={getDescription} handleChange={handleChange} placeholder={'Category Description...!'} id={'description'} name={'description'} label={"Description"} component={'textArea'} icon={<DescriptionRounded fontSize='large' />} />
+
 					<ImageUpload maxFileSize={1048576} limit={1} fileRef={ fileRef } dropzoneText={"Drag and drop an image here or click to upload Category Image...!"} showPreviewsInDropzone={false} showPreviews={true} />
+
 					<div className={`flex justify-between items-center max-[600px]:flex-col gap-5 w-full`}>
 						<Alert className={getError ? '' : 'invisible'} variant="filled" severity="error">{`Please Fill all the Required Fields to Proceed...!`}</Alert>
 						<div className={`flex gap-5`}>
@@ -97,6 +109,7 @@ export default function NewCategory() {
 							<Buttons classes={'submit'} handleSubmit={(e: any) => handleSubmit (e)} startIcon={null} endIcon={<AddCircleRounded />} size={'large'} buttonText={'Save'} />
 						</div>
 					</div>
+
 				</div>
 			</div>
 

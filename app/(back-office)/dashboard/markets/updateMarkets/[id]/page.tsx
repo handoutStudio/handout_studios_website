@@ -2,10 +2,10 @@
 
 import * as React from 'react';
 
-export default function UpdateBanners() {
+export default function UpdateMarket() {
 	return (
 		<div>
-			<h2>Update Banners</h2>
+			<h2>Update Markets</h2>
 		</div>
 	)
 }
