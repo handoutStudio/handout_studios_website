@@ -1,13 +1,45 @@
 import dayjs from 'dayjs';
 import * as React from 'react';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { StaticDatePicker } from '@mui/x-date-pickers/StaticDatePicker';
 import { DemoContainer, DemoItem } from '@mui/x-date-pickers/internals/demo';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { CurrencyRupeeRounded, DescriptionRounded } from '@mui/icons-material';
-import { TextField, InputAdornment, Tooltip, Zoom, MenuItem, Select, InputLabel, OutlinedInput, FormControl } from '@mui/material';
+import { TextField, InputAdornment, Tooltip, Zoom, MenuItem, Select, InputLabel, OutlinedInput, FormControl, Switch, FormControlLabel } from '@mui/material';
 
-export function TextInput({ getValue, handleChange, id, name, placeholder, label, component, icon, disabled, rows, maxRows, type, selectMenu }: any) {
+
+// Augment the palette to include an ochre color
+declare module '@mui/material/styles' {
+	interface Palette {
+		handout: Palette['primary'];
+	}
+  
+	interface PaletteOptions {
+		handout?: PaletteOptions['primary'];
+	}
+}
+
+// Update the Button's color options to include an ochre option
+declare module '@mui/material/Button' {
+	interface ButtonPropsColorOverrides {
+	  ochre: true;
+	}
+}
+  
+const theme = createTheme({
+	palette: {
+		handout: {
+			main: '#7C0107',
+			light: '#7C0107',
+			dark: '#7C0107',
+			contrastText: '#FFFFFF',
+		},
+	},
+});
+
+export function TextInput({ getValue, handleChange, id, name, placeholder, label, component, icon, disabled, rows, maxRows, type, selectMenu, minDate }: any) {
 
 	const tomorrow = new Date((new Date()).valueOf() + 1000*3600*24);
 
@@ -40,13 +72,37 @@ export function TextInput({ getValue, handleChange, id, name, placeholder, label
 						:
 							component === 'date'
 							?
-								<LocalizationProvider dateAdapter={AdapterDayjs}>
-									<DemoContainer components={['MobileDatePicker']}>
-										<DemoItem label={label}>
-											<StaticDatePicker minDate={dayjs(tomorrow)} onChange={handleChange} defaultValue={dayjs(new Date())} />
-										</DemoItem>
-									</DemoContainer>
-								</LocalizationProvider>
+								minDate
+								?
+									<LocalizationProvider dateAdapter={AdapterDayjs}>
+										<DemoContainer components={['MobileDatePicker']}>
+											<DemoItem label={label}>
+												<StaticDatePicker minDate={dayjs(tomorrow)} onChange={handleChange} defaultValue={dayjs(new Date())} orientation="landscape" sx={{ '.MuiPickersToolbar-root': { color: '#7C0107', borderRadius: '20px', backgroundColor: '#FFFFFF' } }} />
+											</DemoItem>
+										</DemoContainer>
+									</LocalizationProvider>
+								:
+									// <LocalizationProvider dateAdapter={AdapterDayjs}>
+									// 	<DemoContainer sx={{ width: '100%' }} components={['DatePicker', 'DesktopDatePicker', 'MobileDatePicker']}>
+									// 		<DatePicker defaultValue={dayjs(new Date())} onChange={handleChange} />
+									// 	</DemoContainer>
+									// </LocalizationProvider>
+
+									<ThemeProvider theme={theme}>
+										<LocalizationProvider dateAdapter={AdapterDayjs}>
+											<DemoContainer sx={{ width: '100%' }} components={['DatePicker', 'DesktopDatePicker', 'MobileDatePicker']}>
+												<DatePicker sx={{ width: '100%' }} label={label} defaultValue={dayjs(new Date())} onChange={handleChange} slotProps={{ openPickerButton: { color: 'handout' }, textField: { color: 'error' } }} />
+											</DemoContainer>
+										</LocalizationProvider>
+									</ThemeProvider>
+
+									// <LocalizationProvider dateAdapter={AdapterDayjs}>
+									// 	<DemoContainer components={['DatePicker']}>
+									// 		<DemoItem label={label}>
+									// 			<StaticDatePicker onChange={handleChange} defaultValue={dayjs(new Date())} />
+									// 		</DemoItem>
+									// 	</DemoContainer>
+									// </LocalizationProvider>
 							:
 								component === 'select'
 								?
@@ -75,6 +131,17 @@ export function TextInput({ getValue, handleChange, id, name, placeholder, label
 											</Select>
 										</FormControl>
 									:
-										null
+										component === 'switch'
+										?
+											<FormControlLabel
+												value={getValue}
+												id={id}
+												name={name}
+												control={<Switch checked={getValue} id={id} name={name} color='error' onChange={handleChange} inputProps={{ 'aria-label': 'controlled' }} />}
+												label={label}
+												labelPlacement="start"
+											/>
+										:
+											null
 	)
 }

@@ -110,8 +110,8 @@ export default function NewProducts() {
 				imagePath.push(element.substring(element.indexOf('/public'), element.length));
 			});
 
-			const productData = { title: getTitle, selectCategory: getSelectCategory, selectSeller: getSelectSeller, sku: getSKU, quantity: getQuantity, barcode: getBarcode, productPrice: getProductPrice, salePrice: getSalePrice, slug: slug, tags: getTags, description: getDescription, image: imagePath, isActive: getActive };
-			const apiResponse = await makePostRequest('http://localhost:3000/api/products', productData, 'Products');
+			const communityData = { title: getTitle, selectCategory: getSelectCategory, selectSeller: getSelectSeller, sku: getSKU, quantity: getQuantity, barcode: getBarcode, productPrice: getProductPrice, salePrice: getSalePrice, slug: slug, tags: getTags, description: getDescription, image: imagePath, isActive: getActive };
+			const apiResponse = await makePostRequest('http://localhost:3000/api/community', communityData, 'Community');
 			setApiResponse(apiResponse!);
 			setOpen(!getOpen);
 
@@ -129,7 +129,7 @@ export default function NewProducts() {
 		{
 			const data = new FormData();
 			data.set('file', fileRef);
-			data.set('folder', 'Products/');
+			data.set('folder', 'Community/');
 			data.set('name', getTitle + index);
 
 			const res = await fetch('/api/upload', {

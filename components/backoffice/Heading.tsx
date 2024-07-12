@@ -1,1 +1,1 @@
-export default function Heading( { title }: any) { return <h2 className={`text-2xl max-[400px]:text-xs max-[700px]:text-md max-[900px]:text-lg font-semibold text-[#7c0104]`}>{title}</h2> }
+export default function Heading( { title }: any) { return <h2 className={`text-2xl max-[400px]:text-xs max-[700px]:text-md max-[900px]:text-lg font-semibold text-[#7c0104] py-3 px-5 w-full rounded-3xl bg-red-300`}>{title}</h2> }

@@ -37,8 +37,10 @@ export default function NewCoupons() {
 		}
 		else
 		{
-			const date = event[Object.keys(event)[5]]
-			const month = Number(event[Object.keys(event)[4]]) < Number(10) ? '0' + event[Object.keys(event)[4]] : event[Object.keys(event)[4]]
+			const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+			let month: any = months.indexOf(event[Object.keys(event)[2]].toString().split(' ')[1]) + 1;
+			month = month < 10 ? '0' + month : month;
+			const date = event[Object.keys(event)[5]];
 			const year = event[Object.keys(event)[3]];
 			const fulldate = month + '/' + date +  '/' + year;
 			setDate(fulldate);
@@ -61,14 +63,15 @@ export default function NewCoupons() {
 
 			const imagePath = response.substring(response.indexOf('/public'), response.length);
 			const couponData = { title: getTitle, couponCode: getCode, slug: slug, image: imagePath, expiryDate: getDate };
-			const apiResponse = await makePostRequest('http://localhost:3000/api/coupons', couponData, 'Coupoun');
-			setApiResponse(apiResponse!);
-			setOpen(!getOpen);
+			console.log(couponData);
+			// const apiResponse = await makePostRequest('http://localhost:3000/api/coupons', couponData, 'Coupoun');
+			// setApiResponse(apiResponse!);
+			// setOpen(!getOpen);
 
-			setTimeout(() => {
-				setOpen(!getOpen);
-				router.back();
-			}, 2000);
+			// setTimeout(() => {
+			// 	setOpen(!getOpen);
+			// 	router.back();
+			// }, 2000);
 		}
 		setLoading(!getLoading);
 	}
@@ -115,7 +118,7 @@ export default function NewCoupons() {
 							<ImageUpload maxFileSize={1048576} limit={1} fileRef={ fileRef } dropzoneText={"Drag and drop an image here or click to upload Coupon background...!"} showPreviewsInDropzone={true} showPreviews={false} />
 						</div>
 						<div className={`flex w-full gap-20 justify-around items-center`}>
-							<TextInput handleChange={handleChange} placeholder={'Expiry Date'} getValue={getDate} id={'date'} name={'date'} label={"Expiry Date"} component={'date'} icon={<DateRangeRounded />} />					
+							<TextInput handleChange={(event: any) => handleChange(event)} placeholder={'Expiry Date'} minDate={true} getValue={getDate} id={'date'} name={'date'} label={"Expiry Date"} component={'date'} icon={<DateRangeRounded />} />
 						</div>
 					</div>
 					<div className={`flex justify-between items-center max-[600px]:flex-col gap-5 w-full`}>

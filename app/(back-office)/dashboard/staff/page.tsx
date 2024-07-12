@@ -7,7 +7,13 @@ export default function page() {
 	return (
 		<div>
 			{/* TODO: Header */}
-			<PageHeader pageTitle={'Our Staff'} link={'/dashboard/staff/addStaff'} buttonText={'Add Staff'} />
+			<div className={`p-5`}>
+				<PageHeader pageTitle={'Our Staff'} link={'/dashboard/staff/addStaff'} buttonText={'Add Staff'} />
+			</div>
+			{/* TODO: Table */}
+			<div className={`py-4`}>
+				Table
+			</div>
 		</div>
 	)
 }
