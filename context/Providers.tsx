@@ -6,7 +6,7 @@ import { ThemeProvider } from 'next-themes';
 export default function Providers({ children }: any) {
 
 	return (
-		<ThemeProvider attribute='class' defaultTheme='dark'>
+		<ThemeProvider attribute='class'>
 			{ children }
 		</ThemeProvider>
 	)

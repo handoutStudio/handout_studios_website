@@ -4,11 +4,8 @@ import * as React from 'react';
 import ThemeSwitcher from '../ThemeSwitcher';
 import { Notifications, Settings, Logout, LensBlur, TrendingDown, TrendingUp, Close } from '@mui/icons-material';
 import { Avatar, Badge, Divider, MenuItem, ListItemIcon, IconButton, Tooltip, Menu, Typography, ListItemText, Chip, Zoom } from '@mui/material';
-import { useTheme } from 'next-themes';
 
 export default function Navbar() {
-
-	const { theme, setTheme } = useTheme();
 
 	const [anchorElAvatar, setAnchorElAvatar] = React.useState<null | HTMLElement>(null);
 	const [anchorElNotifications, setAnchorElNotifications] = React.useState<null | HTMLElement>(null);
@@ -61,7 +58,7 @@ export default function Navbar() {
 			icon: <TrendingUp fontSize={"medium"} />,
 			event: 'New Order',
 			eventColor: 'bg-green-700 text-white',
-			primaryText: 'Something',
+			primaryText: 'Something Something Something Something Something Something Something Something Something Something Something Something',
 			secondaryText: formattedToday,
 			secondaryTextTime: formattedTime,
 		},
@@ -77,55 +74,7 @@ export default function Navbar() {
 			icon: <TrendingUp fontSize={"medium"} />,
 			event: 'New Order',
 			eventColor: 'bg-green-700 text-white',
-			primaryText: 'Something',
-			secondaryText: formattedToday,
-			secondaryTextTime: formattedTime,
-		},
-		{
-			icon: <TrendingDown fontSize={"medium"} />,
-			event: 'Order Cancelled',
-			eventColor: 'bg-red-700 text-white',
-			primaryText: 'Something',
-			secondaryText: formattedToday,
-			secondaryTextTime: formattedTime,
-		},
-		{
-			icon: <TrendingUp fontSize={"medium"} />,
-			event: 'New Order',
-			eventColor: 'bg-green-700 text-white',
-			primaryText: 'Something',
-			secondaryText: formattedToday,
-			secondaryTextTime: formattedTime,
-		},
-		{
-			icon: <TrendingDown fontSize={"medium"} />,
-			event: 'Order Cancelled',
-			eventColor: 'bg-red-700 text-white',
-			primaryText: 'Something',
-			secondaryText: formattedToday,
-			secondaryTextTime: formattedTime,
-		},
-		{
-			icon: <TrendingUp fontSize={"medium"} />,
-			event: 'New Order',
-			eventColor: 'bg-green-700 text-white',
-			primaryText: 'Something',
-			secondaryText: formattedToday,
-			secondaryTextTime: formattedTime,
-		},
-		{
-			icon: <TrendingDown fontSize={"medium"} />,
-			event: 'Order Cancelled',
-			eventColor: 'bg-red-700 text-white',
-			primaryText: 'Something',
-			secondaryText: formattedToday,
-			secondaryTextTime: formattedTime,
-		},
-		{
-			icon: <TrendingUp fontSize={"medium"} />,
-			event: 'New Order',
-			eventColor: 'bg-green-700 text-white',
-			primaryText: 'Something',
+			primaryText: 'Something Something Something Something Something Something Something Something Something Something Something Something',
 			secondaryText: formattedToday,
 			secondaryTextTime: formattedTime,
 		},

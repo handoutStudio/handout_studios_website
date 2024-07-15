@@ -6,6 +6,7 @@ import { SpaceDashboard } from "@mui/icons-material";
 import logo from '@/public/Assets/logo/compressed/final stamp 1.svg';
 
 export default function Home() {
+
 	return (
 		<div className={`flex gap-10 items-center justify-center flex-col min-h-screen`}>
 
