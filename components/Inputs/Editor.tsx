@@ -122,9 +122,6 @@ export default function Editor({setSubmittedContent, submittedContent}: any) {
 				&&
 					(
 						<>
-							<pre style={{ marginTop: 10, overflow: "auto", maxWidth: "100%" }}>
-								<code>{submittedContent}</code>
-							</pre>
 							<Box mt={3}>
 								<Typography variant="overline" sx={{ mb: 2 }}> Preview of Instructions: </Typography>
 								<RichTextReadOnly content={submittedContent} extensions={extensions} />

@@ -135,7 +135,9 @@ export default function NewProducts() {
 
 					<TextInput getValue={getDescription} handleChange={handleChange} placeholder={'Training Description...!'} id={'description'} name={'description'} label={"Training Description"} component={'textArea'} icon={<DescriptionRounded fontSize='large' />} />
 					
-					<ImageUpload maxFileSize={1048576} limit={1} fileRef={ fileRef } dropzoneText={"Drag and drop an image here or click to upload Product Image...!"} showPreviewsInDropzone={true} showPreviews={false} />
+					<div className={`z-0 w-full`}>
+						<ImageUpload maxFileSize={1048576} limit={1} fileRef={ fileRef } dropzoneText={"Drag and drop an image here or click to upload Product Image...!"} showPreviewsInDropzone={true} showPreviews={false} />
+					</div>
 					
 					<div className={`w-full`}>
 						<Editor submittedContent={submittedContent} setSubmittedContent={setSubmittedContent} />

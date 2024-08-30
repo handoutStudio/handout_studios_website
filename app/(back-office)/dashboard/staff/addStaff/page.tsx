@@ -9,7 +9,7 @@ import { Buttons } from '@/components/Inputs/SubmitButton';
 import { ImageUpload } from '@/components/Inputs/ImageUpload';
 import { PageHeader } from '@/components/backoffice/PageHeader';
 import { Alert, AlertTitle, Chip, Snackbar } from '@mui/material';
-import { AddCircleRounded, AddIcCallRounded, BadgeRounded, Category, CloseRounded, CurrencyRupeeRounded, DateRangeRounded, DescriptionRounded, EditNoteRounded, Groups3, InventoryRounded, MailRounded, PasswordRounded, PersonPinCircleRounded, ProductionQuantityLimitsRounded, PublishRounded, QrCodeScannerRounded, StyleRounded, TagRounded } from '@mui/icons-material';
+import { AddCircleRounded, AddIcCallRounded, AssignmentLateRounded, BadgeRounded, CloseRounded, DateRangeRounded, DescriptionRounded, MailRounded, PasswordRounded, PersonPinCircleRounded } from '@mui/icons-material';
 
 
 export default function NewProducts() {
@@ -100,11 +100,12 @@ export default function NewProducts() {
 	const handleSubmit = async (e: any) => {
 		setLoading(!getLoading);
 		e.preventDefault();
-		getFirstName !== '' && getLastName !== '' && getMiddleName !== ''? setFullName(getFirstName + ' ' + getMiddleName + ' ' + getLastName) : setFullName(getFirstName + ' ' + getLastName);
+		getFirstName !== '' && getLastName !== '' && getMiddleName !== ''? setFullName(getFirstName + ' ' + getMiddleName + ' ' + getLastName) : getFirstName !== '' && getLastName !== '' && getMiddleName === '' ? setFullName(getFirstName + ' ' + getLastName) : setFullName(getFirstName + ' ' + getLastName);
 
-		if(getFirstName !== '' && getLastName !== '') setError(!getError);
+		if(getFirstName === '' && getLastName === '') setError(!getError);
 		else
 		{
+			console.log("Here");
 			const slug = generateSlug(getFullName);
 			
 			const fileArrays: any = fileRef.current;
@@ -203,7 +204,7 @@ export default function NewProducts() {
 					
 					<div className={`flex justify-start items-center gap-2`}>
 						<TextInput getValue={getActive} handleChange={handleChange} id={'active'} name={'active'} label={"Is Staff Member Working...?"} component={'switch'} />
-						<Chip color={ getActive ? 'error' : 'default' } label={ getActive ? 'Working' : 'Left' } onDelete={() => { setActive(!getActive) }} deleteIcon={ getActive ? <PublishRounded fontSize='small' /> : <EditNoteRounded fontSize='small' /> } />
+						<Chip color={ getActive ? 'success' : 'error' } label={ getActive ? 'Working' : 'Left' } onDelete={() => { setActive(!getActive) }} deleteIcon={ getActive ? <BadgeRounded fontSize='small' /> : <AssignmentLateRounded fontSize='small' /> } />
 					</div>
 
 					<div className={`flex justify-between items-center max-[600px]:flex-col gap-5 w-full`}>
