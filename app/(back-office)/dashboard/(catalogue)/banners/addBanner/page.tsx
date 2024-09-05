@@ -9,20 +9,22 @@ import { Buttons } from '@/components/Inputs/SubmitButton';
 import { Alert, AlertTitle, Snackbar } from '@mui/material';
 import { ImageUpload } from '@/components/Inputs/ImageUpload';
 import { PageHeader } from '@/components/backoffice/PageHeader';
-import { AddCircleRounded, CloseRounded, ConfirmationNumberRounded } from '@mui/icons-material';
+import { AddCircleRounded, CloseRounded, ConfirmationNumberRounded, InsertLinkRounded } from '@mui/icons-material';
 
 
 export default function NewCategory() {
 	
 	const router = useRouter();
 	const fileRef = React.useRef();
+	const [getLink, setLink] = React.useState('');
 	const [getOpen, setOpen] = React.useState(false);
 	const [getTitle, setTitle] = React.useState('');
 	const [getError, setError] = React.useState(false);
 	const [getLoading, setLoading] = React.useState(false);
+	const [getIsActive, setIsActive] = React.useState(true);
 	const [getApiResponse, setApiResponse] = React.useState({ message: '', color: '' });
 
-	const handleChange = (event: any) => { (setTitle(event.target.value), setError(false)) };
+	const handleChange = (event: any) => { event.target.name === 'title' ? (setTitle(event.target.value), setError(false)) : event.target.name === 'link' ? (setLink(event.target.value), setError(false)) : (setIsActive(!getIsActive), setError(false)) };
 	
 	const handleSubmit = async (e: any) => {
 		setLoading(!getLoading);
@@ -37,7 +39,7 @@ export default function NewCategory() {
 				.catch((error: any) => console.log(error));
 
 			const imagePath = response.substring(response.indexOf('/public'), response.length);
-			const bannerData = { title: getTitle, slug: slug, link: imagePath, image: imagePath };
+			const bannerData = { title: getTitle, slug: slug, link: getLink, image: imagePath, isActive: getIsActive };
 			const apiResponse = await makePostRequest('http://localhost:3000/api/banners', bannerData, 'Banner');			
 			setApiResponse(apiResponse!);
 			setOpen(!getOpen);
@@ -74,20 +76,24 @@ export default function NewCategory() {
 
 	return (
 		<div className={`flex flex-col justify-center items-center w-full gap-8`}>
-			<div className={`flex items-center justify-between py-3 px-5 w-full rounded-lg bg-red-300`}>
-				<PageHeader pageTitle={'Add New Banner'} link={null} buttonText={null} />
-			</div>
 			{/* 
 				- id => auto()
 				- title => userInput()
 				- slug => auto()
 				- link => auto()
 				- image => userInput()
+				- isActive => userInput()
 			*/}
-			<div className={`flex w-5/6 rounded-lg bg-red-50`}>
+			<div className={`flex flex-col w-[90%] rounded-lg bg-red-50 gap-5`}>
+				<PageHeader pageTitle={'Add New Banner'} link={null} buttonText={null} />
 				<div className={`flex flex-col justify-center items-start w-full px-12 py-6 gap-5`}>
-					<TextInput handleChange={handleChange} getValue={getTitle} placeholder={'Banner Title...!'} id={'title'} name={'title'} label={"Banner"} component={'text'} icon={<ConfirmationNumberRounded />} />
+					<div className={`flex justify-center items-center w-full gap-5`}>
+						<TextInput handleChange={handleChange} getValue={getTitle} placeholder={'Banner Title...!'} id={'title'} name={'title'} label={"Banner Title"} component={'text'} icon={<ConfirmationNumberRounded />} />
+						<TextInput handleChange={handleChange} getValue={getLink} placeholder={'Banner Link...!'} id={'link'} name={'link'} label={"Banner Link"} component={'text'} icon={<InsertLinkRounded />} />
+					</div>
 					<ImageUpload maxFileSize={2097152} limit={1} fileRef={ fileRef } dropzoneText={"Drag and drop an image here or click to upload Category Image...!"} showPreviewsInDropzone={false} showPreviews={true} />
+					<TextInput getValue={getIsActive} handleChange={handleChange} id={'active'} name={'active'} label={ getIsActive ? "Active...?" : "Disabled...!"} component={'switch'} />
+
 					<div className={`flex justify-between items-center max-[600px]:flex-col gap-5 w-full`}>
 						<Alert className={getError ? '' : 'invisible'} variant="filled" severity="error">{`Please Fill all the Required Fields to Proceed...!`}</Alert>
 						<div className={`flex gap-5`}>

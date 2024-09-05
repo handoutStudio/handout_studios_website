@@ -112,9 +112,6 @@ export default function NewProducts() {
 
 	return (
 		<div className={`flex flex-col justify-center items-center w-full gap-8`}>
-			<div className={`flex items-center justify-between py-3 px-5 w-full rounded-lg bg-red-300`}>
-				<PageHeader pageTitle={'Add New Training'} link={null} buttonText={null} />
-			</div>
 			{/* 
 				- id => auto()
 				- title => userInput()
@@ -125,7 +122,8 @@ export default function NewProducts() {
 				- image => userInput()
 				- content => userInput() [RichTextBox]
 			*/}
-			<div className={`flex w-5/6 rounded-lg bg-red-50`}>
+			<div className={`flex flex-col w-[90%] rounded-lg bg-red-50 gap-5`}>
+				<PageHeader pageTitle={'Add New Training'} link={null} buttonText={null} />
 				<div className={`flex flex-col justify-center items-start w-full px-12 py-6 gap-5`}>
 
 					<div className={`flex justify-center items-start w-full gap-5`}>

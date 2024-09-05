@@ -2,7 +2,7 @@ import * as React from 'react';
 import { visuallyHidden } from '@mui/utils';
 import { alpha } from '@mui/material/styles';
 import { Delete } from '@mui/icons-material';
-import { Data } from '../Interfaces/ICategoryData';
+import { ICategoryData } from '../Interfaces/ICategoryData';
 import { Box, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow, TableSortLabel, Toolbar, Typography, Paper, Checkbox, IconButton, Tooltip, Snackbar, Slide, Alert } from '@mui/material';
 
 
@@ -16,11 +16,11 @@ export default function TableBulkDelete({rows, tableTitle}: any) {
 	const [rowsPerPage, setRowsPerPage] = React.useState(10);
 	const [getSnackbarState, setSnackbarState] = React.useState(false);
 	const [selected, setSelected] = React.useState<readonly number[]>([]);
-	const [orderBy, setOrderBy] = React.useState<keyof Data>('calories');
+	const [orderBy, setOrderBy] = React.useState<keyof ICategoryData>('calories');
 
 	interface HeadCell {
 		disablePadding: boolean;
-		id: keyof Data;
+		id: keyof ICategoryData;
 		label: string;
 		numeric: boolean;
 	}
@@ -72,7 +72,7 @@ export default function TableBulkDelete({rows, tableTitle}: any) {
 		return stabilizedThis.map((el) => el[0]);
 	}
 
-	const handleRequestSort = (event: React.MouseEvent<unknown>, property: keyof Data) => {
+	const handleRequestSort = (event: React.MouseEvent<unknown>, property: keyof ICategoryData) => {
 		const isAsc = orderBy === property && order === 'asc';
 		setOrder(isAsc ? 'desc' : 'asc');
 		setOrderBy(property);
@@ -134,7 +134,7 @@ export default function TableBulkDelete({rows, tableTitle}: any) {
 			console.log(selected)
 	}
 
-	const createSortHandler = (property: keyof Data) => (event: React.MouseEvent<unknown>) => { handleRequestSort(event, property); };
+	const createSortHandler = (property: keyof ICategoryData) => (event: React.MouseEvent<unknown>) => { handleRequestSort(event, property); };
 	
 	return (
 		<Box sx={{ width: '100%', backgroundColor: '#7c0104', padding: '0.5vw', borderRadius: '0.5vw' }}>

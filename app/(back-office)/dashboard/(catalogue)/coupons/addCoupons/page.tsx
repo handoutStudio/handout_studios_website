@@ -11,6 +11,7 @@ import { Alert, AlertTitle, Snackbar } from '@mui/material';
 import { ImageUpload } from '@/components/Inputs/ImageUpload';
 import { PageHeader } from '@/components/backoffice/PageHeader';
 import { AddCircleRounded, CloseRounded, DateRangeRounded, LocalOfferRounded, LoyaltyRounded } from '@mui/icons-material';
+import { generateISOFormattedDate } from '@/app/lib/generateISOFormattedDate';
 
 
 export default function NewCoupons() {
@@ -62,16 +63,16 @@ export default function NewCoupons() {
 				.catch((error: any) => console.log(error));
 
 			const imagePath = response.substring(response.indexOf('/public'), response.length);
-			const couponData = { title: getTitle, couponCode: getCode, slug: slug, image: imagePath, expiryDate: getDate };
-			console.log(couponData);
-			// const apiResponse = await makePostRequest('http://localhost:3000/api/coupons', couponData, 'Coupoun');
-			// setApiResponse(apiResponse!);
-			// setOpen(!getOpen);
+			const isoFormattedDate = generateISOFormattedDate(getDate);
+			const couponData = { title: getTitle, couponCode: getCode, slug: slug, image: imagePath, expiryDate: isoFormattedDate };
+			const apiResponse = await makePostRequest('http://localhost:3000/api/coupons', couponData, 'Coupoun');
+			setApiResponse(apiResponse!);
+			setOpen(!getOpen);
 
-			// setTimeout(() => {
-			// 	setOpen(!getOpen);
-			// 	router.back();
-			// }, 2000);
+			setTimeout(() => {
+				setOpen(!getOpen);
+				router.back();
+			}, 2000);
 		}
 		setLoading(!getLoading);
 	}
@@ -132,11 +133,11 @@ export default function NewCoupons() {
 			</div>
 
 			<Snackbar open={getOpen} autoHideDuration={1000} anchorOrigin={{ vertical: 'top', horizontal:'center' }}>
-					<Alert variant="filled" severity={ getApiResponse.color.toLocaleLowerCase() === "success" ? "success" : getApiResponse.color.toLocaleLowerCase() === "warning" ? "warning" : "error" }>
-						<AlertTitle>{getApiResponse.color}</AlertTitle>
-						{getApiResponse.message}
-					</Alert>
-				</Snackbar>
+				<Alert variant="filled" severity={ getApiResponse.color.toLocaleLowerCase() === "success" ? "success" : getApiResponse.color.toLocaleLowerCase() === "warning" ? "warning" : "error" }>
+					<AlertTitle>{getApiResponse.color}</AlertTitle>
+					{getApiResponse.message}
+				</Alert>
+			</Snackbar>
 			
 		</div>
 	)

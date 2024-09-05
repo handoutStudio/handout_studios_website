@@ -1,9 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { Data } from '@/components/Interfaces/ICategoryData';
 import { PageHeader } from '@/components/backoffice/PageHeader';
-import TableBulkDelete from '@/components/backoffice/TableBulkDelete';
 
 export default function page() {
 

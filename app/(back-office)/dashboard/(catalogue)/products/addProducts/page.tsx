@@ -3,6 +3,7 @@
 import * as React from 'react';
 import { useRouter } from 'next/navigation';
 import { generateSlug } from '@/app/lib/generateSlug';
+import TagsInput from '@/components/Inputs/TagsInput';
 import { makePostRequest } from '@/app/lib/apiRequest';
 import { TextInput } from '@/components/Inputs/TextInput';
 import { Buttons } from '@/components/Inputs/SubmitButton';
@@ -31,7 +32,6 @@ export default function NewProducts() {
 	const [getProductPrice, setProductPrice] = React.useState(1.99);
 	const [getSelectCategory, setSelectCategory] = React.useState([]);
 	const [getApiResponse, setApiResponse] = React.useState({ message: '', color: '' });
-	const tags: any = [];
 
 	const handleChange = (event: any) => {
 
@@ -70,11 +70,6 @@ export default function NewProducts() {
 				break;
 			case 'productSalePrice':
 				setSalePrice(event.target.value);
-				setError(false);
-				break;
-			case 'tags':
-				tags.push(event.target.value.split(","));
-				setTags(tags[0]);
 				setError(false);
 				break;
 			case 'active':
@@ -146,12 +141,13 @@ export default function NewProducts() {
 	const selectMenuDataCategory = ['One', 'Two', 'Three'];
 	const selectMenuDataSeller = ['One', 'Two', 'Three'];
 
+	const handleSelecetedTags = (items: any) => {
+		setTags(items);
+	}
+
 
 	return (
 		<div className={`flex flex-col justify-center items-center w-full gap-8`}>
-			<div className={`flex items-center justify-between py-3 px-5 w-full rounded-lg bg-red-300`}>
-				<PageHeader pageTitle={'Add New Product'} link={null} buttonText={null} />
-			</div>
 			{/* 
 				- id => auto()
 				- title => userInput()
@@ -167,7 +163,8 @@ export default function NewProducts() {
 				- description => userInput()
 				- images => userInput() max 5
 			*/}
-			<div className={`flex w-5/6 rounded-lg bg-red-50`}>
+			<div className={`flex flex-col w-[90%] rounded-lg bg-red-50 gap-5`}>
+				<PageHeader pageTitle={'Add New Product'} link={null} buttonText={null} />
 				<div className={`flex flex-col justify-center items-start w-full px-12 py-6 gap-5`}>
 
 					<div className={`flex justify-center items-start w-full gap-5`}>
@@ -186,13 +183,13 @@ export default function NewProducts() {
 						<TextInput handleChange={handleChange} getValue={getProductPrice} placeholder={'Product Price...!'} id={'productPrice'} name={'productPrice'} label={"Product Price"} component={'currency'} type={'number'} icon={<CurrencyRupeeRounded />} />
 						<TextInput handleChange={handleChange} getValue={getSalePrice} placeholder={'Product Sale Price...!'} id={'productSalePrice'} name={'productSalePrice'} label={"Product Sale Price"} component={'currency'} type={'number'} icon={<CurrencyRupeeRounded />} />
 					</div>
-
-					<ImageUpload maxFileSize={1048576} limit={5} fileRef={ fileRef } dropzoneText={"Drag and drop an image here or click to upload Product Image...!"} showPreviewsInDropzone={false} showPreviews={true} />
-
-					<div className={`flex justify-start align-middle items-center gap-5`}> { getTags.map((tag: any, index: number) => <Chip key={index} color='error' label={`#${tag}`} /> )} </div>
 					
-					<TextInput getValue={getTags} handleChange={handleChange} placeholder={'Tags (should be comma "," seperated)...!'} id={'tags'} name={'tags'} label={"Tags"} component={'text'} icon={<TagRounded />} />
-					<TextInput getValue={getDescription} handleChange={handleChange} placeholder={'Product Description...!'} id={'description'} name={'description'} label={"Description"} component={'textArea'} icon={<DescriptionRounded fontSize='large' />} />
+					<TagsInput selectedTags={handleSelecetedTags} placeholder="Add Tags (Press Enter after every hashtag)" />
+
+					<div className={`flex justify-center items-center w-full gap-5`}>
+						<ImageUpload maxFileSize={1048576} limit={5} fileRef={ fileRef } dropzoneText={"Drag and drop an image here or click to upload Product Image...!"} showPreviewsInDropzone={true} showPreviews={false} />
+						<TextInput getValue={getDescription} handleChange={handleChange} placeholder={'Product Description...!'} id={'description'} name={'description'} label={"Description"} component={'textArea'} icon={<DescriptionRounded fontSize='large' />} />
+					</div>
 					
 					<div className={`flex justify-start items-center gap-2`}>
 						<TextInput getValue={getActive} handleChange={handleChange} id={'active'} name={'active'} label={"Publish Your Product...?"} component={'switch'} />

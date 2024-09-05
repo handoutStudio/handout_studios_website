@@ -30,10 +30,16 @@ export default function Layout({ children }: any) {
 				</div> */}
 
 				{/* TODO: Main Here...! */}
-				<main className={`p-8 text-[#7c0104] min-h-screen mt-16`}> { children } </main>
+				<main className={`p-8 text-[#7c0104] min-h-[91.5vh] mt-20`}>
+					<div>
+						{ children }
+					</div>
+					<div className={`p-2`}>
+						{/* TODO: Footer Here...! */}
+						<Footer />
+					</div>
+				</main>
 
-				{/* TODO: Footer Here...! */}
-				<Footer />
 			</div>
 
 			{/* TODO: Main Body Here...! */}

@@ -77,9 +77,6 @@ export default function NewMarket() {
 
 	return (
 		<div className={`flex flex-col justify-center items-center w-full gap-8`}>
-			<div className={`flex items-center justify-between w-full`}>
-				<PageHeader pageTitle={'Add New Market'} link={null} buttonText={null} />
-			</div>
 			{/* 
 				- id => auto()
 				- title => userInput()
@@ -87,7 +84,8 @@ export default function NewMarket() {
 				- logo => userInput()
 				- description => userInput()
 			*/}
-			<div className={`flex w-5/6 rounded-lg bg-red-50`}>
+			<div className={`flex flex-col w-[90%] rounded-lg bg-red-50 gap-5`}>
+				<PageHeader pageTitle={'Add New Market'} link={null} buttonText={null} />
 				<div className={`flex flex-col justify-center items-start w-full px-12 py-6 gap-5`}>
 
 					<TextInput handleChange={handleChange} getValue={getTitle} placeholder={'Market Name...!'} id={'name'} name={'name'} label={"Market"} component={'text'} icon={<PersonPinCircleRounded />} />

@@ -1,13 +1,13 @@
 'use client';
 
 import * as React from 'react';
-import { Data } from '@/components/Interfaces/ICategoryData';
+import { ICategoryData } from '@/components/Interfaces/ICategoryData';
 import { PageHeader } from '@/components/backoffice/PageHeader';
 import TableBulkDelete from '@/components/backoffice/TableBulkDelete';
 
 export default function page() {
 	
-	function createData(id: number, title: string, calories: number, fat: number, carbs: number, protein: number): Data { return { id, title, calories, fat, carbs, protein }; }
+	function createData(id: number, title: string, calories: number, fat: number, carbs: number, protein: number): ICategoryData { return { id, title, calories, fat, carbs, protein }; }
 	
 	const rows = [
 		createData(1, 'Cupcake', 305, 3.7, 67, 4.3),

@@ -1,4 +1,4 @@
-export interface Data {
+export interface ICategoryData {
     id: number;
     calories: number;
     carbs: number;
