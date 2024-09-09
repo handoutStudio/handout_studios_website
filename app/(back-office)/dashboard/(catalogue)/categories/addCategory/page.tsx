@@ -91,7 +91,7 @@ export default function NewCategory() {
 				<PageHeader pageTitle={'Add New Category'} link={null} buttonText={null} />
 				<div className={`flex flex-col justify-center items-start w-full px-12 py-6 gap-5`}>
 
-					<div className={`flex justify-center items-start w-full gap-5`}>
+					<div className={`flex justify-center items-start w-full gap-5 max-[570px]:flex-col`}>
 						<TextInput handleChange={handleChange} getValue={getTitle} placeholder={'Category Title...!'} id={'title'} name={'title'} label={"Category"} component={'text'} icon={<StyleRounded />} />
 						<TextInput handleChange={handleChange} getValue={getSelect} placeholder={'Select Market...!'} id={'select'} name={'select'} label={"Select Market"} component={'select'} icon={<Store />} selectMenu={selectMenuData} />
 					</div>
@@ -101,8 +101,8 @@ export default function NewCategory() {
 					<ImageUpload maxFileSize={1048576} limit={1} fileRef={ fileRef } dropzoneText={"Drag and drop an image here or click to upload Category Image...!"} showPreviewsInDropzone={false} showPreviews={true} />
 
 					<div className={`flex justify-between items-center max-[600px]:flex-col gap-5 w-full`}>
-						<Alert className={getError ? '' : 'invisible'} variant="filled" severity="error">{`Please Fill all the Required Fields to Proceed...!`}</Alert>
-						<div className={`flex gap-5`}>
+						<Alert className={getError ? '' : 'invisible hidden'} variant="filled" severity="error">{`Please Fill all the Required Fields to Proceed...!`}</Alert>
+						<div className={`flex justify-end w-full gap-5`}>
 							<Buttons classes={'cancel'} startIcon={<CloseRounded />} endIcon={null} size={'large'} buttonText={'Cancel'} />
 							<Buttons classes={'submit'} handleSubmit={(e: any) => handleSubmit (e)} startIcon={null} endIcon={<AddCircleRounded />} size={'large'} buttonText={'Save'} />
 						</div>

@@ -26,11 +26,11 @@ export function PageHeader({pageTitle, link, buttonText, dataRows, workSheetName
 	}
 
 	return (
-		<div className={`flex justify-between items-center py-3 px-5 w-full rounded-lg bg-red-300`}>
+		<div className={`flex justify-between items-center py-3 px-5 w-full rounded-lg bg-red-300 max-[600px]:flex-col`}>
 			<div className={`flex justify-center items-center gap-5`}>
 				<Heading title={ pageTitle } />
 			</div>
-			<div className={`flex justify-center items-center gap-5`}>
+			<div className={`flex justify-center items-center gap-5 max-[470px]:flex-col min-[471px]:flex-row`}>
 				{
 					buttonText !== null &&
 					<>

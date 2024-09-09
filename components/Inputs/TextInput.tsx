@@ -1,17 +1,19 @@
 import dayjs from 'dayjs';
 import * as React from 'react';
+import useScreenSize from '@/app/lib/useScreenSize';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { StaticDatePicker } from '@mui/x-date-pickers/StaticDatePicker';
 import { DemoContainer, DemoItem } from '@mui/x-date-pickers/internals/demo';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { CurrencyRupeeRounded, DescriptionRounded } from '@mui/icons-material';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { TextField, InputAdornment, Tooltip, Zoom, MenuItem, Select, InputLabel, OutlinedInput, FormControl, Switch, FormControlLabel } from '@mui/material';
 
 
 export function TextInput({ getValue, handleChange, id, name, placeholder, label, component, icon, disabled, rows, maxRows, type, selectMenu, minDate }: any) {
 
 	const tomorrow = new Date((new Date()).valueOf() + 1000*3600*24);
+	const screenSize = useScreenSize();
 
 	return (
 			component === 'text'
@@ -42,7 +44,7 @@ export function TextInput({ getValue, handleChange, id, name, placeholder, label
 						:
 							component === 'date'
 							?
-								minDate
+								minDate && screenSize?.width && screenSize.width >= 750
 								?
 									<LocalizationProvider dateAdapter={AdapterDayjs}>
 										<DemoContainer components={['MobileDatePicker']}>
@@ -59,7 +61,7 @@ export function TextInput({ getValue, handleChange, id, name, placeholder, label
 									// </LocalizationProvider>
 
 									<LocalizationProvider dateAdapter={AdapterDayjs}>
-										<DemoContainer sx={{ width: '100%' }} components={['DatePicker', 'DesktopDatePicker', 'MobileDatePicker']}>
+										<DemoContainer sx={{ width: '100%' }} components={['DatePicker']}>
 											<DatePicker sx={{ width: '100%' }} label={label} defaultValue={dayjs(new Date())} onChange={handleChange} slotProps={{ openPickerButton: { color: 'error' }, textField: { color: 'error' } }} />
 										</DemoContainer>
 									</LocalizationProvider>
@@ -108,6 +110,7 @@ export function TextInput({ getValue, handleChange, id, name, placeholder, label
 												control={<Switch checked={getValue} id={id} name={name} color='error' onChange={handleChange} inputProps={{ 'aria-label': 'controlled' }} />}
 												label={label}
 												labelPlacement="start"
+												className={`max-[570px]:text-xs`}
 											/>
 										:
 											null

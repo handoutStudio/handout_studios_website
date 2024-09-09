@@ -147,7 +147,7 @@ export default function NewProducts() {
 
 
 	return (
-		<div className={`flex flex-col justify-center items-center w-full gap-8`}>
+		<div className={`flex flex-col justify-center items-center w-full gap-5`}>
 			{/* 
 				- id => auto()
 				- title => userInput()
@@ -167,26 +167,26 @@ export default function NewProducts() {
 				<PageHeader pageTitle={'Add New Product'} link={null} buttonText={null} />
 				<div className={`flex flex-col justify-center items-start w-full px-12 py-6 gap-5`}>
 
-					<div className={`flex justify-center items-start w-full gap-5`}>
+					<div className={`flex justify-center items-start w-full gap-5 max-[570px]:flex-col`}>
 						<TextInput handleChange={handleChange} getValue={getTitle} placeholder={'Product Title...!'} id={'title'} name={'title'} label={"Product"} component={'text'} icon={<StyleRounded />} />
 						<TextInput handleChange={handleChange} getValue={getSelectCategory} placeholder={'Select Category...!'} id={'selectC'} name={'selectC'} label={"Select Category"} component={'select'} icon={<Category />} selectMenu={selectMenuDataCategory} />
 						<TextInput handleChange={handleChange} getValue={getSelectSeller} placeholder={'Select Seller...!'} id={'selectS'} name={'selectS'} label={"Select Seller"} component={'select'} icon={<Groups3 />} selectMenu={selectMenuDataSeller} />
 					</div>
 
-					<div className={`flex justify-center items-start w-full gap-5`}>
+					<div className={`flex justify-center items-start w-full gap-5 max-[570px]:flex-col`}>
 						<TextInput handleChange={handleChange} getValue={getSKU} placeholder={'Stock Keeping Unit...!'} id={'unit'} name={'unit'} label={"Stock Keeping Unit"} component={'number'} type={'number'} icon={<InventoryRounded />} />
 						<TextInput handleChange={handleChange} getValue={getQuantity} placeholder={'Stock Quantity...!'} id={'quantity'} name={'quantity'} label={"Quantity"} component={'number'} type={'number'} icon={<ProductionQuantityLimitsRounded />} />
 						<TextInput handleChange={handleChange} getValue={getBarcode} placeholder={'Barcode...!'} id={'barcode'} name={'barcode'} label={"Barcode"} component={'text'} icon={<QrCodeScannerRounded />} />
 					</div>
 
-					<div className={`flex justify-center items-start w-full gap-5`}>
+					<div className={`flex justify-center items-start w-full gap-5 max-[570px]:flex-col`}>
 						<TextInput handleChange={handleChange} getValue={getProductPrice} placeholder={'Product Price...!'} id={'productPrice'} name={'productPrice'} label={"Product Price"} component={'currency'} type={'number'} icon={<CurrencyRupeeRounded />} />
 						<TextInput handleChange={handleChange} getValue={getSalePrice} placeholder={'Product Sale Price...!'} id={'productSalePrice'} name={'productSalePrice'} label={"Product Sale Price"} component={'currency'} type={'number'} icon={<CurrencyRupeeRounded />} />
 					</div>
 					
 					<TagsInput selectedTags={handleSelecetedTags} placeholder="Add Tags (Press Enter after every hashtag)" />
 
-					<div className={`flex justify-center items-center w-full gap-5`}>
+					<div className={`flex justify-center items-center w-full gap-5 max-[570px]:flex-col`}>
 						<ImageUpload maxFileSize={1048576} limit={5} fileRef={ fileRef } dropzoneText={"Drag and drop an image here or click to upload Product Image...!"} showPreviewsInDropzone={true} showPreviews={false} />
 						<TextInput getValue={getDescription} handleChange={handleChange} placeholder={'Product Description...!'} id={'description'} name={'description'} label={"Description"} component={'textArea'} icon={<DescriptionRounded fontSize='large' />} />
 					</div>
@@ -195,10 +195,9 @@ export default function NewProducts() {
 						<TextInput getValue={getActive} handleChange={handleChange} id={'active'} name={'active'} label={"Publish Your Product...?"} component={'switch'} />
 						<Chip color={ getActive ? 'error' : 'warning' } label={ getActive ? 'Publish' : 'Draft' } onDelete={() => { setActive(!getActive) }} deleteIcon={ getActive ? <PublishRounded fontSize='small' /> : <EditNoteRounded fontSize='small' /> } />
 					</div>
-
 					<div className={`flex justify-between items-center max-[600px]:flex-col gap-5 w-full`}>
-						<Alert className={getError ? '' : 'invisible'} variant="filled" severity="error">{`Please Fill all the Required Fields to Proceed...!`}</Alert>
-						<div className={`flex gap-5`}>
+						<Alert className={getError ? '' : 'invisible hidden'} variant="filled" severity="error">{`Please Fill all the Required Fields to Proceed...!`}</Alert>
+						<div className={`flex justify-end w-full gap-5`}>
 							<Buttons classes={'cancel'} startIcon={<CloseRounded />} endIcon={null} size={'large'} buttonText={'Cancel'} />
 							<Buttons classes={'submit'} handleSubmit={(e: any) => handleSubmit (e)} startIcon={null} endIcon={<AddCircleRounded />} size={'large'} buttonText={'Save'} />
 						</div>

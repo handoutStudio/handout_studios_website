@@ -86,15 +86,15 @@ export default function NewMarket() {
 			*/}
 			<div className={`flex flex-col w-[90%] rounded-lg bg-red-50 gap-5`}>
 				<PageHeader pageTitle={'Add New Market'} link={null} buttonText={null} />
-				<div className={`flex flex-col justify-center items-start w-full px-12 py-6 gap-5`}>
+				<div className={`flex flex-col justify-center items-start w-full px-12 py-6 gap-5 max-[570px]:flex-col`}>
 
 					<TextInput handleChange={handleChange} getValue={getTitle} placeholder={'Market Name...!'} id={'name'} name={'name'} label={"Market"} component={'text'} icon={<PersonPinCircleRounded />} />
 					<ImageUpload maxFileSize={1000000} limit={1} fileRef={ fileRef } dropzoneText={"Drag and drop an image here or click to upload Market Logo...!"} showPreviewsInDropzone={true} showPreviews={false} />
 					<TextInput handleChange={handleChange} getValue={getDescription} placeholder={'Market Description...!'} id={'description'} name={'description'} label={"Description"} component={'textArea'} icon={<NotesRounded fontSize='large' />} rows={6} />
 
 					<div className={`flex justify-between items-center max-[600px]:flex-col gap-5 w-full`}>
-						<Alert className={getError ? '' : 'invisible'} variant="filled" severity="error">{`Please Fill all the Required Fields to Proceed...!`}</Alert>
-						<div className={`flex gap-5`}>
+						<Alert className={getError ? '' : 'invisible hidden'} variant="filled" severity="error">{`Please Fill all the Required Fields to Proceed...!`}</Alert>
+						<div className={`flex justify-end w-full gap-5`}>
 							<Buttons classes={'cancel'} startIcon={<CloseRounded />} endIcon={null} size={'large'} buttonText={'Cancel'} />
 							<Buttons classes={'submit'} handleSubmit={(e: any) => handleSubmit (e)} startIcon={null} endIcon={<AddCircleRounded />} size={'large'} buttonText={'Save'} />
 						</div>

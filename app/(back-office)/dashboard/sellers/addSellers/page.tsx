@@ -70,17 +70,17 @@ export default function NewSeller() {
 				<PageHeader pageTitle={'Add New Seller'} link={null} buttonText={null} />
 				<div className={`flex flex-col justify-center items-start w-full px-12 py-6 gap-5`}>
 					
-					<div className={`flex justify-center items-start w-full gap-5`}>
+					<div className={`flex justify-center items-start w-full gap-5 max-[680px]:flex-col`}>
 						<TextInput handleChange={handleChange} getValue={getTitle} placeholder={'Seller Name...!'} id={'name'} name={'name'} label={"Seller"} component={'text'} icon={<PersonPinCircleRounded />} />
 						<TextInput handleChange={handleChange} getValue={getPhone} placeholder={'Seller Phone...!'} id={'phone'} name={'phone'} label={"Phone"} component={'text'} icon={<CallRounded />} type={'tel'} />
 					</div>
 
-					<div className={`flex justify-center items-start w-full gap-5`}>
+					<div className={`flex justify-center items-start w-full gap-5 max-[680px]:flex-col`}>
 						<TextInput handleChange={handleChange} getValue={getEmail} placeholder={'Seller Email...!'} id={'email'} name={'email'} label={"Email"} component={'text'} icon={<EmailRounded />} type={'email'} />
 						<TextInput handleChange={handleChange} getValue={getContactPerson} placeholder={'Seller Contact Person...!'} id={'contact'} name={'contact'} label={"Contact Person"} component={'text'} icon={<Person2Rounded />} />
 					</div>
 
-					<div className={`flex justify-center items-start w-full gap-5`}>
+					<div className={`flex justify-center items-start w-full gap-5 max-[680px]:flex-col`}>
 						<TextInput getValue={getAddress} handleChange={handleChange} placeholder={'Seller Address...!'} id={'address'} name={'address'} label={"Address"} component={'textArea'} icon={<PinDropRounded fontSize='large' />} rows={5} />
 						<TextInput handleChange={handleChange} getValue={getNotes} placeholder={'Seller Notes...!'} id={'notes'} name={'notes'} label={"Notes"} component={'textArea'} icon={<NotesRounded fontSize='large' />} rows={5} />
 					</div>
@@ -88,8 +88,8 @@ export default function NewSeller() {
 						<TextInput getValue={getPaymentTerms} handleChange={handleChange} placeholder={'Seller Payment Terms...!'} id={'payment'} name={'payment'} label={"Payment Terms"} component={'textArea'} icon={<ListAltRounded fontSize='large' />} rows={10} />
 
 					<div className={`flex justify-between items-center max-[600px]:flex-col gap-5 w-full`}>
-						<Alert className={getError ? '' : 'invisible'} variant="filled" severity="error">{`Please Fill all the Required Fields to Proceed...!`}</Alert>
-						<div className={`flex gap-5`}>
+						<Alert className={getError ? '' : 'invisible hidden'} variant="filled" severity="error">{`Please Fill all the Required Fields to Proceed...!`}</Alert>
+						<div className={`flex justify-end w-full gap-5`}>
 							<Buttons classes={'cancel'} startIcon={<CloseRounded />} endIcon={null} size={'large'} buttonText={'Cancel'} />
 							<Buttons classes={'submit'} handleSubmit={(e: any) => handleSubmit (e)} startIcon={null} endIcon={<AddCircleRounded />} size={'large'} buttonText={'Save'} />
 						</div>

@@ -86,19 +86,19 @@ export default function NewCategory() {
 			*/}
 			<div className={`flex flex-col w-[90%] rounded-lg bg-red-50 gap-5`}>
 				<PageHeader pageTitle={'Add New Banner'} link={null} buttonText={null} />
-				<div className={`flex flex-col justify-center items-start w-full px-12 py-6 gap-5`}>
-					<div className={`flex justify-center items-center w-full gap-5`}>
+				<div className={`flex flex-col justify-center items-start w-full px-12 py-6 gap-5 max-[570px]:gap-2 max-[570px]:px-2 max-[570px]:py-2 max-[570px]:mb-3`}>
+					<div className={`flex justify-center items-center w-full gap-5 min-[570px]:flex-row max-[571px]:flex-col`}>
 						<TextInput handleChange={handleChange} getValue={getTitle} placeholder={'Banner Title...!'} id={'title'} name={'title'} label={"Banner Title"} component={'text'} icon={<ConfirmationNumberRounded />} />
 						<TextInput handleChange={handleChange} getValue={getLink} placeholder={'Banner Link...!'} id={'link'} name={'link'} label={"Banner Link"} component={'text'} icon={<InsertLinkRounded />} />
 					</div>
 					<ImageUpload maxFileSize={2097152} limit={1} fileRef={ fileRef } dropzoneText={"Drag and drop an image here or click to upload Category Image...!"} showPreviewsInDropzone={false} showPreviews={true} />
 					<TextInput getValue={getIsActive} handleChange={handleChange} id={'active'} name={'active'} label={ getIsActive ? "Active...?" : "Disabled...!"} component={'switch'} />
 
-					<div className={`flex justify-between items-center max-[600px]:flex-col gap-5 w-full`}>
-						<Alert className={getError ? '' : 'invisible'} variant="filled" severity="error">{`Please Fill all the Required Fields to Proceed...!`}</Alert>
-						<div className={`flex gap-5`}>
-							<Buttons classes={'cancel'} startIcon={<CloseRounded />} endIcon={null} size={'large'} buttonText={'Cancel'} />
-							<Buttons classes={'submit'} handleSubmit={(e: any) => handleSubmit (e)} startIcon={null} endIcon={<AddCircleRounded />} size={'large'} buttonText={'Save'} />
+					<div className={`flex justify-between items-center max-[600px]:flex-col gap-5 min-[570px]:gap-2 w-full`}>
+						<Alert className={getError ? '' : 'invisible hidden'} variant="filled" severity="error">{`Please Fill all the Required Fields to Proceed...!`}</Alert>
+						<div className={`flex justify-end w-full gap-5`}>
+							<Buttons classes={'cancel'} startIcon={<CloseRounded />} endIcon={null} buttonText={'Cancel'} />
+							<Buttons classes={'submit'} handleSubmit={(e: any) => handleSubmit (e)} startIcon={null} endIcon={<AddCircleRounded />} buttonText={'Save'} />
 						</div>
 					</div>
 				</div>

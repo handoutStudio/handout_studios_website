@@ -100,9 +100,6 @@ export default function NewCoupons() {
 
 	return (
 		<div className={`flex flex-col justify-center items-center w-full gap-8`}>
-			<div className={`flex items-center justify-between py-3 px-5 w-full rounded-lg bg-red-300`}>
-				<PageHeader pageTitle={'Add New Coupon'} link={null} buttonText={null} />
-			</div>
 			{/* 
 				- id => auto()
 				- title => userInput()
@@ -110,9 +107,10 @@ export default function NewCoupons() {
 				- expiryDate => Date()
 				- image => userInput()
 			*/}
-			<div className={`flex w-5/6 rounded-lg bg-red-50`}>
+			<div className={`flex flex-col w-[90%] rounded-lg bg-red-50 gap-5`}>
+				<PageHeader pageTitle={'Add New Coupon'} link={null} buttonText={null} />
 				<div className={`flex flex-col justify-center items-start w-full px-12 py-6 gap-5`}>
-					<div className={`flex w-full gap-10 justify-evenly items-center`}>
+					<div className={`flex w-full gap-10 justify-evenly items-center max-[950px]:flex-col`}>
 						<div className={`flex flex-col w-full gap-10 justify-around`}>
 							<TextInput handleChange={handleChange} getValue={getTitle} placeholder={'Coupons Title...!'} id={'title'} name={'title'} label={"Coupon"} component={'text'} icon={<LocalOfferRounded />} />
 							<TextInput disabled={true} handleChange={handleChange} getValue={getCode} placeholder={'Coupons Code...!'} id={'code'} name={'code'} label={"Coupon Code"} component={'text'} icon={<LoyaltyRounded />} />
@@ -123,8 +121,8 @@ export default function NewCoupons() {
 						</div>
 					</div>
 					<div className={`flex justify-between items-center max-[600px]:flex-col gap-5 w-full`}>
-						<Alert className={getError ? '' : 'invisible'} variant="filled" severity="error">{`Please Fill all the Required Fields to Proceed...!`}</Alert>
-						<div className={`flex gap-5`}>
+						<Alert className={getError ? '' : 'invisible hidden'} variant="filled" severity="error">{`Please Fill all the Required Fields to Proceed...!`}</Alert>
+						<div className={`flex justify-end w-full gap-5`}>
 							<Buttons classes={'cancel'} startIcon={<CloseRounded />} endIcon={null} size={'large'} buttonText={'Cancel'} />
 							<Buttons classes={'submit'} handleSubmit={(e: any) => handleSubmit (e)} startIcon={null} endIcon={<AddCircleRounded />} size={'large'} buttonText={'Save'} />
 						</div>

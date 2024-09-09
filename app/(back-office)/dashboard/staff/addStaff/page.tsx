@@ -177,24 +177,24 @@ export default function NewProducts() {
 				<PageHeader pageTitle={'Add New Staff'} link={null} buttonText={null} />
 				<div className={`flex flex-col justify-center items-start w-full px-12 py-6 gap-5`}>
 
-					<div className={`flex justify-center items-start w-full gap-5`}>
+					<div className={`flex justify-center items-start w-full gap-5 max-[1000px]:flex-col`}>
 						<TextInput handleChange={handleChange} getValue={getFirstName} placeholder={'First Name'} id={'firstName'} name={'firstName'} label={"First Name"} component={'text'} icon={<BadgeRounded />} />
 						<TextInput handleChange={handleChange} getValue={getMiddleName} placeholder={'Middle Name'} id={'middleName'} name={'middleName'} label={"Middle Name"} component={'text'} icon={<BadgeRounded />} />
 						<TextInput handleChange={handleChange} getValue={getLastName} placeholder={'Last Name'} id={'lastName'} name={'lastName'} label={"Last Name"} component={'text'} icon={<BadgeRounded />} />
 					</div>
 
-					<div className={`flex justify-center items-start w-full gap-5`}>
+					<div className={`flex justify-center items-start w-full gap-5 max-[1000px]:flex-col`}>
 						<TextInput handleChange={handleChange} getValue={getEmail} placeholder={'xyz@admin.com'} id={'email'} name={'email'} type={'email'} label={"Email"} component={'text'} icon={<MailRounded />} />
 						<TextInput handleChange={handleChange} getValue={getPassword} placeholder={'Password'} id={'password'} name={'password'} label={"Password"} type={'password'} component={'text'} icon={<PasswordRounded />} />
 						<TextInput handleChange={handleChange} getValue={getPhone} placeholder={'Phone Number'} id={'phone'} name={'phone'} label={"Phone Number"} component={'text'} icon={<AddIcCallRounded />} />
 					</div>
 
-					<div className={`flex justify-center items-start w-full gap-5`}>
+					<div className={`flex justify-center items-start w-full gap-5 max-[1000px]:flex-col`}>
 						<TextInput handleChange={handleDOJAccept} placeholder={'DD/MM/YYYY'} minDate={false} getValue={getDOJ} id={'doj'} name={'doj'} label={"Date Of Joining"} component={'date'} icon={<DateRangeRounded />} />					
 						<TextInput handleChange={handleDOBAccept} placeholder={'DD/MM/YYYY'} minDate={false} getValue={getDOB} id={'dob'} name={'dob'} label={"Date Of Birth"} component={'date'} icon={<DateRangeRounded />} />					
 					</div>
 
-					<div className={`flex justify-center items-start w-full gap-5`}>
+					<div className={`flex justify-center items-start w-full gap-5 max-[1000px]:flex-col`}>
 						<TextInput getValue={getAddress} handleChange={handleChange} placeholder={'Address'} id={'address'} name={'address'} label={"Physical Address"} component={'textArea'} icon={<PersonPinCircleRounded fontSize='large' />} />
 						<TextInput getValue={getNote} handleChange={handleChange} placeholder={'Note'} id={'note'} name={'note'} label={"Notes"} component={'textArea'} icon={<DescriptionRounded fontSize='large' />} />
 						<ImageUpload maxFileSize={1048576} limit={1} fileRef={ fileRef } dropzoneText={"Drag and drop an image here or click to upload Your Photo...!"} showPreviewsInDropzone={true} showPreviews={false} />
@@ -206,8 +206,8 @@ export default function NewProducts() {
 					</div>
 
 					<div className={`flex justify-between items-center max-[600px]:flex-col gap-5 w-full`}>
-						<Alert className={getError ? '' : 'invisible'} variant="filled" severity="error">{`Please Fill all the Required Fields to Proceed...!`}</Alert>
-						<div className={`flex gap-5`}>
+						<Alert className={getError ? '' : 'invisible hidden'} variant="filled" severity="error">{`Please Fill all the Required Fields to Proceed...!`}</Alert>
+						<div className={`flex justify-end w-full gap-5`}>
 							<Buttons classes={'cancel'} startIcon={<CloseRounded />} endIcon={null} size={'large'} buttonText={'Cancel'} />
 							<Buttons classes={'submit'} handleSubmit={(e: any) => handleSubmit (e)} startIcon={null} endIcon={<AddCircleRounded />} size={'large'} buttonText={'Save'} />
 						</div>
