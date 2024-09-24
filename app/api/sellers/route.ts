@@ -3,8 +3,8 @@ import { NextResponse } from "next/server";
 export async function POST(request: any) {
     try
     {
-        const { title, slug, phone, email, contactPerson, address, payment, notes } = await request.json();
-        const newSeller = { title, slug, phone, email, contactPerson, address, payment, notes };
+        const { title, slug, phone, email, contactPerson, address, payment, notes, isActive } = await request.json();
+        const newSeller = { title, slug, phone, email, contactPerson, address, payment, notes, isActive };
         return NextResponse.json(newSeller, { status: 200 });
     }
     catch (error)

@@ -6,10 +6,11 @@ import { generateSlug } from '@/app/lib/generateSlug';
 import { makePostRequest } from '@/app/lib/apiRequest';
 import { TextInput } from '@/components/Inputs/TextInput';
 import { Buttons } from '@/components/Inputs/SubmitButton';
-import { Alert, AlertTitle, Snackbar } from '@mui/material';
 import { ImageUpload } from '@/components/Inputs/ImageUpload';
-import { PageHeader } from '@/components/backoffice/PageHeader';
-import { AddCircleRounded, CloseRounded, NotesRounded, PersonPinCircleRounded } from '@mui/icons-material';
+import { Alerts } from '@/components/Inputs/AlertsAndSnackBars/Alerts';
+import { Card, CardActions, CardContent, CardHeader } from '@mui/material';
+import { Snackbars } from '@/components/Inputs/AlertsAndSnackBars/Snackbars';
+import { AddCircleRounded, Category, CloseRounded, NotesRounded, PersonPinCircleRounded } from '@mui/icons-material';
 
 
 export default function NewMarket() {
@@ -17,14 +18,27 @@ export default function NewMarket() {
 
 	const router = useRouter();
 	const fileRef = React.useRef();
-	const [getOpen, setOpen] = React.useState(false);
 	const [getTitle, setTitle] = React.useState('');
+	const [getOpen, setOpen] = React.useState(false);
 	const [getError, setError] = React.useState(false);
 	const [getLoading, setLoading] = React.useState(false);
+	const [getIsActive, setIsActive] = React.useState(true);
 	const [getDescription, setDescription] = React.useState('');
+	const [getSelectCategory, setSelectCategory] = React.useState([]);
 	const [getApiResponse, setApiResponse] = React.useState({ message: '', color: '' });
 
-	const handleChange = (event: any) => event.target.name === 'name' ? (setTitle(event.target.value), setError(false)) : (setDescription(event.target.value), setError(false));
+	const handleChange = (event: any) =>
+	{
+		const { name, value, checked } = event.target;
+
+		switch (name) {
+			case 'name': setTitle(value); break;
+			case 'selectC': setSelectCategory(value); break;
+			case 'description': setDescription(value); break;
+			case 'active': setIsActive(checked); break;
+			default: break;
+		}
+	}
 	
 	const handleSubmit = async (e: any) => {
 		setLoading(!getLoading);
@@ -39,7 +53,7 @@ export default function NewMarket() {
 				.catch((error: any) => console.log(error));
 
 			const imagePath = response.substring(response.indexOf('/public'), response.length);
-			const marketData = { title: getTitle, slug: slug, logo: imagePath, description: getDescription };
+			const marketData = { title: getTitle, slug: slug, logo: imagePath, description: getDescription, selectCategory: getSelectCategory, isActive: getIsActive };
 			console.log(marketData);
 			const apiResponse = await makePostRequest('http://localhost:3000/api/markets', marketData, 'Market');
 			setApiResponse(apiResponse!);
@@ -74,41 +88,49 @@ export default function NewMarket() {
 		catch(error: any) { console.log(error); }
 	}
 
+	const selectMenuDataCategory = ['One', 'Two', 'Three'];
+
 
 	return (
-		<div className={`flex flex-col justify-center items-center w-full gap-8`}>
+		<div className={`w-full flex justify-center items-center min-[950px]:p-5 p-2`}>
 			{/* 
 				- id => auto()
 				- title => userInput()
 				- slug => auto()
 				- logo => userInput()
 				- description => userInput()
+				- isActive => userInput()
 			*/}
-			<div className={`flex flex-col w-[90%] rounded-lg bg-red-50 gap-5`}>
-				<PageHeader pageTitle={'Add New Market'} link={null} buttonText={null} />
-				<div className={`flex flex-col justify-center items-start w-full px-12 py-6 gap-5 max-[570px]:flex-col`}>
+			<Card className={`flex min-[950px]:w-3/4 w-full flex-col rounded-lg bg-red-50 gap-5`}>
+				
+				<CardHeader className={`flex justify-center items-center py-3 px-5 w-full rounded-tl-lg rounded-tr-lg bg-red-300 max-[600px]:flex-col`} title="Add New Market" />
+				
+				<CardContent className={`flex flex-col justify-center items-start w-full px-12 py-6 gap-5`}>
 
-					<TextInput handleChange={handleChange} getValue={getTitle} placeholder={'Market Name...!'} id={'name'} name={'name'} label={"Market"} component={'text'} icon={<PersonPinCircleRounded />} />
-					<ImageUpload maxFileSize={1000000} limit={1} fileRef={ fileRef } dropzoneText={"Drag and drop an image here or click to upload Market Logo...!"} showPreviewsInDropzone={true} showPreviews={false} />
-					<TextInput handleChange={handleChange} getValue={getDescription} placeholder={'Market Description...!'} id={'description'} name={'description'} label={"Description"} component={'textArea'} icon={<NotesRounded fontSize='large' />} rows={6} />
+					<Alerts getError={getError} setError={setError} alertMessage={`Please Fill all the Required Fields to Proceed...!`} />
 
-					<div className={`flex justify-between items-center max-[600px]:flex-col gap-5 w-full`}>
-						<Alert className={getError ? '' : 'invisible hidden'} variant="filled" severity="error">{`Please Fill all the Required Fields to Proceed...!`}</Alert>
-						<div className={`flex justify-end w-full gap-5`}>
-							<Buttons classes={'cancel'} startIcon={<CloseRounded />} endIcon={null} size={'large'} buttonText={'Cancel'} />
-							<Buttons classes={'submit'} handleSubmit={(e: any) => handleSubmit (e)} startIcon={null} endIcon={<AddCircleRounded />} size={'large'} buttonText={'Save'} />
-						</div>
+					<div className={`flex justify-center items-start w-full gap-5 max-[950px]:flex-col`}>
+						<TextInput handleChange={handleChange} getValue={getTitle} placeholder={'Market Name...!'} id={'name'} name={'name'} label={"Market"} component={'text'} icon={<PersonPinCircleRounded />} />
+						<TextInput handleChange={handleChange} getValue={getSelectCategory} placeholder={'Select Category...!'} id={'selectC'} name={'selectC'} label={"Select Category"} component={'select'} icon={<Category />} selectMenu={selectMenuDataCategory} />
 					</div>
-				</div>
-			</div>
+					<div className={`flex justify-center items-start w-full gap-5 max-[950px]:flex-col`}>
+						<TextInput handleChange={handleChange} getValue={getDescription} placeholder={'Market Description...!'} id={'description'} name={'description'} label={"Description"} component={'textArea'} icon={<NotesRounded fontSize='large' />} rows={9} />
+						<ImageUpload maxFileSize={1000000} limit={1} fileRef={ fileRef } dropzoneText={"Drag and drop an image here or click to upload Market Logo...!"} showPreviewsInDropzone={true} showPreviews={false} />
+					</div>
 
-			<Snackbar open={getOpen} autoHideDuration={1000} anchorOrigin={{ vertical: 'top', horizontal:'center' }}>
-				<Alert variant="filled" severity={ getApiResponse.color.toLocaleLowerCase() === "success" ? "success" : getApiResponse.color.toLocaleLowerCase() === "warning" ? "warning" : "error" }>
-					<AlertTitle>{getApiResponse.color}</AlertTitle>
-					{getApiResponse.message}
-				</Alert>
-			</Snackbar>
-			
+				</CardContent>
+
+				<CardActions className={`flex justify-between items-center max-[950px]:flex-col gap-5 w-full`}>
+					<div className={`flex justify-start items-start max-[950px]:flex-row max-[1200px]:flex-col w-full ml-8 mb-8 gap-5`}>
+						<TextInput getValue={getIsActive} handleChange={handleChange} id={'active'} name={'active'} label={`Market  ${ getIsActive ? 'Active...!' : 'Disabled...!'}`} component={'switch'} />
+					</div>
+					<div className={`flex min-[569px]:justify-end justify-center min-[569px]:items-end items-center min-[569px]:mr-8 mb-8 w-full gap-5`}>
+						<Buttons classes={'cancel'} startIcon={<CloseRounded />} endIcon={null} size={'large'} buttonText={'Cancel'} />
+						<Buttons classes={'submit'} handleSubmit={(e: any) => handleSubmit (e)} startIcon={null} endIcon={<AddCircleRounded />} size={'large'} buttonText={'Save'} />
+					</div>
+				</CardActions>
+			</Card>
+			<Snackbars getOpen={getOpen} getApiResponse={getApiResponse} />			
 		</div>
 	)
 }

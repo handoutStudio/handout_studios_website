@@ -19,11 +19,12 @@ model Coupon {
 	id String @id @default(auto()) @map("_id") @db.ObjectId
 	title String
 	couponCode String
-	slug String
+	slug String @unique
 	image String
 	expiryDate DateTime
+	isActive Boolean
 	createdAt DateTime @default(now())
-	updatedAt DateTime @updatedAt
+	updatedAt DateTime? @updatedAt
 }
 
 
@@ -31,10 +32,109 @@ model Coupon {
 model Banner {
 	id String @id @default(auto()) @map("_id") @db.ObjectId
 	title String
-	slug String
-	link String
-	image String
+	slug String @unique
+	link String?
+	image String?
 	isActive Boolean
 	createdAt DateTime @default(now())
-	updatedAt DateTime @updatedAt
+	updatedAt DateTime? @updatedAt
+}
+
+
+// Model Category
+model Category {
+	id String @id @default(auto()) @map("_id") @db.ObjectId
+	title String
+	slug String @unique
+	image String?
+	description String?
+	isActive Boolean
+	
+	productsIds String[] @db.ObjectId
+	products Product[] @relation(fields: [productsIds], references: [id])
+
+	communityTrainingsIds String[] @db.ObjectId
+	communityTrainings CommunityTraining[] @relation(fields: [communityTrainingsIds], references: [id])
+
+	// products Product[]
+	// communityTrainings CommunityTraining[]
+
+	marketIds String[] @db.ObjectId
+	markets Market[] @relation(fields: [marketIds], references: [id])
+	createdAt DateTime @default(now())
+	updatedAt DateTime? @updatedAt
+}
+
+
+// Model Market
+model Market {
+	id String @id @default(auto()) @map("_id") @db.ObjectId
+	title String @unique
+	slug String @unique
+	logo String?
+	description String?
+	isActive Boolean
+	categoryIds String[] @db.ObjectId
+	category Category[] @relation(fields: [categoryIds], references: [id])
+	createdAt DateTime @default(now())
+	updatedAt DateTime? @updatedAt
+}
+
+
+// Model Products
+model Product {
+	id String @id @default(auto()) @map("_id") @db.ObjectId
+	title String
+	stockKeepingUnit Int
+	quantity Int
+	barcode String?
+	productPrice Float
+	salePrice Float
+	slug String @unique
+	tags String[]
+	description String?
+	images String?
+	isActive Boolean
+	sellerIds String[] @db.ObjectId
+	seller Seller[] @relation(fields: [sellerIds], references: [id])
+	categoryIds String[] @db.ObjectId
+	category Category[] @relation(fields: [categoryIds], references: [id])
+	createdAt DateTime @default(now())
+	updatedAt DateTime? @updatedAt
+}
+
+
+// Model Seller
+model Seller {
+	id String @id @default(auto()) @map("_id") @db.ObjectId
+	title String
+	slug String @unique
+	phone String @unique
+	email String @unique
+	contactPerson String?
+	address String?
+	payment String?
+	notes String?
+	isActive Boolean
+	productsIds String[] @db.ObjectId
+	products Product[] @relation(fields: [productsIds], references: [id])
+	createdAt DateTime @default(now())
+	updatedAt DateTime? @updatedAt
+}
+
+
+// Model CommunityTraining
+model CommunityTraining {
+	id String @id @default(auto()) @map("_id") @db.ObjectId
+	title String
+	slug String @unique
+	description String?
+	image String?
+	content String?
+	isActive Boolean
+	selectCategory String
+	categoryIds String[] @db.ObjectId
+	category Category[] @relation(fields: [categoryIds], references: [id])
+	createdAt DateTime @default(now())
+	updatedAt DateTime? @updatedAt
 }

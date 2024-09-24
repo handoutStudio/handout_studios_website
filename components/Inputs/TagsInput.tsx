@@ -1,7 +1,7 @@
 import Downshift from "downshift";
 import PropTypes from "prop-types";
-import React, { useEffect } from "react";
 import { Chip, TextField } from "@mui/material";
+import React, { useEffect, useState } from "react";
 
 export interface TagsInputProps {
 	selectedTags: (tags: string[]) => void;
@@ -9,9 +9,9 @@ export interface TagsInputProps {
 	tags?: string[];
 }
 
-export default function TagsInput({ selectedTags, placeholder, tags = [], ...other }: TagsInputProps) {
-	const [inputValue, setInputValue] = React.useState<string>("");
-	const [selectedItem, setSelectedItem] = React.useState<string[]>([]);
+export default function TagsInput({ selectedTags, placeholder="Enter Tags", tags = [], ...other }: TagsInputProps) {
+	const [inputValue, setInputValue] = useState<string>("");
+	const [selectedItem, setSelectedItem] = useState<string[]>([]);
   
 	useEffect(() => { setSelectedItem(tags); }, [tags]);
   
@@ -34,13 +34,15 @@ export default function TagsInput({ selectedTags, placeholder, tags = [], ...oth
 			setInputValue("");
 		}
 		
-		if (selectedItem.length && !inputValue.length && event.key === "Backspace") {
+		if (selectedItem.length && !inputValue.length && event.key === "Backspace")
+		{
 			setSelectedItem(selectedItem.slice(0, selectedItem.length - 1));
 		}
 	}
 	
 	function handleChange(item: string | null) {
-		if (item && !selectedItem.includes(item)) {
+		if (item && !selectedItem.includes(item))
+		{
 			setSelectedItem([...selectedItem, item]);
 		}
 		setInputValue("");
@@ -51,9 +53,7 @@ export default function TagsInput({ selectedTags, placeholder, tags = [], ...oth
 		setSelectedItem(newSelectedItem);
 	};
   
-	function handleInputChange(event: React.ChangeEvent<HTMLInputElement>) {
-		setInputValue(event.target.value);
-	}
+	function handleInputChange(event: React.ChangeEvent<HTMLInputElement>) { setInputValue(event.target.value); }
   
 	return (
 		
@@ -84,7 +84,7 @@ export default function TagsInput({ selectedTags, placeholder, tags = [], ...oth
 		</Downshift>
 	);
 }
-  
+
 TagsInput.defaultProps = { tags: [], placeholder: "Enter tags" };
   
 TagsInput.propTypes = { selectedTags: PropTypes.func.isRequired, tags: PropTypes.arrayOf(PropTypes.string), placeholder: PropTypes.string };

@@ -3,7 +3,7 @@ export function generateISOFormattedDate(normalDate) {
 	const dateObject = new Date(normalDate);
 
 	// Format the date as a string in ISO 8601 format
-	const isoFormattedDate = dateObject.toLocaleString();
+	const isoFormattedDate = dateObject.toISOString();
 
 	return isoFormattedDate;
 }

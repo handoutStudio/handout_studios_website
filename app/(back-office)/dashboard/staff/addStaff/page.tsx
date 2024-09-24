@@ -8,8 +8,10 @@ import { TextInput } from '@/components/Inputs/TextInput';
 import { Buttons } from '@/components/Inputs/SubmitButton';
 import { ImageUpload } from '@/components/Inputs/ImageUpload';
 import { PageHeader } from '@/components/backoffice/PageHeader';
-import { Alert, AlertTitle, Chip, Snackbar } from '@mui/material';
+import { Alert, AlertTitle, Card, CardActions, CardContent, CardHeader, Chip, Snackbar } from '@mui/material';
 import { AddCircleRounded, AddIcCallRounded, AssignmentLateRounded, BadgeRounded, CloseRounded, DateRangeRounded, DescriptionRounded, MailRounded, PasswordRounded, PersonPinCircleRounded } from '@mui/icons-material';
+import { Snackbars } from '@/components/Inputs/AlertsAndSnackBars/Snackbars';
+import { Alerts } from '@/components/Inputs/AlertsAndSnackBars/Alerts';
 
 
 export default function NewProducts() {
@@ -35,46 +37,22 @@ export default function NewProducts() {
 	const [getApiResponse, setApiResponse] = React.useState({ message: '', color: '' });
 
 	const handleChange = (event: any) => {
+
+		const { value, checked } = event.target;
+
 		switch (event.target.name) {
-			case 'firstName':
-				setFirstName(event.target.value);
-				setError(false);
-				break;
-			case 'middleName':
-				setMiddleName(event.target.value);
-				setError(false);
-				break;
-			case 'lastName':
-				setLastName(event.target.value);
-				setError(false);
-				break;
-			case 'email':
-				setEmail(event.target.value);
-				setError(false);
-				break;
-			case 'password':
-				setPassword(event.target.value);
-				setError(false);
-				break;
-			case 'phone':
-				setPhone(event.target.value);
-				setError(false);
-				break;
-			case 'address':
-				setAddress(event.target.value);
-				setError(false);
-				break;
-			case 'note':
-				setNote(event.target.value);
-				setError(false);
-				break;
-			case 'active':
-				setActive(event.target.checked);
-				setError(false);
-				break;
-			default:
-				break;
+			case 'firstName': setFirstName(value); break;
+			case 'middleName': setMiddleName(value); break;
+			case 'lastName': setLastName(value); break;
+			case 'email': setEmail(value); break;
+			case 'password': setPassword(value); break;
+			case 'phone': setPhone(value); break;
+			case 'address': setAddress(value); break;
+			case 'note': setNote(value); break;
+			case 'active': setActive(checked); break;
+			default: break;
 		}
+		setError(false);
 	};
 
 	const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
@@ -158,7 +136,7 @@ export default function NewProducts() {
 	}
 
 	return (
-		<div className={`flex flex-col justify-center items-center w-full gap-8`}>
+		<div className={`w-full flex justify-center items-center min-[950px]:p-5 p-2`}>
 			{/* 
 				- id => auto()
 				- firstName => userInput()
@@ -173,9 +151,13 @@ export default function NewProducts() {
 				- slug => auto()
 				- images => userInput()
 			*/}
-			<div className={`flex flex-col w-[90%] rounded-lg bg-red-50 gap-5`}>
-				<PageHeader pageTitle={'Add New Staff'} link={null} buttonText={null} />
-				<div className={`flex flex-col justify-center items-start w-full px-12 py-6 gap-5`}>
+			<Card className={`flex min-[950px]:w-3/4 w-full flex-col rounded-lg bg-red-50 gap-5`}>
+				
+				<CardHeader className={`flex justify-center items-center py-3 px-5 w-full rounded-tl-lg rounded-tr-lg bg-red-300 max-[600px]:flex-col`} title="Add New Product" />
+				
+				<CardContent className={`flex flex-col justify-center items-start w-full px-12 py-6 gap-5`}>
+
+					<Alerts getError={getError} setError={setError} alertMessage={`Please Fill all the Required Fields to Proceed...!`} />
 
 					<div className={`flex justify-center items-start w-full gap-5 max-[1000px]:flex-col`}>
 						<TextInput handleChange={handleChange} getValue={getFirstName} placeholder={'First Name'} id={'firstName'} name={'firstName'} label={"First Name"} component={'text'} icon={<BadgeRounded />} />
@@ -199,30 +181,20 @@ export default function NewProducts() {
 						<TextInput getValue={getNote} handleChange={handleChange} placeholder={'Note'} id={'note'} name={'note'} label={"Notes"} component={'textArea'} icon={<DescriptionRounded fontSize='large' />} />
 						<ImageUpload maxFileSize={1048576} limit={1} fileRef={ fileRef } dropzoneText={"Drag and drop an image here or click to upload Your Photo...!"} showPreviewsInDropzone={true} showPreviews={false} />
 					</div>
-					
-					<div className={`flex justify-start items-center gap-2`}>
-						<TextInput getValue={getActive} handleChange={handleChange} id={'active'} name={'active'} label={"Is Staff Member Working...?"} component={'switch'} />
+				</CardContent>
+
+				<CardActions className={`flex justify-between items-center max-[950px]:flex-col gap-5 w-full`}>
+					<div className={`flex justify-start items-start flex-row max-[1200px]:flex-col w-full ml-8 mb-8 gap-5`}>
+						<TextInput getValue={getActive} handleChange={handleChange} id={'active'} name={'active'} label={"Publish Your Training...?"} component={'switch'} />
 						<Chip color={ getActive ? 'success' : 'error' } label={ getActive ? 'Working' : 'Left' } onDelete={() => { setActive(!getActive) }} deleteIcon={ getActive ? <BadgeRounded fontSize='small' /> : <AssignmentLateRounded fontSize='small' /> } />
 					</div>
-
-					<div className={`flex justify-between items-center max-[600px]:flex-col gap-5 w-full`}>
-						<Alert className={getError ? '' : 'invisible hidden'} variant="filled" severity="error">{`Please Fill all the Required Fields to Proceed...!`}</Alert>
-						<div className={`flex justify-end w-full gap-5`}>
-							<Buttons classes={'cancel'} startIcon={<CloseRounded />} endIcon={null} size={'large'} buttonText={'Cancel'} />
-							<Buttons classes={'submit'} handleSubmit={(e: any) => handleSubmit (e)} startIcon={null} endIcon={<AddCircleRounded />} size={'large'} buttonText={'Save'} />
-						</div>
+					<div className={`flex min-[569px]:justify-end justify-center min-[569px]:items-end items-center min-[569px]:mr-8 mb-8 w-full gap-5`}>
+						<Buttons classes={'cancel'} startIcon={<CloseRounded />} endIcon={null} size={'large'} buttonText={'Cancel'} />
+						<Buttons classes={'submit'} handleSubmit={(e: any) => handleSubmit (e)} startIcon={null} endIcon={<AddCircleRounded />} size={'large'} buttonText={'Save'} />
 					</div>
-
-				</div>
-			</div>
-
-			<Snackbar open={getOpen} autoHideDuration={1000} anchorOrigin={{ vertical: 'top', horizontal:'center' }}>
-				<Alert variant="filled" severity={ getApiResponse.color.toLocaleLowerCase() === "success" ? "success" : getApiResponse.color.toLocaleLowerCase() === "warning" ? "warning" : "error" }>
-					<AlertTitle>{getApiResponse.color}</AlertTitle>
-					{getApiResponse.message}
-				</Alert>
-			</Snackbar>
-			
+				</CardActions>
+			</Card>
+			<Snackbars getOpen={getOpen} getApiResponse={getApiResponse} />			
 		</div>
 	)
 }

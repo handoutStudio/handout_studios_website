@@ -122,7 +122,7 @@ export default function Editor({setSubmittedContent, submittedContent}: any) {
 				&&
 					(
 						<>
-							<div style={{ marginTop: 10, overflow: "auto", maxWidth: "100%" }}>
+							<div className={`hidden invisible`} style={{ marginTop: 10, overflow: "auto", maxWidth: "100%" }}>
 								<code>{submittedContent}</code>
 							</div>
 							<Box mt={3}>

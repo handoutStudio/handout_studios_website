@@ -8,8 +8,9 @@ import { makePostRequest } from '@/app/lib/apiRequest';
 import { TextInput } from '@/components/Inputs/TextInput';
 import { Buttons } from '@/components/Inputs/SubmitButton';
 import { ImageUpload } from '@/components/Inputs/ImageUpload';
-import { PageHeader } from '@/components/backoffice/PageHeader';
-import { Alert, AlertTitle, Chip, Snackbar } from '@mui/material';
+import { Alerts } from '@/components/Inputs/AlertsAndSnackBars/Alerts';
+import { Snackbars } from '@/components/Inputs/AlertsAndSnackBars/Snackbars';
+import { Card, CardActions, CardContent, CardHeader, Chip } from '@mui/material';
 import { AddCircleRounded, Category, CloseRounded, DescriptionRounded, EditNoteRounded, LocalLibraryRounded, PublishRounded } from '@mui/icons-material';
 
 
@@ -111,7 +112,7 @@ export default function NewProducts() {
 	const selectMenuDataCategory = ['One', 'Two', 'Three'];
 
 	return (
-		<div className={`flex flex-col justify-center items-center w-full gap-8`}>
+		<div className={`w-full flex justify-center items-center min-[950px]:p-5 p-2`}>
 			{/* 
 				- id => auto()
 				- title => userInput()
@@ -122,18 +123,22 @@ export default function NewProducts() {
 				- image => userInput()
 				- content => userInput() [RichTextBox]
 			*/}
-			<div className={`flex flex-col w-[90%] rounded-lg bg-red-50 gap-5`}>
-				<PageHeader pageTitle={'Add New Training'} link={null} buttonText={null} />
-				<div className={`flex flex-col justify-center items-start w-full px-12 py-6 gap-5`}>
+			<Card className={`flex min-[950px]:w-3/4 w-full flex-col rounded-lg bg-red-50 gap-5`}>
+				
+				<CardHeader className={`flex justify-center items-center py-3 px-5 w-full rounded-tl-lg rounded-tr-lg bg-red-300 max-[600px]:flex-col`} title="Add New Training" />
 
-					<div className={`flex justify-center items-start w-full gap-5 max-[570px]:flex-col`}>
+				<CardContent className={`flex flex-col justify-center items-start w-full px-12 py-6 gap-5`}>
+
+					<Alerts getError={getError} setError={setError} alertMessage={`Please Fill all the Required Fields to Proceed...!`} />
+
+					<div className={`flex justify-center items-start w-full gap-5 max-[950px]:flex-col`}>
 						<TextInput handleChange={handleChange} getValue={getTitle} placeholder={'Training Title...!'} id={'title'} name={'title'} label={"Training Title"} component={'text'} icon={<LocalLibraryRounded />} />
 						<TextInput handleChange={handleChange} getValue={getSelectCategory} placeholder={'Training Category...!'} id={'selectC'} name={'selectC'} label={"Training Category"} component={'selectMulti'} icon={<Category />} selectMenu={selectMenuDataCategory} />
 					</div>
 
-					<TextInput getValue={getDescription} handleChange={handleChange} placeholder={'Training Description...!'} id={'description'} name={'description'} label={"Training Description"} component={'textArea'} icon={<DescriptionRounded fontSize='large' />} />
+					<div className={`flex justify-center items-center gap-5 z-0 w-full max-[950px]:flex-col`}>
+						<TextInput getValue={getDescription} handleChange={handleChange} placeholder={'Training Description...!'} id={'description'} name={'description'} label={"Training Description"} component={'textArea'} icon={<DescriptionRounded fontSize='large' />} />
 					
-					<div className={`z-0 w-full`}>
 						<ImageUpload maxFileSize={1048576} limit={1} fileRef={ fileRef } dropzoneText={"Drag and drop an image here or click to upload Product Image...!"} showPreviewsInDropzone={true} showPreviews={false} />
 					</div>
 					
@@ -141,29 +146,20 @@ export default function NewProducts() {
 						<Editor submittedContent={submittedContent} setSubmittedContent={setSubmittedContent} />
 					</div>
 
-					<div className={`flex justify-start items-center gap-2`}>
+				</CardContent>
+
+				<CardActions className={`flex justify-between items-center max-[950px]:flex-col gap-5 w-full`}>
+					<div className={`flex justify-start items-start flex-col min-[569px]:flex-row w-full ml-8 mb-8 gap-5`}>
 						<TextInput getValue={getActive} handleChange={handleChange} id={'active'} name={'active'} label={"Publish Your Training...?"} component={'switch'} />
 						<Chip color={ getActive ? 'error' : 'warning' } label={ getActive ? 'Publish' : 'Draft' } onDelete={() => { setActive(!getActive) }} deleteIcon={ getActive ? <PublishRounded fontSize='small' /> : <EditNoteRounded fontSize='small' /> } />
 					</div>
-					
-					<div className={`flex justify-between items-center max-[600px]:flex-col gap-5 w-full`}>
-						<Alert className={getError ? '' : 'invisible hidden'} variant="filled" severity="error">{`Please Fill all the Required Fields to Proceed...!`}</Alert>
-						<div className={`flex justify-end w-full gap-5`}>
-							<Buttons classes={'cancel'} startIcon={<CloseRounded />} endIcon={null} size={'large'} buttonText={'Cancel'} />
-							<Buttons classes={'submit'} handleSubmit={(e: any) => handleSubmit (e)} startIcon={null} endIcon={<AddCircleRounded />} size={'large'} buttonText={'Save'} />
-						</div>
+					<div className={`flex min-[569px]:justify-end justify-center min-[569px]:items-end items-center min-[569px]:mr-8 mb-8 w-full gap-5`}>
+						<Buttons classes={'cancel'} startIcon={<CloseRounded />} endIcon={null} size={'large'} buttonText={'Cancel'} />
+						<Buttons classes={'submit'} handleSubmit={(e: any) => handleSubmit (e)} startIcon={null} endIcon={<AddCircleRounded />} size={'large'} buttonText={'Save'} />
 					</div>
-
-				</div>
-			</div>
-
-			<Snackbar open={getOpen} autoHideDuration={1000} anchorOrigin={{ vertical: 'top', horizontal:'center' }}>
-				<Alert variant="filled" severity={ getApiResponse.color.toLocaleLowerCase() === "success" ? "success" : getApiResponse.color.toLocaleLowerCase() === "warning" ? "warning" : "error" }>
-					<AlertTitle>{getApiResponse.color}</AlertTitle>
-					{getApiResponse.message}
-				</Alert>
-			</Snackbar>
-			
+				</CardActions>
+			</Card>
+			<Snackbars getOpen={getOpen} getApiResponse={getApiResponse} />
 		</div>
 	)
 }

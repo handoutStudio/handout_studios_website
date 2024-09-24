@@ -7,11 +7,12 @@ import { generateSlug } from '@/app/lib/generateSlug';
 import { makePostRequest } from '@/app/lib/apiRequest';
 import { TextInput } from '@/components/Inputs/TextInput';
 import { Buttons } from '@/components/Inputs/SubmitButton';
-import { Alert, AlertTitle, Snackbar } from '@mui/material';
 import { ImageUpload } from '@/components/Inputs/ImageUpload';
-import { PageHeader } from '@/components/backoffice/PageHeader';
-import { AddCircleRounded, CloseRounded, DateRangeRounded, LocalOfferRounded, LoyaltyRounded } from '@mui/icons-material';
+import { Alerts } from '@/components/Inputs/AlertsAndSnackBars/Alerts';
+import { Snackbars } from '@/components/Inputs/AlertsAndSnackBars/Snackbars';
 import { generateISOFormattedDate } from '@/app/lib/generateISOFormattedDate';
+import { Card, CardActions, CardContent, CardHeader, Chip, Tooltip } from '@mui/material';
+import { AddCircleRounded, CloseRounded, DateRangeRounded, LocalOfferRounded, LoyaltyRounded } from '@mui/icons-material';
 
 
 export default function NewCoupons() {
@@ -23,6 +24,7 @@ export default function NewCoupons() {
 	const [getTitle, setTitle] = React.useState('');
 	const [getOpen, setOpen] = React.useState(false);
 	const [getError, setError] = React.useState(false);
+	const [getActive, setActive] = React.useState(true);
 	const [getLoading, setLoading] = React.useState(false);
 	const [getApiResponse, setApiResponse] = React.useState({ message: '', color: '' });
 
@@ -34,7 +36,7 @@ export default function NewCoupons() {
 
 		if(Object.keys(event).includes('target'))
 		{
-			event.target.id === 'title' ? setTitle(event.target.value) : event.target.id === 'code' ? setCode(event.target.value) : null;
+			event.target.id === 'title' ? setTitle(event.target.value) : event.target.id === 'code' ? setCode(event.target.value) : event.target.name === 'active' ? (setActive(event.target.checked), setError(false)) : null;
 		}
 		else
 		{
@@ -64,7 +66,7 @@ export default function NewCoupons() {
 
 			const imagePath = response.substring(response.indexOf('/public'), response.length);
 			const isoFormattedDate = generateISOFormattedDate(getDate);
-			const couponData = { title: getTitle, couponCode: getCode, slug: slug, image: imagePath, expiryDate: isoFormattedDate };
+			const couponData = { title: getTitle, couponCode: getCode, slug: slug, image: imagePath, expiryDate: isoFormattedDate, isActive: getActive };
 			const apiResponse = await makePostRequest('http://localhost:3000/api/coupons', couponData, 'Coupoun');
 			setApiResponse(apiResponse!);
 			setOpen(!getOpen);
@@ -99,7 +101,7 @@ export default function NewCoupons() {
 	}
 
 	return (
-		<div className={`flex flex-col justify-center items-center w-full gap-8`}>
+		<div className={`w-full flex justify-center items-center min-[950px]:p-5 p-2`}>
 			{/* 
 				- id => auto()
 				- title => userInput()
@@ -107,36 +109,38 @@ export default function NewCoupons() {
 				- expiryDate => Date()
 				- image => userInput()
 			*/}
-			<div className={`flex flex-col w-[90%] rounded-lg bg-red-50 gap-5`}>
-				<PageHeader pageTitle={'Add New Coupon'} link={null} buttonText={null} />
-				<div className={`flex flex-col justify-center items-start w-full px-12 py-6 gap-5`}>
-					<div className={`flex w-full gap-10 justify-evenly items-center max-[950px]:flex-col`}>
-						<div className={`flex flex-col w-full gap-10 justify-around`}>
+			<Card className={`flex min-[500px]:w-3/4 w-full flex-col rounded-lg bg-red-50 min-[569px]:gap-5 gap-2`}>
+				<CardHeader className={`flex justify-center items-center py-3 px-5 w-full rounded-tl-lg rounded-tr-lg bg-red-300 max-[600px]:flex-col`} title="Add New Coupon" />
+				<CardContent className={`flex flex-col justify-center items-start w-full px-12 py-6 gap-5`}>
+
+					<Alerts getError={getError} setError={setError} alertMessage={`Please Fill all the Required Fields to Proceed...!`} />
+
+					<div className={`flex w-full gap-5 justify-around items-center max-[950px]:flex-col`}>
+						<div className={`flex gap-10 justify-around items-center flex-col`}>
 							<TextInput handleChange={handleChange} getValue={getTitle} placeholder={'Coupons Title...!'} id={'title'} name={'title'} label={"Coupon"} component={'text'} icon={<LocalOfferRounded />} />
-							<TextInput disabled={true} handleChange={handleChange} getValue={getCode} placeholder={'Coupons Code...!'} id={'code'} name={'code'} label={"Coupon Code"} component={'text'} icon={<LoyaltyRounded />} />
 							<ImageUpload maxFileSize={1048576} limit={1} fileRef={ fileRef } dropzoneText={"Drag and drop an image here or click to upload Coupon background...!"} showPreviewsInDropzone={true} showPreviews={false} />
 						</div>
-						<div className={`flex w-full gap-20 justify-around items-center`}>
-							<TextInput handleChange={(event: any) => handleChange(event)} placeholder={'Expiry Date'} minDate={true} getValue={getDate} id={'date'} name={'date'} label={"Expiry Date"} component={'date'} icon={<DateRangeRounded />} />
+						<TextInput handleChange={(event: any) => handleChange(event)} placeholder={'Expiry Date'} minDate={true} getValue={getDate} id={'date'} name={'date'} label={"Expiry Date"} component={'date'} icon={<DateRangeRounded />} />
+					</div>
+				</CardContent>
+				<CardActions className={`flex justify-between items-center max-[950px]:flex-col gap-5 w-full`}>
+					<div className={`flex justify-start items-start flex-col w-full ml-8 min-[569px]:mb-8 mb-4 gap-5 max-[950px]:flex-col`}>
+						<div className={`flex w-full justify-start items-center gap-2 max-[950px]:flex-col`}>
+							<TextInput getValue={getActive} handleChange={handleChange} id={'active'} name={'active'} label={"Coupon Active...?"} component={'switch'} />
+							<div className={`w-[50%] max-[569px]:w-full text-ellipsis`}>
+								<Tooltip title={"Code: " + getCode} className={ getCode ? '' : 'invisible hidden' }>
+									<Chip className={`text-ellipsis w-[90%]`} color={ getActive ? 'error' : 'warning' } icon={<LoyaltyRounded fontSize='small' />} label={ getCode } />
+								</Tooltip>
+							</div>
 						</div>
 					</div>
-					<div className={`flex justify-between items-center max-[600px]:flex-col gap-5 w-full`}>
-						<Alert className={getError ? '' : 'invisible hidden'} variant="filled" severity="error">{`Please Fill all the Required Fields to Proceed...!`}</Alert>
-						<div className={`flex justify-end w-full gap-5`}>
-							<Buttons classes={'cancel'} startIcon={<CloseRounded />} endIcon={null} size={'large'} buttonText={'Cancel'} />
-							<Buttons classes={'submit'} handleSubmit={(e: any) => handleSubmit (e)} startIcon={null} endIcon={<AddCircleRounded />} size={'large'} buttonText={'Save'} />
-						</div>
+					<div className={`flex min-[569px]:justify-end justify-center min-[569px]:items-end items-center min-[569px]:mr-8 mb-8 w-full gap-5`}>
+						<Buttons classes={'cancel'} startIcon={<CloseRounded />} endIcon={null} size={'large'} buttonText={'Cancel'} />
+						<Buttons classes={'submit'} handleSubmit={(e: any) => handleSubmit (e)} startIcon={null} endIcon={<AddCircleRounded />} size={'large'} buttonText={'Save'} />
 					</div>
-				</div>
-			</div>
-
-			<Snackbar open={getOpen} autoHideDuration={1000} anchorOrigin={{ vertical: 'top', horizontal:'center' }}>
-				<Alert variant="filled" severity={ getApiResponse.color.toLocaleLowerCase() === "success" ? "success" : getApiResponse.color.toLocaleLowerCase() === "warning" ? "warning" : "error" }>
-					<AlertTitle>{getApiResponse.color}</AlertTitle>
-					{getApiResponse.message}
-				</Alert>
-			</Snackbar>
-			
+				</CardActions>
+			</Card>
+			<Snackbars getOpen={getOpen} getApiResponse={getApiResponse} />
 		</div>
 	)
 }

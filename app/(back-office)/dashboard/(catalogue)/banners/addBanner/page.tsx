@@ -6,9 +6,10 @@ import { generateSlug } from '@/app/lib/generateSlug';
 import { makePostRequest } from '@/app/lib/apiRequest';
 import { TextInput } from '@/components/Inputs/TextInput';
 import { Buttons } from '@/components/Inputs/SubmitButton';
-import { Alert, AlertTitle, Snackbar } from '@mui/material';
 import { ImageUpload } from '@/components/Inputs/ImageUpload';
-import { PageHeader } from '@/components/backoffice/PageHeader';
+import { Alerts } from '@/components/Inputs/AlertsAndSnackBars/Alerts';
+import { Card, CardActions, CardContent, CardHeader } from '@mui/material';
+import { Snackbars } from '@/components/Inputs/AlertsAndSnackBars/Snackbars';
 import { AddCircleRounded, CloseRounded, ConfirmationNumberRounded, InsertLinkRounded } from '@mui/icons-material';
 
 
@@ -75,7 +76,7 @@ export default function NewCategory() {
 
 
 	return (
-		<div className={`flex flex-col justify-center items-center w-full gap-8`}>
+		<div className={`w-full flex justify-center items-center min-[950px]:p-5 p-2`}>
 			{/* 
 				- id => auto()
 				- title => userInput()
@@ -84,33 +85,34 @@ export default function NewCategory() {
 				- image => userInput()
 				- isActive => userInput()
 			*/}
-			<div className={`flex flex-col w-[90%] rounded-lg bg-red-50 gap-5`}>
-				<PageHeader pageTitle={'Add New Banner'} link={null} buttonText={null} />
-				<div className={`flex flex-col justify-center items-start w-full px-12 py-6 gap-5 max-[570px]:gap-2 max-[570px]:px-2 max-[570px]:py-2 max-[570px]:mb-3`}>
-					<div className={`flex justify-center items-center w-full gap-5 min-[570px]:flex-row max-[571px]:flex-col`}>
+			<Card className={`flex min-[950px]:w-3/4 w-full flex-col rounded-lg bg-red-50 gap-5`}>
+
+				<CardHeader className={`flex justify-center items-center py-3 px-5 w-full rounded-tl-lg rounded-tr-lg bg-red-300 max-[600px]:flex-col`} title="Add New Banner" />
+
+				<CardContent className={`flex flex-col justify-center items-start w-full px-12 py-6 gap-5`}>
+
+					<Alerts getError={getError} setError={setError} alertMessage={`Please Fill all the Required Fields to Proceed...!`} />
+
+					<div className={`flex justify-center items-center w-full gap-5 max-[950px]:flex-col`}>
 						<TextInput handleChange={handleChange} getValue={getTitle} placeholder={'Banner Title...!'} id={'title'} name={'title'} label={"Banner Title"} component={'text'} icon={<ConfirmationNumberRounded />} />
 						<TextInput handleChange={handleChange} getValue={getLink} placeholder={'Banner Link...!'} id={'link'} name={'link'} label={"Banner Link"} component={'text'} icon={<InsertLinkRounded />} />
 					</div>
 					<ImageUpload maxFileSize={2097152} limit={1} fileRef={ fileRef } dropzoneText={"Drag and drop an image here or click to upload Category Image...!"} showPreviewsInDropzone={false} showPreviews={true} />
-					<TextInput getValue={getIsActive} handleChange={handleChange} id={'active'} name={'active'} label={ getIsActive ? "Active...?" : "Disabled...!"} component={'switch'} />
 
-					<div className={`flex justify-between items-center max-[600px]:flex-col gap-5 min-[570px]:gap-2 w-full`}>
-						<Alert className={getError ? '' : 'invisible hidden'} variant="filled" severity="error">{`Please Fill all the Required Fields to Proceed...!`}</Alert>
-						<div className={`flex justify-end w-full gap-5`}>
-							<Buttons classes={'cancel'} startIcon={<CloseRounded />} endIcon={null} buttonText={'Cancel'} />
-							<Buttons classes={'submit'} handleSubmit={(e: any) => handleSubmit (e)} startIcon={null} endIcon={<AddCircleRounded />} buttonText={'Save'} />
-						</div>
+				</CardContent>
+				<CardActions className={`flex justify-between items-center max-[950px]:flex-col gap-5 w-full`}>
+					<div className={`flex justify-start items-start flex-col w-full ml-8 mb-8 gap-5`}>
+						<TextInput getValue={getIsActive} handleChange={handleChange} id={'active'} name={'active'} label={ getIsActive ? "Active...?" : "Disabled...!"} component={'switch'} />
 					</div>
-				</div>
-			</div>
-
-			<Snackbar open={getOpen} autoHideDuration={1000} anchorOrigin={{ vertical: 'top', horizontal:'center' }}>
-				<Alert variant="filled" severity={ getApiResponse.color.toLocaleLowerCase() === "success" ? "success" : getApiResponse.color.toLocaleLowerCase() === "warning" ? "warning" : "error" }>
-					<AlertTitle>{getApiResponse.color}</AlertTitle>
-					{getApiResponse.message}
-				</Alert>
-			</Snackbar>
+					<div className={`flex min-[569px]:justify-end justify-center min-[569px]:items-end items-center min-[569px]:mr-8 mb-8 w-full gap-5`}>
+						<Buttons classes={'cancel'} startIcon={<CloseRounded />} endIcon={null} size={'large'} buttonText={'Cancel'} />
+						<Buttons classes={'submit'} handleSubmit={(e: any) => handleSubmit (e)} startIcon={null} endIcon={<AddCircleRounded />} size={'large'} buttonText={'Save'} />
+					</div>
+				</CardActions>
+			</Card>
 			
+			<Snackbars getOpen={getOpen} getApiResponse={getApiResponse} />
 		</div>
+
 	)
 }
