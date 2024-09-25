@@ -34,7 +34,7 @@ export default function Sidebar() {
 	const paperProps = React.useMemo(() => { return { sx: { backgroundColor: "#7c0104", color: "white", marginTop: '80px' }}}, [] );
 	const paperPropsDark = React.useMemo(() => { return { sx: { backgroundColor: "#2D333A", color: "#7c0104", marginTop: '80px' }}}, []);
 
-	const [open, setOpen] = React.useState(true); // Change this to default false at the end of editing.
+	const [open, setOpen] = React.useState(false);
 	const handleDrawerClose = () => setOpen(!open);
 	const [getProps, setProps] = React.useState(paperProps);
 
