@@ -46,7 +46,7 @@ export default function BottomBarMobile({drawerBleeding, StyledBox, Puller, useP
 															(
 																<>
 																	<Typography variant="subtitle1" gutterBottom>
-																		<Accordion className={`w-full !bg-transparent z-0 text-white`} square expanded={openSubCatalogue} onChange={() => setOpenSubCatalogue(!openSubCatalogue)} elevation={0}>
+																		<Accordion className={`w-full !bg-transparent z-0 !text-white`} square expanded={openSubCatalogue} onChange={() => setOpenSubCatalogue(!openSubCatalogue)} elevation={0}>
 																				<AccordionSummary expandIcon={<ExpandMoreRounded className={`text-white`} />}>
 																					<div className={`flex flex-col justify-center items-center gap-2 w-full`}>
 																						<Avatar alt="Remy Sharp" className={`!bg-transparent !text-white w-10 h-10`}>
