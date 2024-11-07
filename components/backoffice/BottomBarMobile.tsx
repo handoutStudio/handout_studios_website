@@ -63,7 +63,7 @@ export default function BottomBarMobile({drawerBleeding, StyledBox, Puller, useP
 																						<Tooltip title={subItem.name} placement="right" TransitionComponent={Zoom} followCursor key={indexx}>
 																							<Link href={subItem.path}>
 																								<div className={`${pathName === subItem.path ? 'dark:text-white text-[#7c0104] bg-white dark:bg-[#AF0106]' : 'text-white' } flex flex-col justify-center items-center gap-2 w-full rounded-lg`} key={indexx}>
-																									<Avatar alt="Remy Sharp" className={`bg-transparent text-white w-10 h-10`}>
+																									<Avatar alt="Remy Sharp" className={`!bg-transparent !text-white w-10 h-10`}>
 																										<IconButton sx={{ p: '10px' }} aria-label={subItem.name}>
 																											{ subItem.icon }
 																										</IconButton>
