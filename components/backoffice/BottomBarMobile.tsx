@@ -34,7 +34,7 @@ export default function BottomBarMobile({drawerBleeding, StyledBox, Puller, useP
 					<Masonry columns={{ xs: 2, sm: 3 }} spacing={2}>
 					{
 						paths.map((items: any, index: number) => (
-							<div key={index} className={`flex flex-col justify-center items-center gap-2`}>
+							<div key={index} className={`${pathName === items.path ? 'dark:text-white text-[#7c0104] bg-white dark:bg-[#AF0106]' : 'text-white' } flex flex-col justify-center items-center gap-2`}>
 								{
 									items[Object.keys(items)[0]].map((item: any, indexx: number) => (
 										<Tooltip key={indexx} title={item.name} placement="right" TransitionComponent={Zoom} followCursor>
@@ -106,52 +106,3 @@ export default function BottomBarMobile({drawerBleeding, StyledBox, Puller, useP
 		</div>
 	)
 }
-
-
-
-
-
-// {
-// 	items[Object.keys(items)[0]].map((item: any, indexx: number) =>
-// 		<List key={indexx}>
-			// <Tooltip title={item.name} placement="right" TransitionComponent={Zoom} followCursor>
-			// 	<Link href={item.path}>
-// 					<ListItem key={index} disablePadding sx={{ display: 'block' }} className={`${pathName === item.path ? 'dark:text-white text-[#7c0104] bg-white dark:bg-[#AF0106]' : 'text-white' }`}>
-// 						<ListItemButton onClick={ item.openFunction } sx={{ minHeight: 48, justifyContent: open ? 'initial' : 'center', px: 2.5 }}>
-							
-// 							<ListItemIcon sx={{ minWidth: 0, mr: open ? 3 : 'auto', justifyContent: 'center' }}>
-// 								{ item.icon }
-// 							</ListItemIcon>
-// 							<ListItemText className={`flex flex-row gap-10`} primary={item.name} secondary={ item.iconEnd } sx={{ opacity: open ? 1 : 0 }} />
-// 							{ item.subList.length > 0 ? (openSubCatalogue ? <ExpandLessRounded /> : <ExpandMoreRounded />)  : ''}
-// 						</ListItemButton>
-// 						{
-// 							item.subList.length > 0 && (
-								// <Collapse in={openSubCatalogue} timeout="auto" unmountOnExit>
-								// 	<List component="div" disablePadding>
-								// 		{
-								// 			item.subList.map((subItem: any, indexx: number) =>
-												// <Tooltip title={subItem.name} placement="right" TransitionComponent={Zoom} followCursor key={indexx}>
-												// 	<Link href={subItem.path}>
-								// 						<ListItem key={index} disablePadding sx={{ display: 'block' }} className={`${pathName === subItem.path ? 'dark:text-white text-[#7c0104] bg-white dark:bg-[#AF0106]' : 'text-white' }`}>
-								// 							<ListItemButton sx={{ pl: 4 }}>
-								// 								<ListItemIcon sx={{ minWidth: 0, mr: open ? 3 : 'auto', justifyContent: 'center' }}>
-								// 									{ subItem.icon }
-								// 								</ListItemIcon>
-								// 								<ListItemText className={`flex flex-row gap-10`} primary={subItem.name} secondary={ subItem.iconEnd } sx={{ opacity: open ? 1 : 0 }} />
-								// 							</ListItemButton>
-								// 						</ListItem>
-								// 					</Link>
-								// 				</Tooltip>
-								// 			)
-								// 		}
-								// 	</List>
-								// </Collapse>
-// 							)
-// 						}
-// 					</ListItem>
-// 				</Link>
-// 			</Tooltip>
-// 		</List>
-// 	)
-// }
