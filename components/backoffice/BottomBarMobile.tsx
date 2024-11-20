@@ -4,10 +4,8 @@ import Link from 'next/link';
 import * as React from 'react';
 import { Masonry } from '@mui/lab';
 import { Global } from '@emotion/react';
-import { styled } from '@mui/material/styles';
-import { ExpandLessRounded, ExpandMoreRounded } from '@mui/icons-material';
-import { List, ListItem, ListItemButton, ListItemIcon, ListItemText, Tooltip, Zoom, Collapse, Typography, SwipeableDrawer, CssBaseline, Paper, AccordionDetails, AccordionSummary, Accordion, Avatar, IconButton, Badge, Box } from '@mui/material';
-
+import { ExpandMoreRounded } from '@mui/icons-material';
+import { Tooltip, Zoom, Typography, SwipeableDrawer, CssBaseline, AccordionSummary, Accordion, Avatar, IconButton, Box } from '@mui/material';
 
 
 
@@ -54,7 +52,7 @@ export default function BottomBarMobile({drawerBleeding, StyledBox, Puller, useP
 																								{ item.icon }
 																							</IconButton>
 																						</Avatar>
-																						<Typography variant="subtitle1"> {item.name} </Typography>
+																						<Typography className={`!text-white`} variant="subtitle1"> {item.name} </Typography>
 																					</div>
 																				</AccordionSummary>
 																				<Box className={`${openSubCatalogue ? '' : 'hidden invisible'}`} key={indexx} sx={{ borderColor: 'white', borderWidth: '1px', borderStyle: 'solid', borderRadius: 1, p: 1 }}>
