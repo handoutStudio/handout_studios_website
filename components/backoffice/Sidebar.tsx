@@ -2,33 +2,32 @@
 
 import * as React from 'react';
 import { useTheme } from 'next-themes';
-import { grey } from '@mui/material/colors';
 import MuiDrawer from '@mui/material/Drawer';
 import { usePathname } from 'next/navigation';
 import SideBarDesktop from './SideBarDesktop';
-import BottomBarMobile from './BottomBarMobile';
 import { styled, Theme, CSSObject} from '@mui/material';
+import FloatingActionButtonMobile from './FloatingActionButtonMobile';
 import { Category, ConfirmationNumberRounded, Diversity1, EditAttributesRounded, Groups3, Inventory, LocalLibraryRounded, LocalShippingRounded, Loyalty, OpenInNew, ReduceCapacity, Settings, SpaceDashboard, Store, Storefront, Style, WalletRounded,  } from '@mui/icons-material';
-
-
-const drawerWidth = 240;
-const openedMixin = (theme: Theme): CSSObject => ({ width: drawerWidth, transition: theme.transitions.create('width', { easing: theme.transitions.easing.sharp, duration: theme.transitions.duration.enteringScreen }), overflowX: 'hidden' });
-const closedMixin = (theme: Theme): CSSObject => ({ transition: theme.transitions.create('width', { easing: theme.transitions.easing.sharp, duration: theme.transitions.duration.leavingScreen }), overflowX: 'hidden', width: `calc(${theme.spacing(7)} + 1px)`, [theme.breakpoints.up('sm')]: { width: `calc(${theme.spacing(8)} + 1px)` }});
-// necessary for content to be below app bar
-const DrawerHeader = styled('div')(({ theme }) => ({ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', padding: theme.spacing(0, 1), ...theme.mixins.toolbar }));
-const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(({ theme, open }) => ({ width: drawerWidth, flexShrink: 0, whiteSpace: 'nowrap', boxSizing: 'border-box', ...(open && { ...openedMixin(theme), '& .MuiDrawer-paper': openedMixin(theme) }), ...(!open && { ...closedMixin(theme), '& .MuiDrawer-paper': closedMixin(theme) })}));
-
-
-// Mobile
-const drawerBleeding = 56;
-const StyledBox = styled('div')(({ theme }) => ({ backgroundColor: '#7c0104', ...theme.applyStyles('dark', { backgroundColor: grey[800] }) }));
-const Puller = styled('div')(({ theme }) => ({ width: 30, height: 6, backgroundColor: grey[300], borderRadius: 3, position: 'absolute', top: 8, left: 'calc(50% - 15px)', ...theme.applyStyles('dark', { backgroundColor: grey[900] }) }));
 
 export default function Sidebar() {
 
 	const { theme } = useTheme();
 	const pathName = usePathname();
 	const [openSubCatalogue, setOpenSubCatalogue] = React.useState(false);
+	const [isDesktop, setDesktop] = React.useState(false);
+
+	const drawerWidth = 240;
+	const openedMixin = (theme: Theme): CSSObject => ({ width: drawerWidth, transition: theme.transitions.create('width', { easing: theme.transitions.easing.sharp, duration: theme.transitions.duration.enteringScreen }), overflowX: 'hidden' });
+	const closedMixin = (theme: Theme): CSSObject => ({ transition: theme.transitions.create('width', { easing: theme.transitions.easing.sharp, duration: theme.transitions.duration.leavingScreen }), overflowX: 'hidden', width: `calc(${theme.spacing(7)} + 1px)`, [theme.breakpoints.up('sm')]: { width: `calc(${theme.spacing(8)} + 1px)` }});
+	// necessary for content to be below app bar
+	const DrawerHeader = styled('div')(({ theme }) => ({ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', padding: theme.spacing(0, 1), ...theme.mixins.toolbar }));
+	const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(({ theme, open }) => ({ width: drawerWidth, flexShrink: 0, whiteSpace: 'nowrap', boxSizing: 'border-box', ...(open && { ...openedMixin(theme), '& .MuiDrawer-paper': openedMixin(theme) }), ...(!open && { ...closedMixin(theme), '& .MuiDrawer-paper': closedMixin(theme) })}));
+
+
+	// Mobile
+	const drawerBleeding = 56;
+	const StyledBox = styled('div')(({ theme }) => ({ backgroundColor: '#7c0104', ...theme.applyStyles('dark', { backgroundColor: '#2D333A !important' }) }));
+	const Puller = styled('div')(({ theme }) => ({ width: 30, height: 6, backgroundColor: '#FFFFFF', borderRadius: 3, position: 'absolute', top: 8, left: 'calc(50% - 15px)', ...theme.applyStyles('dark', { backgroundColor: '#7c0104 !important' }) }));  
 
 
 	const paperProps = React.useMemo(() => { return { sx: { backgroundColor: "#7c0104", color: "white", marginTop: '80px' }}}, [] );
@@ -184,7 +183,6 @@ export default function Sidebar() {
 
 	];
 
-	const [isDesktop, setDesktop] = React.useState(false);
 	React.useEffect(() => {
 		if (window.innerWidth > 1450) { setDesktop(true); }
 		else { setDesktop(false); }
@@ -205,7 +203,9 @@ export default function Sidebar() {
 				?
 					<SideBarDesktop open = { open } openSubCatalogue = { openSubCatalogue } handleDrawerClose = { handleDrawerClose } getProps = { getProps } DrawerHeader = { DrawerHeader } Drawer = { Drawer } usePathname = { usePathname } paths = { paths } />
 				:
-					<BottomBarMobile drawerBleeding = { drawerBleeding } StyledBox = { StyledBox } Puller = { Puller } usePathname = { usePathname } paths = { paths } openSubCatalogue = { openSubCatalogue } setOpenSubCatalogue = { setOpenSubCatalogue } />
+					<div className={`fixed top-[100vh] left-[100%] z-50`}>
+						<FloatingActionButtonMobile usePathname = { usePathname } paths = { paths } />
+					</div>
 				}
 		</>
 	)
