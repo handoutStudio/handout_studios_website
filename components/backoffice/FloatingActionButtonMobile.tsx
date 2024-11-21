@@ -46,8 +46,10 @@ export default function FloatingActionButtonMobile({ usePathname, paths }: any) 
 	};
   
 	// Functions to handle nested SpeedDial open/close
-	const handleNestedOpen = () => setNestedOpen(true);
+	const handleNestedOpenEnter = () => setNestedOpen(true);
+	const handleNestedOpenLeave = () => setNestedOpen(false);
 	const handleNestedClose = () => setNestedOpen(false);
+	const handleNestedOpenClick = () => setNestedOpen(!nestedOpen);
 
 	const { pathsReturn, subPathsReturn } = createData(paths);
 
@@ -58,42 +60,47 @@ export default function FloatingActionButtonMobile({ usePathname, paths }: any) 
 	return (
 		<Box sx={{ transform: 'translateZ(0px)', flexGrow: 1, zIndex: 100 }}>
 			<Backdrop open={parentOpen} onClick={handleParentClose} />
-			<SpeedDial className={`${parentOpen ? 'bg-[#7c0104] dark:bg-white' : ''} rounded-full`} color={`#7c0104`} ariaLabel="SpeedDial tooltip example" sx={{ position: 'absolute', bottom: 16, right: 16, zIndex: 9999 }} icon={ <Avatar src={logo.src} alt="Remy Sharp" className={`bg-white rounded-full p-2 w-10 h-10`}>{}</Avatar> } onClose={handleParentClose} onOpen={handleParentOpen} open={parentOpen} FabProps={{ className:`!bg-[#7c0104] hover:!bg-white dark:!bg-white dark:hover:!bg-[#7c0104]`, size:'small' }}>
+			<SpeedDial className={`${parentOpen ? 'bg-[#7c0104] dark:bg-white' : 'bg-transparent'} rounded-full m-2 p-0`} ariaLabel="SpeedDial tooltip example" sx={{ position: 'absolute', bottom: 16, right: 16, zIndex: 9999 }} icon={ <Avatar src={logo.src} alt="Remy Sharp" className={`bg-white rounded-full p-2 w-10 h-10`}>{}</Avatar> } onClose={handleParentClose} onOpen={handleParentOpen} open={parentOpen} FabProps={{ className:`m-1`, size:'small' }}>
 				<SpeedDialAction
-					className={`'!text-[#7c0104] dark:!text-white !bg-white dark:!bg-white p-0 m-0`}
-					icon={<StyleRounded className={`${['attributes', 'banners', 'products', 'categories', 'coupons'].filter((item => pathName.includes(item))).length > 0 ? '!text-[#7c0104]' : '!text-white dark:!text-[#AF0106]'}`} />}
+					className={``}
+					icon={<StyleRounded className={`${['attributes', 'banners', 'products', 'categories', 'coupons'].filter((item => pathName.includes(item))).length > 0 ? '' : '!text[#7C0104]'}`} />}
 					tooltipTitle={`Catelogue`}
 					tooltipOpen={ nestedOpen ? false : true }
-					onMouseEnter={handleNestedOpen}
-					FabProps={{ className: `${['attributes', 'banners', 'products', 'categories', 'coupons'].filter((item => pathName.includes(item))).length > 0 ? '!text-[#7c0104] !bg-white dark:!bg-[#AF0106] dark:!text-white' : '!bg-[#7c0104] hover:!bg-white hover:!text-[#7c0104] dark:!bg-white dark:hover:!bg-[#2d333a] dark:hover:!text-white' } text-white dark:!text-[#AF0106] p-0 m-1`, size: 'small' }}
-					classes={{ staticTooltipLabel: `${['attributes', 'banners', 'products', 'categories', 'coupons'].filter((item => pathName.includes(item))).length > 0 ? 'dark:!bg-[#AF0106] dark:!text-white !text-[#7c0104] !bg-white' : '!bg-[#7c0104] !text-white dark:!text-[#AF0106] dark:!bg-white' } rounded-xl text-sm` }}
+					tooltipPlacement={ nestedOpen ? 'bottom' : 'left' }
+					onMouseEnter={handleNestedOpenEnter}
+					onMouseLeave={handleNestedOpenLeave}
+					open={nestedOpen}
+					onClick={handleNestedOpenClick}
+					FabProps={{ className: `${['attributes', 'banners', 'products', 'categories', 'coupons'].filter((item => pathName.includes(item))).length > 0 ? '!bg-[#E20108] !text-white dark:!bg-white dark:!text-[#AF0106]' : '!text-[#7C0104] dark:bg-[#AF0106] dark:!text-white' } hover:!bg-[#E20108] hover:!text-white dark:hover:!bg-white dark:hover:!text-[#E20108] p-0 m-1`, size: 'small' }}
+					classes={{ staticTooltipLabel: `${['attributes', 'banners', 'products', 'categories', 'coupons'].filter((item => pathName.includes(item))).length > 0 ? '!bg-[#E20108] !text-white dark:!bg-white dark:!text-[#AF0106]' : '!text-[#7C0104] dark:bg-[#AF0106] dark:!text-white' } m-0 p-2 text-sm rounded-xl` }}
 				/>
 				{
 					pathsReturn.map((item: any) => (
 						<SpeedDialAction
-						className={`${pathName === item.path ? '!text-[#7c0104] dark:!text-white' : '!text-[#7c0104] dark:!text-white' } !bg-white dark:!bg-white p-0 m-0`}
-						key={item.name}
-						icon={item.icon}
-						tooltipTitle={item.name}
-						tooltipOpen={ nestedOpen ? false : true }
-						onClick={() => handleOpenLink(item.path)}
-						FabProps={{ className: `${pathName === item.path ? '!text-[#7c0104] !bg-white dark:!bg-[#AF0106] dark:!text-white' : '!bg-[#7c0104] hover:!bg-white hover:!text-[#7c0104] dark:!bg-white dark:hover:!bg-[#2d333a] dark:hover:!text-white' } text-white dark:!text-[#AF0106] p-0 m-1`, size: 'small' }}
-						classes={{ staticTooltipLabel: `${pathName === item.path ? 'dark:!bg-[#AF0106] dark:!text-white !text-[#7c0104] !bg-white' : '!bg-[#7c0104] !text-white dark:!text-[#AF0106] dark:!bg-white' } rounded-xl text-sm` }}
+							className={``}
+							key={item.name}
+							icon={item.icon}
+							tooltipTitle={item.name}
+							tooltipOpen={ nestedOpen ? false : true }
+							onClick={() => handleOpenLink(item.path)}
+							FabProps={{ className: `${pathName === item.path ? '!bg-[#E20108] !text-white dark:!bg-white dark:!text-[#AF0106]' : '!text-[#7C0104] dark:bg-[#AF0106] dark:!text-white' } hover:!bg-[#E20108] hover:!text-white dark:hover:!bg-white dark:hover:!text-[#E20108] p-0 m-1`, size: 'small' }}
+							classes={{ staticTooltipLabel: `${pathName === item.path ? '!bg-[#E20108] !text-white dark:!bg-white dark:!text-[#AF0106]' : '!text-[#7C0104] dark:bg-[#AF0106] dark:!text-white' } m-0 p-2 text-sm rounded-xl` }}
 						/>
 					))
 				}
 			</SpeedDial>
-			<SpeedDial direction={"left"} className={`${nestedOpen ? '' : 'hidden invisible'}`} ariaLabel="Nested SpeedDial" sx={{ position: 'absolute', bottom: 550, right: 25 }} icon={<StyleRounded />} onClose={handleNestedClose} open={nestedOpen} FabProps={{ className:`!bg-[#7c0104] hover:!bg-white dark:!bg-white dark:hover:!bg-[#7c0104]`, size:'small' }}>
+			<SpeedDial direction={"left"} className={`${nestedOpen ? '' : 'hidden invisible'}`} ariaLabel="Nested SpeedDial" sx={{ position: 'absolute', bottom: 89, right: 30 }} icon={<StyleRounded />} onClose={handleNestedClose} open={nestedOpen} FabProps={{ className:`!bg-[#7c0104] hover:!bg-white dark:!bg-white dark:hover:!bg-[#7c0104]`, size:'small' }}>
 				{
 					subPathsReturn.map((item: any) => (
 						<SpeedDialAction
-							className={`${pathName === item.path ? '!text-[#7c0104] dark:!text-white' : '!text-[#7c0104] dark:!text-white'} !bg-white dark:!bg-white p-0 m-0`} 
 							key={item.name}
 							icon={item.icon}
 							tooltipTitle={item.name}
+							tooltipOpen
 							onClick={ () => handleOpenLink(item.path) }
-							FabProps={{ className:`${pathName === item.path ? '!text-[#7c0104] !bg-white dark:!bg-[#AF0106] dark:!text-white' :'!bg-[#7c0104] hover:!bg-white hover:!text-[#7c0104] dark:!bg-white dark:hover:!bg-[#2d333a] dark:hover:!text-white' } text-white dark:!text-[#AF0106] p-0 m-1`, size:'small' }}
-							classes={{ staticTooltipLabel:`${pathName === item.path ? 'dark:!bg-[#AF0106] dark:!text-white !text-[#7c0104] !bg-white' : '!bg-[#7c0104] !text-white dark:!text-[#AF0106] dark:!bg-white'} rounded-xl text-sm`}} 
+							FabProps={{ className: `${pathName === item.path ? '!bg-[#E20108] !text-white dark:!bg-white dark:!text-[#AF0106]' : '!text-[#7C0104] dark:bg-[#AF0106] dark:!text-white' } hover:!bg-[#E20108] hover:!text-white dark:hover:!bg-white dark:hover:!text-[#E20108] p-0 m-1`, size: 'small' }}
+							classes={{ staticTooltipLabel: `${pathName === item.path ? '!bg-[#E20108] !text-white dark:!bg-white dark:!text-[#AF0106]' : '!text-[#7C0104] dark:bg-[#AF0106] dark:!text-white' } m-0 p-2 text-sm rounded-xl ml-12 mb-5` }}
+							sx={{ zIndex: 2000, '& .MuiTooltip-tooltip': { zIndex: 2100 }, transform: 'rotate(-73deg)' }}
 						/>
 					))
 				}
