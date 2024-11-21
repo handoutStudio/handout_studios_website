@@ -89,7 +89,7 @@ export default function FloatingActionButtonMobile({ usePathname, paths }: any) 
 					))
 				}
 			</SpeedDial>
-			<SpeedDial direction={"left"} className={`${nestedOpen ? '' : 'hidden invisible'}`} ariaLabel="Nested SpeedDial" sx={{ position: 'absolute', bottom: 89, right: 30 }} icon={<StyleRounded />} onClose={handleNestedClose} open={nestedOpen} FabProps={{ className:`!bg-[#7c0104] hover:!bg-white dark:!bg-white dark:hover:!bg-[#7c0104]`, size:'small' }}>
+			<SpeedDial direction={"left"} className={`${nestedOpen ? 'bg-[#7c0104] dark:bg-white' : 'hidden invisible'} rounded-full m-2 p-0`} ariaLabel="Nested SpeedDial" sx={{ position: 'absolute', bottom: 80, right: 16 }} icon={<StyleRounded className={`bg-white rounded-full p-2 w-10 h-10`} />} onClose={handleNestedClose} open={nestedOpen} FabProps={{ className:`!bg-[#7c0104] hover:!bg-white dark:!bg-white dark:hover:!bg-[#7c0104]`, size:'small' }}>
 				{
 					subPathsReturn.map((item: any) => (
 						<SpeedDialAction
@@ -99,8 +99,8 @@ export default function FloatingActionButtonMobile({ usePathname, paths }: any) 
 							tooltipOpen
 							onClick={ () => handleOpenLink(item.path) }
 							FabProps={{ className: `${pathName === item.path ? '!bg-[#E20108] !text-white dark:!bg-white dark:!text-[#AF0106]' : '!text-[#7C0104] dark:bg-[#AF0106] dark:!text-white' } hover:!bg-[#E20108] hover:!text-white dark:hover:!bg-white dark:hover:!text-[#E20108] p-0 m-1`, size: 'small' }}
-							classes={{ staticTooltipLabel: `${pathName === item.path ? '!bg-[#E20108] !text-white dark:!bg-white dark:!text-[#AF0106]' : '!text-[#7C0104] dark:bg-[#AF0106] dark:!text-white' } m-0 p-2 text-sm rounded-xl ml-12 mb-5` }}
-							sx={{ zIndex: 2000, '& .MuiTooltip-tooltip': { zIndex: 2100 }, transform: 'rotate(-73deg)' }}
+							classes={{ staticTooltipLabel: `${pathName === item.path ? '!bg-[#E20108] !text-white dark:!bg-white dark:!text-[#AF0106]' : '!text-[#7C0104] dark:bg-[#AF0106] dark:!text-white' } m-0 p-1 text-sm rounded-full bottom-[5vh] left-[0.25vw] pb-[4vh] mb-[-4vh] pt-[0.5vw] pl-[0.5vw] pr-[0.5vw]` }}
+							sx={{ '& #NestedSpeedDial-action-0-label, #NestedSpeedDial-action-1-label, #NestedSpeedDial-action-2-label, #NestedSpeedDial-action-3-label, #NestedSpeedDial-action-4-label': { writingMode: 'vertical-lr', textOrientation: 'upright' } }}
 						/>
 					))
 				}
