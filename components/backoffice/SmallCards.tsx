@@ -1,6 +1,6 @@
 import * as React from 'react';
 import SmallCard from './SmallCard';
-import { Grid } from '@mui/material';
+import Grid from '@mui/material/Grid2';
 import { Autorenew, Check, LocalShipping, ShoppingCart } from '@mui/icons-material';
 
 export default function SmallCards() {
@@ -35,10 +35,10 @@ export default function SmallCards() {
 	return (
 		<div className={`flex py-4`}>
 			{/* TODO: Large Card Component */}
-			<Grid container gap={{ xs: 2, sm: 3 }} columns={9}>
+			<Grid container spacing={2} columns={12} sx={{ width: '100% !important' }}>
 				{
 					orderStats.map((stats: any, index: number) =>
-						<Grid item xs={12} sm={6} md={4} lg={2} key={ index }>
+						<Grid size={{ xs: 12, sm:5, lg: 3 }} key={ index }>
 							<SmallCard className={ stats.color } data={ stats } />
 						</Grid>
 					)

@@ -7,6 +7,7 @@ import { List, ListItem, ListItemButton, ListItemIcon, ListItemText, Tooltip, Zo
 
 
 
+
 export default function SideBarDesktop({open, openSubCatalogue, handleDrawerClose, getProps, DrawerHeader, Drawer, usePathname, paths}: any) {
 
 	const pathName = usePathname();

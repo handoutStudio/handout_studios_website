@@ -2,8 +2,9 @@
 
 import * as React from 'react';
 import ThemeSwitcher from '../ThemeSwitcher';
-import { Notifications, Settings, Logout, LensBlur, TrendingDown, TrendingUp, Close } from '@mui/icons-material';
-import { Avatar, Badge, Divider, MenuItem, ListItemIcon, IconButton, Tooltip, Menu, Typography, ListItemText, Chip, Zoom } from '@mui/material';
+import logo from '@/public/Assets/logo/compressed/final stamp 1.svg';
+import { Notifications, Settings, Logout, TrendingDown, TrendingUp, Close } from '@mui/icons-material';
+import { Avatar, Badge, Divider, MenuItem, ListItemIcon, IconButton, Tooltip, Menu, Typography, ListItemText, Chip, Zoom, Link } from '@mui/material';
 
 export default function Navbar() {
 
@@ -93,12 +94,12 @@ export default function Navbar() {
 			
 			{/* Icon */}
 			<button>
-				<div className={`flex flex-row justify-center gap-2 items-center w-full`}>
-					<Avatar alt="Remy Sharp" className={`bg-transparent text-white w-10 h-10`}>
-						<LensBlur fontSize={"large"} />
-					</Avatar>
-					{' '}
-					<Typography className={`text-white min-[600px]:text-2xl text-sm`} variant={'h5'} component={'h5'}>Handout Studios</Typography>
+				<div className={`flex w-full`}>
+					<Link href={'/dashboard'} className={`flex flex-row justify-center gap-2 items-center no-underline`}>
+						<Avatar src={logo.src} alt="Remy Sharp" className={`bg-white rounded-full p-2 w-10 h-10`} />
+						{' '}
+						<Typography className={`text-white min-[600px]:text-2xl text-sm`} variant={'h5'} component={'h5'}>Handout Studios</Typography>
+					</Link>
 				</div>
 			</button>
 			

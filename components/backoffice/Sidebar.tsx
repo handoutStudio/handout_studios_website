@@ -15,6 +15,8 @@ export default function Sidebar() {
 	const pathName = usePathname();
 	const [openSubCatalogue, setOpenSubCatalogue] = React.useState(false);
 	const [isDesktop, setDesktop] = React.useState(false);
+	const [isMobile, setMobile] = React.useState(false);
+	const [isTab, setTab] = React.useState(false);
 
 	const drawerWidth = 240;
 	const openedMixin = (theme: Theme): CSSObject => ({ width: drawerWidth, transition: theme.transitions.create('width', { easing: theme.transitions.easing.sharp, duration: theme.transitions.duration.enteringScreen }), overflowX: 'hidden' });
@@ -22,13 +24,6 @@ export default function Sidebar() {
 	// necessary for content to be below app bar
 	const DrawerHeader = styled('div')(({ theme }) => ({ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', padding: theme.spacing(0, 1), ...theme.mixins.toolbar }));
 	const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(({ theme, open }) => ({ width: drawerWidth, flexShrink: 0, whiteSpace: 'nowrap', boxSizing: 'border-box', ...(open && { ...openedMixin(theme), '& .MuiDrawer-paper': openedMixin(theme) }), ...(!open && { ...closedMixin(theme), '& .MuiDrawer-paper': closedMixin(theme) })}));
-
-
-	// Mobile
-	const drawerBleeding = 56;
-	const StyledBox = styled('div')(({ theme }) => ({ backgroundColor: '#7c0104', ...theme.applyStyles('dark', { backgroundColor: '#2D333A !important' }) }));
-	const Puller = styled('div')(({ theme }) => ({ width: 30, height: 6, backgroundColor: '#FFFFFF', borderRadius: 3, position: 'absolute', top: 8, left: 'calc(50% - 15px)', ...theme.applyStyles('dark', { backgroundColor: '#7c0104 !important' }) }));  
-
 
 	const paperProps = React.useMemo(() => { return { sx: { backgroundColor: "#7c0104", color: "white", marginTop: '80px' }}}, [] );
 	const paperPropsDark = React.useMemo(() => { return { sx: { backgroundColor: "#2D333A", color: "#7c0104", marginTop: '80px' }}}, []);
@@ -188,7 +183,9 @@ export default function Sidebar() {
 		else { setDesktop(false); }
 	
 		const updateMedia = () => {
-			if (window.innerWidth > 950) { setDesktop(true); }
+			if (window.innerWidth > 950) { setDesktop(true); setTab(false); }
+			else if (window.innerWidth > 500 && window.innerWidth < 950) { setTab(true); setMobile(false); }
+			else if (window.innerWidth > 375 && window.innerWidth < 500) { setMobile(true); }
 			else { setDesktop(false); }
 		};
 
@@ -203,8 +200,8 @@ export default function Sidebar() {
 				?
 					<SideBarDesktop open = { open } openSubCatalogue = { openSubCatalogue } handleDrawerClose = { handleDrawerClose } getProps = { getProps } DrawerHeader = { DrawerHeader } Drawer = { Drawer } usePathname = { usePathname } paths = { paths } />
 				:
-					<div className={`fixed top-[100vh] left-[100%] z-50`}>
-						<FloatingActionButtonMobile usePathname = { usePathname } paths = { paths } />
+					<div className={`fixed top-[98vh] left-[100%] z-50`}>
+						<FloatingActionButtonMobile usePathname = { usePathname } paths = { paths } isDesktop = { isDesktop } isMobile = { isMobile } isTab = { isTab } />
 					</div>
 				}
 		</>

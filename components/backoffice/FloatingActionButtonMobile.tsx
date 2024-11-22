@@ -2,9 +2,9 @@
 
 import * as React from 'react';
 import { useRouter } from 'next/navigation';
+import { StyleRounded } from '@mui/icons-material';
 import logo from '@/public/Assets/logo/compressed/final stamp 1.svg';
 import { Box, Backdrop, SpeedDial, SpeedDialAction, Avatar } from '@mui/material';
-import { StyleRounded } from '@mui/icons-material';
 
 const createData = (paths: any) => {
 	const copyPath:any = paths;
@@ -29,7 +29,7 @@ const createData = (paths: any) => {
 }
 
 
-export default function FloatingActionButtonMobile({ usePathname, paths }: any) {
+export default function FloatingActionButtonMobile({ usePathname, paths, isTab, isMobile }: any) {
 
 	const pathName = usePathname();	
 	const router = useRouter();
@@ -54,6 +54,8 @@ export default function FloatingActionButtonMobile({ usePathname, paths }: any) 
 	const { pathsReturn, subPathsReturn } = createData(paths);
 
 	const handleOpenLink = (link: any) => {
+		setParentOpen(false);
+		setNestedOpen(false);
 		router.replace(link);
 	}
 
@@ -82,6 +84,7 @@ export default function FloatingActionButtonMobile({ usePathname, paths }: any) 
 							icon={item.icon}
 							tooltipTitle={item.name}
 							tooltipOpen={ nestedOpen ? false : true }
+							tooltipPlacement={ nestedOpen ? 'right' : 'left' }
 							onClick={() => handleOpenLink(item.path)}
 							FabProps={{ className: `${pathName === item.path ? '!bg-[#E20108] !text-white dark:!bg-white dark:!text-[#AF0106]' : '!text-[#7C0104] dark:bg-[#AF0106] dark:!text-white' } hover:!bg-[#E20108] hover:!text-white dark:hover:!bg-white dark:hover:!text-[#E20108] p-0 m-1`, size: 'small' }}
 							classes={{ staticTooltipLabel: `${pathName === item.path ? '!bg-[#E20108] !text-white dark:!bg-white dark:!text-[#AF0106]' : '!text-[#7C0104] dark:bg-[#AF0106] dark:!text-white' } m-0 p-2 text-sm rounded-xl` }}
@@ -99,7 +102,7 @@ export default function FloatingActionButtonMobile({ usePathname, paths }: any) 
 							tooltipOpen
 							onClick={ () => handleOpenLink(item.path) }
 							FabProps={{ className: `${pathName === item.path ? '!bg-[#E20108] !text-white dark:!bg-white dark:!text-[#AF0106]' : '!text-[#7C0104] dark:bg-[#AF0106] dark:!text-white' } hover:!bg-[#E20108] hover:!text-white dark:hover:!bg-white dark:hover:!text-[#E20108] p-0 m-1`, size: 'small' }}
-							classes={{ staticTooltipLabel: `${pathName === item.path ? '!bg-[#E20108] !text-white dark:!bg-white dark:!text-[#AF0106]' : '!text-[#7C0104] dark:bg-[#AF0106] dark:!text-white' } m-0 p-1 text-sm rounded-full bottom-[5vh] left-[0.25vw] pb-[4vh] mb-[-4vh] pt-[0.5vw] pl-[0.5vw] pr-[0.5vw]` }}
+							classes={{ staticTooltipLabel: `${ isMobile ? 'pt-[2.5vw] pl-[2.5vw] pr-[2.5vw]' : isTab ? 'pt-[1vw] pl-[1vw] pr-[1vw]' : '' } ${pathName === item.path ? '!bg-[#E20108] !text-white dark:!bg-white dark:!text-[#AF0106]' : '!text-[#7C0104] dark:bg-[#AF0106] dark:!text-white' } m-0 text-sm rounded-full bottom-[4.5vh] left-[0.5vw] pb-[5.5vh] mb-[-4vh]` }}
 							sx={{ '& #NestedSpeedDial-action-0-label, #NestedSpeedDial-action-1-label, #NestedSpeedDial-action-2-label, #NestedSpeedDial-action-3-label, #NestedSpeedDial-action-4-label': { writingMode: 'vertical-lr', textOrientation: 'upright' } }}
 						/>
 					))
