@@ -1,6 +1,6 @@
 import * as React from 'react';
 import LargeCard from './LargeCard';
-import { Grid } from '@mui/material';
+import Grid from '@mui/material/Grid2';
 import { CurrencyRupee, ShoppingCart } from '@mui/icons-material';
 
 export default function LargeCards() {
@@ -36,10 +36,10 @@ export default function LargeCards() {
 	return (
 		<div className={`flex py-8`}>
 			{/* TODO: Large Card Component */}
-			<Grid container gap={{ xs: 2, sm: 3, md: 4, lg: 5, xl: 6 }} columns={12}>
+			<Grid container spacing={2} columns={12} sx={{ width: '100% !important' }}>
 				{
 					orderStats.map((stats: any, index: number) =>
-						<Grid xs={12} sm={6} md={4} lg={3} xl={2} key={ index }>
+						<Grid size={{ xs: 12, sm:5, lg: 2.3 }} key={ index }>
 							<LargeCard className={ stats.color } data={ stats } />
 						</Grid>
 					)

@@ -1,4 +1,4 @@
-import "@/styles/main.scss";
+import "@/styles/main.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import Providers from "@/context/Providers";

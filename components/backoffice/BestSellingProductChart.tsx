@@ -5,6 +5,21 @@ import { PieChart } from '@mui/x-charts';
 import { Typography } from '@mui/material';
 
 export default function BestSellingProductChart() {
+
+	const [isDesktop, setDesktop] = React.useState(false);
+
+	React.useEffect(() => {
+		if (window.innerWidth > 1450) { setDesktop(true); }
+		else { setDesktop(false); }
+	
+		const updateMedia = () => {
+			if (window.innerWidth > 950) { setDesktop(true); }
+			else { setDesktop(false); }
+		};
+
+		window.addEventListener('resize', updateMedia);
+		return () => window.removeEventListener('resize', updateMedia);
+	}, []);
 	
 	const data = [
 		{ id: 0, value: 10, label: 'Product A' },
@@ -17,8 +32,8 @@ export default function BestSellingProductChart() {
 		{ id: 7, value: 15, label: 'Product H' },
 		{ id: 8, value: 20, label: 'Product I' },
 		{ id: 9, value: 10, label: 'Product J' },
-		// { id: 10, value: 15, label: 'Product K' },
-		// { id: 11, value: 20, label: 'Product L' },
+		{ id: 10, value: 15, label: 'Product K' },
+		{ id: 11, value: 20, label: 'Product L' },
 	];
 	
 	const colors = ['#ea580c', '#16a34a', '#0284c7', '#4f46e5', '#db2777', '#0891b2', '#c026d3', '#7c3aed', '#e11d48', '#059669', '#9333ea', '#0d9488'];
@@ -42,9 +57,9 @@ export default function BestSellingProductChart() {
 							faded: { innerRadius: 30, additionalRadius: -30, color: '#2D333A' }
 						}
 					]}
-					slotProps={{ legend: { position: { horizontal: 'middle', vertical: 'top' }, direction: 'row' } }}
+					slotProps={{ legend: { position: { horizontal: `middle`, vertical: `top` }, direction: 'row', hidden: isDesktop ? false : true } }}
 					height={470}
-					sx={{ '@media screen and (max-width: 500px)': { width: `100% !important`, height: '300px !important' }, '@media screen and (min-width: 501px) and (max-width: 800px)': { width: `100% !important`, height: '400px !important' } }}
+					sx={{ '@media screen and (max-width: 500px)': { width: `100% !important`, height: '54vh !important' }, '@media screen and (min-width: 501px) and (max-width: 800px)': { width: `100% !important`, height: '400px !important' } }}
 				/>
 			</div>
 		</div>

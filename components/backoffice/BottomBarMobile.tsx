@@ -9,6 +9,7 @@ import { Tooltip, Zoom, Typography, SwipeableDrawer, CssBaseline, AccordionSumma
 
 
 
+
 export default function BottomBarMobile({drawerBleeding, StyledBox, Puller, usePathname, paths, openSubCatalogue, setOpenSubCatalogue}:any) {
 
 	const pathName = usePathname();
