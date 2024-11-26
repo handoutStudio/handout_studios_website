@@ -9,14 +9,14 @@ import { styled, Theme, CSSObject} from '@mui/material';
 import FloatingActionButtonMobile from './FloatingActionButtonMobile';
 import { Category, ConfirmationNumberRounded, Diversity1, EditAttributesRounded, Groups3, Inventory, LocalLibraryRounded, LocalShippingRounded, Loyalty, OpenInNew, ReduceCapacity, Settings, SpaceDashboard, Store, Storefront, Style, WalletRounded,  } from '@mui/icons-material';
 
-export default function Sidebar() {
+export default function Sidebar({ width, height }: any) {
 
 	const { theme } = useTheme();
 	const pathName = usePathname();
-	const [openSubCatalogue, setOpenSubCatalogue] = React.useState(false);
-	const [isDesktop, setDesktop] = React.useState(false);
-	const [isMobile, setMobile] = React.useState(false);
 	const [isTab, setTab] = React.useState(false);
+	const [isMobile, setMobile] = React.useState(false);
+	const [isDesktop, setDesktop] = React.useState(false);
+	const [openSubCatalogue, setOpenSubCatalogue] = React.useState(false);
 
 	const drawerWidth = 240;
 	const openedMixin = (theme: Theme): CSSObject => ({ width: drawerWidth, transition: theme.transitions.create('width', { easing: theme.transitions.easing.sharp, duration: theme.transitions.duration.enteringScreen }), overflowX: 'hidden' });
@@ -33,9 +33,22 @@ export default function Sidebar() {
 	const [getProps, setProps] = React.useState(paperProps);
 
 	React.useEffect(() => {
-		if(theme === 'light') setProps(paperProps);
-		else setProps(paperPropsDark);
-	}, [paperProps, paperPropsDark, theme]);
+		theme === 'light' ? setProps(paperProps) : setProps(paperPropsDark)
+
+		width > 950
+		?
+			(setDesktop(true), setTab(false), setMobile(false) )
+		:
+			width > 500 && width <= 950
+			?
+				(setTab(true), setMobile(false), setDesktop(false))
+			:
+				width > 375 && width <= 500
+				?
+					(setMobile(true), setTab(false), setDesktop(false))
+				:
+					setDesktop(false)
+	}, [paperProps, paperPropsDark, theme, width, height]);
 
 	const handleOpenCatelogue = () => setOpenSubCatalogue(!openSubCatalogue)
 
@@ -178,21 +191,6 @@ export default function Sidebar() {
 
 	];
 
-	React.useEffect(() => {
-		if (window.innerWidth > 1450) { setDesktop(true); }
-		else { setDesktop(false); }
-	
-		const updateMedia = () => {
-			if (window.innerWidth > 950) { setDesktop(true); setTab(false); }
-			else if (window.innerWidth > 500 && window.innerWidth < 950) { setTab(true); setMobile(false); }
-			else if (window.innerWidth > 375 && window.innerWidth < 500) { setMobile(true); }
-			else { setDesktop(false); }
-		};
-
-		window.addEventListener('resize', updateMedia);
-		return () => window.removeEventListener('resize', updateMedia);
-	}, []);
-
 	return (
 		<>
 			{
@@ -200,9 +198,13 @@ export default function Sidebar() {
 				?
 					<SideBarDesktop open = { open } openSubCatalogue = { openSubCatalogue } handleDrawerClose = { handleDrawerClose } getProps = { getProps } DrawerHeader = { DrawerHeader } Drawer = { Drawer } usePathname = { usePathname } paths = { paths } />
 				:
-					<div className={`fixed top-[98vh] left-[100%] z-50`}>
-						<FloatingActionButtonMobile usePathname = { usePathname } paths = { paths } isDesktop = { isDesktop } isMobile = { isMobile } isTab = { isTab } />
-					</div>
+					isTab || isMobile
+					?
+						<div className={`fixed top-[98vh] left-[100%] z-50`}>
+							<FloatingActionButtonMobile usePathname = { usePathname } paths = { paths } isDesktop = { isDesktop } isMobile = { isMobile } isTab = { isTab } />
+						</div>
+					:
+						null
 				}
 		</>
 	)

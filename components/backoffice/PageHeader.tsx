@@ -26,7 +26,7 @@ export function PageHeader({pageTitle, link, buttonText, dataRows, workSheetName
 	}
 
 	return (
-		<div className={`flex justify-between items-center py-3 px-5 w-full rounded-lg bg-red-300 max-[600px]:flex-col`}>
+		<div className={`flex justify-between items-center py-3 px-5 w-full rounded-lg !bg-red-300 max-[600px]:flex-col`}>
 			<div className={`flex justify-center items-center gap-5`}>
 				<Heading title={ pageTitle } />
 			</div>
@@ -35,11 +35,11 @@ export function PageHeader({pageTitle, link, buttonText, dataRows, workSheetName
 					buttonText !== null &&
 					<>
 						{/* <Button variant="contained" className={`dark:bg-red-500 bg-red-700 hover:bg-red-600`} startIcon={<CloudDownloadRounded />}> Import </Button> */}
-						<Button variant="contained" onClick={handleExport} className={`bg-[#7c0104] hover:bg-red-700`} startIcon={<CloudUploadRounded />}> Export </Button>
+						<Button variant="contained" onClick={handleExport} className={`!bg-[#7c0104] hover:!bg-red-700`} startIcon={<CloudUploadRounded />}> Export </Button>
 						{
 							link !== null && (
 								<Link href={ link }>
-									<Button variant="contained" className={`bg-[#7c0104] hover:bg-red-700`} startIcon={<AddCircleRounded />}>{buttonText}</Button>
+									<Button variant="contained" className={`!bg-[#7c0104] hover:!bg-red-700`} startIcon={<AddCircleRounded />}>{buttonText}</Button>
 								</Link>
 							)
 						}

@@ -42,7 +42,7 @@ export default function Navbar() {
 		{
 			icon: <TrendingUp fontSize={"medium"} />,
 			event: 'New Order',
-			eventColor: 'bg-green-700 text-white',
+			eventColor: '!bg-green-700 !text-white',
 			primaryText: 'Something Something Something Something Something Something Something Something Something Something Something Something',
 			secondaryText: formattedToday,
 			secondaryTextTime: formattedTime,
@@ -50,7 +50,7 @@ export default function Navbar() {
 		{
 			icon: <TrendingDown fontSize={"medium"} />,
 			event: 'Order Cancelled',
-			eventColor: 'bg-red-700 text-white',
+			eventColor: '!bg-red-700 !text-white',
 			primaryText: 'Something',
 			secondaryText: formattedToday,
 			secondaryTextTime: formattedTime,
@@ -58,7 +58,7 @@ export default function Navbar() {
 		{
 			icon: <TrendingUp fontSize={"medium"} />,
 			event: 'New Order',
-			eventColor: 'bg-green-700 text-white',
+			eventColor: '!bg-green-700 !text-white',
 			primaryText: 'Something Something Something Something Something Something Something Something Something Something Something Something',
 			secondaryText: formattedToday,
 			secondaryTextTime: formattedTime,
@@ -66,7 +66,7 @@ export default function Navbar() {
 		{
 			icon: <TrendingDown fontSize={"medium"} />,
 			event: 'Order Cancelled',
-			eventColor: 'bg-red-700 text-white',
+			eventColor: '!bg-red-700 !text-white',
 			primaryText: 'Something',
 			secondaryText: formattedToday,
 			secondaryTextTime: formattedTime,
@@ -74,7 +74,7 @@ export default function Navbar() {
 		{
 			icon: <TrendingUp fontSize={"medium"} />,
 			event: 'New Order',
-			eventColor: 'bg-green-700 text-white',
+			eventColor: '!bg-green-700 !text-white',
 			primaryText: 'Something Something Something Something Something Something Something Something Something Something Something Something',
 			secondaryText: formattedToday,
 			secondaryTextTime: formattedTime,
@@ -82,7 +82,7 @@ export default function Navbar() {
 		{
 			icon: <TrendingDown fontSize={"medium"} />,
 			event: 'Order Cancelled',
-			eventColor: 'bg-red-700 text-white',
+			eventColor: '!bg-red-700 !text-white',
 			primaryText: 'Something',
 			secondaryText: formattedToday,
 			secondaryTextTime: formattedTime,
@@ -95,10 +95,10 @@ export default function Navbar() {
 			{/* Icon */}
 			<button>
 				<div className={`flex w-full`}>
-					<Link href={'/dashboard'} className={`flex flex-row justify-center gap-2 items-center no-underline`}>
+					<Link href={'/dashboard'} className={`flex flex-row justify-center gap-2 items-center !no-underline`}>
 						<Avatar src={logo.src} alt="Remy Sharp" className={`bg-white rounded-full p-2 w-10 h-10`} />
 						{' '}
-						<Typography className={`text-white min-[600px]:text-2xl text-sm`} variant={'h5'} component={'h5'}>Handout Studios</Typography>
+						<Typography className={`text-white min-[600px]:text-2xl !text-sm`} variant={'h5'} component={'h5'}>Handout Studios</Typography>
 					</Link>
 				</div>
 			</button>
@@ -108,14 +108,14 @@ export default function Navbar() {
 				
 				<ThemeSwitcher />
 				
-				<Tooltip title="Notifications" TransitionComponent={Zoom} followCursor>
+				<Tooltip title="Notifications" followCursor>
 					<IconButton onClick={handleClickNotification} size="small" sx={{ ml: 2 }} aria-controls={openNotification ? 'account-menu' : undefined} aria-haspopup="true" aria-expanded={openNotification ? 'true' : undefined}>
 						<Badge color='error' badgeContent={notificationData.length} max={99} overlap="rectangular">
-							<Notifications fontSize='large' className={`max-[600px]:text-xl text-white`} />
+							<Notifications fontSize='large' className={`max-[600px]:!text-2xl text-white`} />
 						</Badge>
 					</IconButton>
 				</Tooltip>
-				<Menu anchorEl={anchorElNotifications} id="account-menu" open={openNotification} onClose={handleCloseNotification} onClick={handleCloseNotification} PaperProps={{ elevation: 0, sx: { overflow: 'visible', filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))', mt: 1.5, '& .MuiAvatar-root': { width: 32, height: 32, ml: -0.5, mr: 1 }, '&::before': { content: '""', display: 'block', position: 'absolute', top: 0, right: 14, width: 10, height: 10, bgcolor: 'background.paper', transform: 'translateY(-50%) rotate(45deg)', zIndex: 0 } }}} transformOrigin={{ horizontal: 'right', vertical: 'top' }} anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}>
+				<Menu anchorEl={anchorElNotifications} id="account-menu" open={openNotification} onClose={handleCloseNotification} onClick={handleCloseNotification}>
 					{
 						notificationData.map((items: any, index: number) => 
 							<MenuItem onClick={handleCloseNotification} key={index} className={`flex items-center gap-2 hover:text-balance`}>
@@ -124,17 +124,20 @@ export default function Navbar() {
 										{ items.icon }
 									</Avatar>
 								</ListItemIcon>
-								<ListItemText className={` w-80 truncate hover:text-balance`} primary={ items.primaryText } secondary={
-									<div className='flex gap-2 items-center'>
-										<Chip label={ items.event } size="small" className={ items.eventColor } />
-										&rarr;
-										<div className={`flex gap-2 justify-start w-full`}>
-											<Typography variant={`caption`} component={'div'}>{ items.secondaryText }</Typography>
-											&#x2022;
-											<Typography variant={`caption`} component={'div'}>{ items.secondaryTextTime }</Typography>
+								<ListItemText className={`w-80 truncate hover:text-balance`} primary={
+									<div className={`flex flex-col gap-1 items-start`}>
+										<Typography className={`!text-sm`} variant={`body1`} component={'p'}>{ items.primaryText }</Typography>
+										<div className='flex flex-row gap-2 items-center justify-center'>
+											<Chip sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }} label={ items.event } size="small" className={ items.eventColor } />
+											<Typography variant={`caption`} component={'p'}>&rarr;</Typography>
+											<div className={`flex gap-2 justify-start w-full`}>
+												<Typography className={`!text-xs`} variant={`caption`} component={'p'}>{ items.secondaryText }</Typography>
+												<Typography className={`!text-xs`} variant={`caption`} component={'p'}>&#x2022;</Typography>
+												<Typography className={`!text-xs`} variant={`caption`} component={'p'}>{ items.secondaryTextTime }</Typography>
+											</div>
 										</div>
 									</div>
-								} />
+									} secondary={''} />
 								<ListItemIcon onClick={ () => handleRemoveNotification(index) }>
 									<Close fontSize='small' />
 								</ListItemIcon>
@@ -143,12 +146,12 @@ export default function Navbar() {
 					}
 				</Menu>
 				
-				<Tooltip title="Account settings"  TransitionComponent={Zoom} followCursor>
+				<Tooltip title="Account settings" followCursor>
 					<IconButton onClick={handleClickAvatar} size="small" sx={{ ml: 2 }} aria-controls={openAvatar ? 'account-menu' : undefined} aria-haspopup="true" aria-expanded={openAvatar ? 'true' : undefined}>
-						<Avatar alt="Remy Sharp" src={`https://mui.com/static/images/avatar/3.jpg`} className={`max-[600px]:w-7 max-[600px]:h-7 w-10 h-10`} />
+						<Avatar alt="Remy Sharp" src={`https://mui.com/static/images/avatar/3.jpg`} className={`max-[600px]:!w-7 max-[600px]:!h-7 w-10 h-10`} />
 					</IconButton>
 				</Tooltip>
-				<Menu anchorEl={anchorElAvatar} id="account-menu" open={openAvatar} onClose={handleCloseAvatar} onClick={handleCloseAvatar} PaperProps={{ elevation: 0, sx: { overflow: 'visible', filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))', mt: 1.5, '& .MuiAvatar-root': { width: 32, height: 32, ml: -0.5, mr: 1 }, '&::before': { content: '""', display: 'block', position: 'absolute', top: 0, right: 14, width: 10, height: 10, bgcolor: 'background.paper', transform: 'translateY(-50%) rotate(45deg)', zIndex: 0 } }}} transformOrigin={{ horizontal: 'right', vertical: 'top' }} anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}>
+				<Menu anchorEl={anchorElAvatar} id="account-menu" open={openAvatar} onClose={handleCloseAvatar} onClick={handleCloseAvatar}>
 					<MenuItem onClick={handleCloseAvatar}>
 						<Avatar alt="Remy Sharp" src={`https://mui.com/static/images/avatar/3.jpg`} /> My account
 					</MenuItem>
