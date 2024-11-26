@@ -102,7 +102,7 @@ export default function FloatingActionButtonMobile({ usePathname, paths, isTab, 
 							tooltipOpen
 							onClick={ () => handleOpenLink(item.path) }
 							FabProps={{ className: `${pathName === item.path ? '!bg-[#E20108] !text-white dark:!bg-white dark:!text-[#AF0106]' : '!text-[#7C0104] dark:bg-[#AF0106] dark:!text-white' } hover:!bg-[#E20108] hover:!text-white dark:hover:!bg-white dark:hover:!text-[#E20108] p-0 m-1`, size: 'small' }}
-							classes={{ staticTooltipLabel: `${ isMobile ? 'pt-[2.5vw] pl-[2.5vw] pr-[2.5vw]' : isTab ? 'pt-[1vw] pl-[1vw] pr-[1vw]' : '' } ${pathName === item.path ? '!bg-[#E20108] !text-white dark:!bg-white dark:!text-[#AF0106]' : '!text-[#7C0104] dark:bg-[#AF0106] dark:!text-white' } m-0 text-sm rounded-full bottom-[4.5vh] left-[0.5vw] pb-[5.5vh] mb-[-4vh]` }}
+							classes={{ staticTooltipLabel: `${ isMobile ? '!pt-[2.5vw] !pl-[2.5vw] !pr-[2.5vw]' : isTab ? '!pt-[1vw] !pl-[1vw] !pr-[1vw]' : '' } ${pathName === item.path ? '!bg-[#E20108] !text-white dark:!bg-white dark:!text-[#AF0106]' : '!text-[#7C0104] dark:!bg-[#AF0106] dark:!text-white' } m-0 !text-sm !rounded-full !bottom-[4.5vh] !left-[0.5vw] !pb-[5.5vh] !mb-[-4vh]` }}
 							sx={{ '& #NestedSpeedDial-action-0-label, #NestedSpeedDial-action-1-label, #NestedSpeedDial-action-2-label, #NestedSpeedDial-action-3-label, #NestedSpeedDial-action-4-label': { writingMode: 'vertical-lr', textOrientation: 'upright' } }}
 						/>
 					))

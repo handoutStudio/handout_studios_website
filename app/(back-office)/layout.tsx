@@ -4,8 +4,11 @@ import * as React from 'react';
 import Navbar from '@/components/backoffice/Navbar';
 import Footer from '@/components/backoffice/Footer';
 import Sidebar from '@/components/backoffice/Sidebar';
+import { useWindowDimensions } from '../@hooks/useWindowDimension';
 
 export default function Layout({ children }: any) {
+
+	const { width, height } = useWindowDimensions();
 
 	return (
 		<div className={`flex`}>
@@ -14,7 +17,7 @@ export default function Layout({ children }: any) {
 			<Navbar />
 
 			{/* TODO: Sidebar Here...! */}
-			<Sidebar />
+			<Sidebar width={width} height={height} />
 
 			<div className={`w-full`}>
 
