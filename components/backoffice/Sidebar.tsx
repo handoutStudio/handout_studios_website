@@ -9,11 +9,35 @@ import { styled, Theme, CSSObject} from '@mui/material';
 import FloatingActionButtonMobile from './FloatingActionButtonMobile';
 import { Category, ConfirmationNumberRounded, Diversity1, EditAttributesRounded, Groups3, Inventory, LocalLibraryRounded, LocalShippingRounded, Loyalty, OpenInNew, ReduceCapacity, Settings, SpaceDashboard, Store, Storefront, Style, WalletRounded,  } from '@mui/icons-material';
 
-export default function Sidebar({ width, height }: any) {
+type WindowDimentions = {
+	width: number | undefined;
+	height: number | undefined;
+};
+
+export const useWindowDimensions = (): WindowDimentions => {
+	const [windowDimensions, setWindowDimensions] = React.useState<WindowDimentions>({ width: undefined, height: undefined });
+
+	React.useEffect(() => {
+
+		const handleResize = () => setWindowDimensions({ width: window.innerWidth, height: window.innerHeight });
+
+		handleResize();
+
+		window.addEventListener('resize', handleResize);
+
+		return () => window.removeEventListener('resize', handleResize);
+
+	}, []); // Empty array ensures that effect is only run on mount
+
+	return windowDimensions;
+};
+
+export default function Sidebar() {
 
 	const { theme } = useTheme();
 	const pathName = usePathname();
 	const [isTab, setTab] = React.useState(false);
+	const { width, height } = useWindowDimensions();
 	const [isMobile, setMobile] = React.useState(false);
 	const [isDesktop, setDesktop] = React.useState(false);
 	const [openSubCatalogue, setOpenSubCatalogue] = React.useState(false);
@@ -35,19 +59,23 @@ export default function Sidebar({ width, height }: any) {
 	React.useEffect(() => {
 		theme === 'light' ? setProps(paperProps) : setProps(paperPropsDark)
 
-		width > 950
+		width !== undefined
 		?
-			(setDesktop(true), setTab(false), setMobile(false) )
-		:
-			width > 500 && width <= 950
+			width > 950
 			?
-				(setTab(true), setMobile(false), setDesktop(false))
+				(setDesktop(true), setTab(false), setMobile(false) )
 			:
-				width > 375 && width <= 500
+				width > 500 && width <= 950
 				?
-					(setMobile(true), setTab(false), setDesktop(false))
+					(setTab(true), setMobile(false), setDesktop(false))
 				:
-					setDesktop(false)
+					width > 375 && width <= 500
+					?
+						(setMobile(true), setTab(false), setDesktop(false))
+					:
+						setDesktop(false)
+		:
+			null
 	}, [paperProps, paperPropsDark, theme, width, height]);
 
 	const handleOpenCatelogue = () => setOpenSubCatalogue(!openSubCatalogue)

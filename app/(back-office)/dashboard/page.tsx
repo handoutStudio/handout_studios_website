@@ -31,7 +31,7 @@ function CustomTabPanel(props: TabPanelProps) {
 function a11yProps(index: number) { return { id: `simple-tab-${index}`, 'aria-controls': `simple-tabpanel-${index}` }; }
   
 
-export default function page() {
+export default function Page() {
 
 	const { theme } = useTheme();
 	const [value, setValue] = React.useState(0);
