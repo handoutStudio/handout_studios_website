@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import ThemeSwitcher from '../ThemeSwitcher';
+import ThemeSwitcher from '../Theming/ThemeSwitcher';
 import logo from '@/public/Assets/logo/compressed/final stamp 1.svg';
 import { Notifications, Settings, Logout, TrendingDown, TrendingUp, Close } from '@mui/icons-material';
 import { Avatar, Badge, Divider, MenuItem, ListItemIcon, IconButton, Tooltip, Menu, Typography, ListItemText, Chip, Zoom, Link } from '@mui/material';
