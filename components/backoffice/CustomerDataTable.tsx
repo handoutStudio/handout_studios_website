@@ -5,13 +5,15 @@ import { InfoRounded } from '@mui/icons-material';
 import logo from '@/public/Assets/logo/compressed/logo 6.svg';
 import { useWindowDimensions } from '@/components/backoffice/Sidebar';
 import logoStamp from '@/public/Assets/logo/compressed/final stamp 1.svg';
+import CustomDataTableSkeleton from './skeletons/CustomDataTableSkeleton';
 import { ImageList, ImageListItem, ImageListItemBar, IconButton } from '@mui/material';
 
 export default function CustomerDataTable() {
 
-	const { width, height } = useWindowDimensions();
 	const [getCols, setCols] = React.useState(0);
 	const [getGaps, setGaps] = React.useState(0);
+	const { width, height } = useWindowDimensions();
+	const [getIsLoading, setIsLoading] = React.useState(true);
 
 	React.useEffect(() => {
 		width !== undefined
@@ -38,7 +40,7 @@ export default function CustomerDataTable() {
 		{
 			name: "Driscoll Rodriquez",
 			totalSpends: '794',
-			photo: '',
+			photo: logo.src,
 		},
 		{
 			name: "Sybil Nelson",
@@ -48,7 +50,7 @@ export default function CustomerDataTable() {
 		{
 			name: "Katell Gates",
 			totalSpends: '4111',
-			photo: '',
+			photo: logo.src,
 		},
 		{
 			name: "Kermit Pate",
@@ -58,7 +60,7 @@ export default function CustomerDataTable() {
 		{
 			name: "Charity Young",
 			totalSpends: '4645',
-			photo: '',
+			photo: logo.src,
 		},
 		{
 			name: "Winifred Sexton",
@@ -68,7 +70,7 @@ export default function CustomerDataTable() {
 		{
 			name: "Hop Riddle",
 			totalSpends: '2750',
-			photo: '',
+			photo: logo.src,
 		},
 		{
 			name: "Basia Sweeney",
@@ -78,7 +80,7 @@ export default function CustomerDataTable() {
 		{
 			name: "Karina Frank",
 			totalSpends: '4997',
-			photo: '',
+			photo: logo.src,
 		},
 		{
 			name: "Lynn William",
@@ -88,7 +90,7 @@ export default function CustomerDataTable() {
 		{
 			name: "Seth Bullock",
 			totalSpends: '3424',
-			photo: '',
+			photo: logo.src,
 		},
 		{
 			name: "Abdul Sharpe",
@@ -98,7 +100,7 @@ export default function CustomerDataTable() {
 		{
 			name: "Keegan Webb",
 			totalSpends: '524',
-			photo: '',
+			photo: logo.src,
 		},
 		{
 			name: "Irene Henry",
@@ -108,7 +110,7 @@ export default function CustomerDataTable() {
 		{
 			name: "Kennan Battle",
 			totalSpends: '2443',
-			photo: '',
+			photo: logo.src,
 		},
 		{
 			name: "Camden Bryant",
@@ -118,7 +120,7 @@ export default function CustomerDataTable() {
 		{
 			name: "Gareth Cunningham",
 			totalSpends: '1931',
-			photo: '',
+			photo: logo.src,
 		},
 		{
 			name: "Kathleen O'brien",
@@ -128,7 +130,7 @@ export default function CustomerDataTable() {
 		{
 			name: "Fitzgerald James",
 			totalSpends: '3659',
-			photo: '',
+			photo: logo.src,
 		},
 		{
 			name: "Rigel Medina",
@@ -138,7 +140,7 @@ export default function CustomerDataTable() {
 		{
 			name: "Stephanie Blankenship",
 			totalSpends: '1815',
-			photo: '',
+			photo: logo.src,
 		},
 		{
 			name: "Yolanda Moody",
@@ -148,7 +150,7 @@ export default function CustomerDataTable() {
 		{
 			name: "Keiko Little",
 			totalSpends: '3591',
-			photo: '',
+			photo: logo.src,
 		},
 		{
 			name: "Sopoline Young",
@@ -158,22 +160,30 @@ export default function CustomerDataTable() {
 		{
 			name: "Mason Tanner",
 			totalSpends: '2545',
-			photo: '',
+			photo: logo.src,
 		},
 	];
 
 	return (
 		<div className={`flex flex-col w-full mt-10 justify-center bg-[#7c0104] dark:bg-[#AF0106] rounded-2xl p-4 mb-5`}>
-			<ImageList variant="masonry" className='w-50 h-50' cols={getCols} gap={getGaps}>
-				{
-					data.map((item: any, index: number) => (
-						<ImageListItem key={index}>
-							<img srcSet={`${item.photo !== '' ? item.photo : logo.src}?w=248&fit=crop&auto=format&dpr=2 2x`} src={`${item.photo !== '' ? item.photo : logo.src}?w=248&fit=crop&auto=format`} alt={item.name} loading="lazy" />
-							{ width !== undefined && width < 600 ? null : <ImageListItemBar title={<span className={`${width !== undefined && width < 600 ? '' : '!text-sm'}`}>{ item.name }</span>} subtitle={<span className={`${width !== undefined && width < 600 ? '' : '!text-xs'}`}>{ 'orders : '+ item.totalSpends }</span>} actionIcon={ <IconButton sx={{ color: 'rgba(255, 255, 255, 0.54)' }} aria-label={`info about ${item.title}`} > <InfoRounded /> </IconButton> } /> }
-						</ImageListItem>
-					))
+			{
+				getIsLoading
+				?
+					(<CustomDataTableSkeleton setIsLoading={setIsLoading} />)
+				:
+					(
+						<ImageList variant="masonry" className='w-50 h-50' cols={getCols} gap={getGaps}>
+							{
+								data.map((item: any, index: number) => (
+									<ImageListItem key={index}>
+										<img srcSet={`${item.photo !== '' ? item.photo : logo.src}?w=248&fit=crop&auto=format&dpr=2 2x`} src={`${item.photo !== '' ? item.photo : logo.src}?w=248&fit=crop&auto=format`} alt={item.name} loading="eager" />
+										{ width !== undefined && width < 600 ? null : <ImageListItemBar title={<span className={`${width !== undefined && width < 600 ? '' : '!text-sm'}`}>{ item.name }</span>} subtitle={<span className={`${width !== undefined && width < 600 ? '' : '!text-xs'}`}>{ 'orders : '+ item.totalSpends }</span>} actionIcon={ <IconButton sx={{ color: 'rgba(255, 255, 255, 0.54)' }} aria-label={`info about ${item.title}`} > <InfoRounded /> </IconButton> } /> }
+									</ImageListItem>
+								))
+							}
+						</ImageList>
+					)
 				}
-			</ImageList>
-		</div>
+			</div>
 	)
 }
