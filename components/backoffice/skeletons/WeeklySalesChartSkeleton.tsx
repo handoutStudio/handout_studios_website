@@ -9,12 +9,12 @@ export default function WeeklySalesChartSkeleton({ setIsLoading }: any) {
 
 	return (
 		<div className={`bg-transperent p-2 rounded-lg`}>
-			<Skeleton className={`!bg-white`} variant="text" width={400} height={80} />
-			<div className={`flex flex-row gap-2 w-full`}>
-				<Skeleton className={`!bg-white`} variant="text" width={200} height={100} />
-				<Skeleton className={`!bg-white`} variant="text" width={200} height={100} />
+			<Skeleton className={`!bg-white !h-[10vh] !w-[50%]`} variant="text" />
+			<div className={`flex flex-row gap-2`}>
+				<Skeleton className={`!bg-white !w-[15%] !h-[8vh]`} variant="text" />
+				<Skeleton className={`!bg-white !w-[15%] !h-[8vh]`} variant="text" />
 			</div>
-			<Skeleton className={`!bg-white w-full`} variant="rounded" width={830} height={340} />
+			<Skeleton className={`!bg-white !h-[40vh]`} variant="rounded" />
 		</div>
 	)
 }

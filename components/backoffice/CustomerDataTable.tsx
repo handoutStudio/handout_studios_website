@@ -1,6 +1,7 @@
 'use client';
 
 import * as React from 'react';
+import Image from 'next/image';
 import { InfoRounded } from '@mui/icons-material'; 
 import logo from '@/public/Assets/logo/compressed/logo 6.svg';
 import { useWindowDimensions } from '@/components/backoffice/Sidebar';
@@ -11,26 +12,35 @@ import { ImageList, ImageListItem, ImageListItemBar, IconButton } from '@mui/mat
 export default function CustomerDataTable() {
 
 	const [getCols, setCols] = React.useState(0);
-	const [getGaps, setGaps] = React.useState(0);
+	const [getWidth, setWidth] = React.useState(0);
+	const [getHeight, setHeight] = React.useState(0);
 	const { width, height } = useWindowDimensions();
 	const [getIsLoading, setIsLoading] = React.useState(true);
 
 	React.useEffect(() => {
-		width !== undefined
+		width !== undefined && height !== undefined
 		?
-			width > 950
+			width > 1200
+			?
+				(setCols(5), setWidth(width / 5), setHeight(height / 3))
+			:
+				width > 1000 && width <= 1200
 				?
-					(setCols(5), setGaps(8))
+					(setCols(4), setWidth(width / 5), setHeight(height / 3))
 				:
-					width > 600 && width <= 950
+					width > 750 && width <= 1000
 					?
-						(setCols(3), setGaps(4))
+						(setCols(3), setWidth(width / 3), setHeight(height / 2))
 					:
-						width > 375 && width <= 600
+						width > 500 && width <= 750 
 						?
-							(setCols(2), setGaps(3))
+							(setCols(2), setWidth(width / 2), setHeight(height / 1.5))
 						:
-							(setCols(1), setGaps(2))
+							width > 375 && width <= 500
+							?
+								(setCols(1), setWidth(width / 1.5))
+							:
+								(setCols(1), setWidth(width), setHeight(height))
 		:
 			null
 
@@ -158,8 +168,8 @@ export default function CustomerDataTable() {
 			photo: logoStamp.src,
 		},
 		{
-			name: "Mason Tanner",
-			totalSpends: '2545',
+			name: "Keiko Little",
+			totalSpends: '3591',
 			photo: logo.src,
 		},
 	];
@@ -169,15 +179,15 @@ export default function CustomerDataTable() {
 			{
 				getIsLoading
 				?
-					(<CustomDataTableSkeleton setIsLoading={setIsLoading} />)
+					(<CustomDataTableSkeleton setIsLoading={setIsLoading} data={data} />)
 				:
 					(
-						<ImageList variant="masonry" className='w-50 h-50' cols={getCols} gap={getGaps}>
+						<ImageList variant="masonry" className='w-50 h-50' cols={getCols} gap={18}>
 							{
 								data.map((item: any, index: number) => (
-									<ImageListItem key={index}>
-										<img srcSet={`${item.photo !== '' ? item.photo : logo.src}?w=248&fit=crop&auto=format&dpr=2 2x`} src={`${item.photo !== '' ? item.photo : logo.src}?w=248&fit=crop&auto=format`} alt={item.name} loading="eager" />
-										{ width !== undefined && width < 600 ? null : <ImageListItemBar title={<span className={`${width !== undefined && width < 600 ? '' : '!text-sm'}`}>{ item.name }</span>} subtitle={<span className={`${width !== undefined && width < 600 ? '' : '!text-xs'}`}>{ 'orders : '+ item.totalSpends }</span>} actionIcon={ <IconButton sx={{ color: 'rgba(255, 255, 255, 0.54)' }} aria-label={`info about ${item.title}`} > <InfoRounded /> </IconButton> } /> }
+									<ImageListItem key={index} className={`!bg-white rounded-lg`}>
+										<Image className={`rounded-lg flex flex-col justify-center items-center p-5`} src={`${item.photo !== '' ? item.photo : logo.src}`} alt={item.name} loading='eager' width={getWidth} height={getHeight} />
+										<ImageListItemBar className={`rounded-b-lg`} title={<span className={`!text-sm`}>{ item.name }</span>} subtitle={<span className={`!text-xs`}>{ 'orders : '+ item.totalSpends }</span>} actionIcon={ <IconButton sx={{ color: 'rgba(255, 255, 255, 0.54)' }} aria-label={`info about ${item.title}`} > <InfoRounded /> </IconButton> } />
 									</ImageListItem>
 								))
 							}

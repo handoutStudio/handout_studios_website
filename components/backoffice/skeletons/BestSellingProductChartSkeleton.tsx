@@ -8,25 +8,25 @@ export default function BestSellingProductChartSkeleton({ setIsLoading }: any) {
 	}, 2000);
 
 	return (
-		<div className={`bg-transperent p-2 rounded-lg`}>
-			<Skeleton className={`!bg-white`} variant="text" width={400} height={80} />
-			<div className={`flex flex-row gap-2 w-full`}>
-				<Skeleton className={`!bg-white`} variant="text" width={100} height={50} />
-				<Skeleton className={`!bg-white`} variant="text" width={100} height={50} />
-				<Skeleton className={`!bg-white`} variant="text" width={100} height={50} />
-				<Skeleton className={`!bg-white`} variant="text" width={100} height={50} />
-				<Skeleton className={`!bg-white`} variant="text" width={100} height={50} />
-				<Skeleton className={`!bg-white`} variant="text" width={100} height={50} />
-				<Skeleton className={`!bg-white`} variant="text" width={100} height={50} />
+		<div className={`bg-transperent p-2 rounded-lg gap-2 flex flex-col`}>
+			<Skeleton className={`!bg-white !h-[10vh] !w-[50%]`} variant="text" />
+			<div className={`flex flex-row gap-2 w-full max-[600px]:hidden max-[600px]:invisible`}>
+				<Skeleton className={`!bg-white !w-[6vw] !h-[5vh]`} variant="text" />
+				<Skeleton className={`!bg-white !w-[6vw] !h-[5vh]`} variant="text" />
+				<Skeleton className={`!bg-white !w-[6vw] !h-[5vh]`} variant="text" />
+				<Skeleton className={`!bg-white !w-[6vw] !h-[5vh]`} variant="text" />
+				<Skeleton className={`!bg-white !w-[6vw] !h-[5vh]`} variant="text" />
+				<Skeleton className={`!bg-white !w-[6vw] !h-[5vh]`} variant="text" />
+				<Skeleton className={`!bg-white !w-[6vw] !h-[5vh]`} variant="text" />
 			</div>
-			<div className={`flex flex-row gap-2 w-full`}>
-				<Skeleton className={`!bg-white`} variant="text" width={100} height={50} />
-				<Skeleton className={`!bg-white`} variant="text" width={100} height={50} />
-				<Skeleton className={`!bg-white`} variant="text" width={100} height={50} />
-				<Skeleton className={`!bg-white`} variant="text" width={100} height={50} />
-				<Skeleton className={`!bg-white`} variant="text" width={100} height={50} />
+			<div className={`flex flex-row gap-2 w-full max-[600px]:hidden max-[600px]:invisible`}>
+				<Skeleton className={`!bg-white !w-[5.8vw] !h-[5vh]`} variant="text" />
+				<Skeleton className={`!bg-white !w-[5.8vw] !h-[5vh]`} variant="text" />
+				<Skeleton className={`!bg-white !w-[5.8vw] !h-[5vh]`} variant="text" />
+				<Skeleton className={`!bg-white !w-[5.8vw] !h-[5vh]`} variant="text" />
+				<Skeleton className={`!bg-white !w-[5.8vw] !h-[5vh]`} variant="text" />
 			</div>
-			<Skeleton className={`!bg-white w-full`} variant="rounded" width={830} height={340} />
+			<Skeleton className={`!bg-white w-full !h-[35vh]`} variant="rounded" />
 		</div>
 	)
 }
