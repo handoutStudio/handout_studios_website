@@ -14,7 +14,7 @@ export const TagsInput = ({ handleChangeTags, getValue, setValue }: any) => {
 			onChange={handleChangeTags}
 			className={`w-[100%] `}
 			color='error'
-			sx={{ '.MuiChip-root': { backgroundColor: `${theme === 'light' ? '#7c0104' : '#AF0106'}`, color: 'white' }, '.MuiChip-deleteIcon': { color: 'white' } }}
+			sx={{ '.MuiChip-root': { backgroundColor: `${theme === 'light' ? '#7c0104' : '#AF0106'}`, color: 'white !important' }, '.MuiChip-deleteIcon': { color: 'white !important' } }}
 		/>
 	);
 }
