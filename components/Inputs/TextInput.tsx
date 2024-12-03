@@ -1,6 +1,6 @@
 import dayjs from 'dayjs';
 import * as React from 'react';
-import useScreenSize from '@/app/lib/useScreenSize';
+import { useWindowDimensions } from '../backoffice/Sidebar';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { StaticDatePicker } from '@mui/x-date-pickers/StaticDatePicker';
@@ -13,7 +13,7 @@ import { TextField, InputAdornment, Tooltip, Zoom, MenuItem, Select, InputLabel,
 export function TextInput({ getValue, handleChange, id, name, placeholder, label, component, icon, disabled, rows, maxRows, type, selectMenu, minDate }: any) {
 
 	const tomorrow = new Date((new Date()).valueOf() + 1000*3600*24);
-	const screenSize = useScreenSize();
+	const { width } = useWindowDimensions();
 
 	return (
 			component === 'text'
@@ -44,7 +44,7 @@ export function TextInput({ getValue, handleChange, id, name, placeholder, label
 						:
 							component === 'date'
 							?
-								minDate && screenSize?.width && screenSize.width >= 750
+								minDate && width && width >= 750 
 								?
 									<LocalizationProvider dateAdapter={AdapterDayjs}>
 										<DemoContainer components={['MobileDatePicker']}>
