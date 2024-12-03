@@ -3,9 +3,9 @@
 import * as React from 'react';
 import { useRouter } from 'next/navigation';
 import { generateSlug } from '@/app/lib/generateSlug';
-import TagsInput from '@/components/Inputs/TagsInput';
 import { makePostRequest } from '@/app/lib/apiRequest';
 import { Loading } from '@/components/Loading/Loading';
+import { TagsInput } from '@/components/Inputs/TagsInput';
 import { TextInput } from '@/components/Inputs/TextInput';
 import { Buttons } from '@/components/Inputs/SubmitButton';
 import { ImageUpload } from '@/components/Inputs/ImageUpload';
@@ -20,12 +20,12 @@ export default function NewProducts() {
 	const router = useRouter();
 	const fileRef = React.useRef();
 	const [getSKU, setSKU] = React.useState(1);
-	const [getTags, setTags] = React.useState(['']);
 	const [getTitle, setTitle] = React.useState('');
 	const [getOpen, setOpen] = React.useState(false);
 	const [getError, setError] = React.useState(false);
 	const [getBarcode, setBarcode] = React.useState('');
 	const [getActive, setActive] = React.useState(false);
+	const [getValue, setValue] = React.useState<string[]>([]);
 	const [getQuantity, setQuantity] = React.useState(10);
 	const [getIsLoading, setIsLoading] = React.useState(true);
 	const [getSalePrice, setSalePrice] = React.useState(2.99);
@@ -81,7 +81,7 @@ export default function NewProducts() {
 
 
 
-			const productData = { title: getTitle, selectCategory: getSelectCategory, selectSeller: getSelectSeller, sku: getSKU, quantity: getQuantity, barcode: getBarcode, productPrice: getProductPrice, salePrice: getSalePrice, slug: slug, tags: getTags, description: getDescription, image: imagePath, isActive: getActive };
+			const productData = { title: getTitle, selectCategory: getSelectCategory, selectSeller: getSelectSeller, sku: getSKU, quantity: getQuantity, barcode: getBarcode, productPrice: getProductPrice, salePrice: getSalePrice, slug: slug, tags: getValue, description: getDescription, image: imagePath, isActive: getActive };
 			const apiResponse = await makePostRequest('http://localhost:3000/api/products', productData, 'Products');
 			cleanUp();
 			setApiResponse(apiResponse!);
@@ -116,14 +116,9 @@ export default function NewProducts() {
 	const selectMenuDataCategory = ['One', 'Two', 'Three'];
 	const selectMenuDataSeller = ['One', 'Two', 'Three'];
 
-	const handleSelecetedTags = (items: any) => {
-		setTags(items);
-	}
-
-
 	const cleanUp = () => {
 		setSKU(1);
-		setTags(['']);
+		setValue([]);
 		setTitle('');
 		setOpen(false);
 		setBarcode('');
@@ -134,6 +129,8 @@ export default function NewProducts() {
 		setProductPrice(1.99);
 		setSelectCategory('');
 	}
+
+	const handleChangeTags = (newValue: string[]) => setValue(newValue);
 
 
 	return (
@@ -185,7 +182,7 @@ export default function NewProducts() {
 										<TextInput handleChange={handleChange} getValue={getSalePrice} placeholder={'Product Sale Price...!'} id={'productSalePrice'} name={'productSalePrice'} label={"Product Sale Price"} component={'currency'} type={'number'} icon={<CurrencyRupeeRounded />} />
 									</div>
 
-									<TagsInput selectedTags={handleSelecetedTags} placeholder="Add Tags (Press Enter after every hashtag)" />
+									<TagsInput handleChangeTags = { handleChangeTags } getValue = { getValue } setValue = { setValue } /> 
 
 									<div className={`flex justify-center items-center w-full gap-5 max-[950px]:flex-col`}>
 										<ImageUpload maxFileSize={1048576} limit={5} fileRef={ fileRef } dropzoneText={"Drag and drop an image here or click to upload Product Image...!"} showPreviewsInDropzone={true} showPreviews={false} />

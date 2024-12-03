@@ -44,7 +44,7 @@ export default function CustomerDataTable() {
 		:
 			null
 
-	}, [width]);
+	}, [width, height]);
 
 	const data = [
 		{

@@ -9,8 +9,8 @@ export function Buttons({classes, handleSubmit, startIcon, endIcon, buttonText}:
 
 	const router = useRouter();
 	const screenSize = useScreenSize();
-	const submitClass = 'bg-red-700 w-40 max-[570px]:w-full dark:bg-red-500 hover:bg-red-700 dark:hover:bg-red-500 flex justify-around';
-	const cancelClass = 'bg-gray-50 w-40 max-[570px]:w-full hover:bg-gray-50 text-red-700 dark:text-red-500 flex justify-around';
+	const submitClass = '!bg-red-700 !w-40 max-[570px]:!w-full dark:!bg-red-500 hover:!bg-red-700 dark:hover:!bg-red-500 !flex !justify-around';
+	const cancelClass = '!bg-gray-50 !w-40 max-[570px]:!w-full hover:!bg-gray-50 !text-red-700 dark:!text-red-500 !flex !justify-around';
 
 	return (
 		<>
