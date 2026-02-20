@@ -151,8 +151,8 @@ export default function ContactPage({ caller }: ContactPageProps) {
 
 							{/* Contact Buttons */}
 							<div className="flex flex-row justify-around max-[450px]:flex-col max-[450px]:gap-5">
-								<p className={`text-sm border-[#EDE8E4] border p-3 rounded-2xl`} onClick={() => window.open(`https://mail.google.com/mail/?view=cm&fs=1&to=handoutstudio@gmail.com`, "_blank")}> {`handoutstudio@gmail.com`} </p>
-								<p className={`text-sm border-[#EDE8E4] border p-3 rounded-2xl`}>{`(+91) - 123 - 456 - 7890`}</p>
+								<p className={`text-sm border-[#EDE8E4] border p-3 rounded-2xl`} onClick={() => window.open(`https://mail.google.com/mail/?view=cm&fs=1&to=handoutstudio3@gmail.com`, "_blank")}> {`handoutstudio3@gmail.com`} </p>
+								<p className={`text-sm border-[#EDE8E4] border p-3 rounded-2xl`}>{`(+91) - 823 - 800 - 4301`}</p>
 							</div>
 
 							{/* Divider */}
