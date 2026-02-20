@@ -1,0 +1,19 @@
+.landing {
+	position: relative;
+	display: flex;
+	height: 100svh;
+	overflow: hidden;
+	img { object-fit: fill; width: 100%; height: 100%; }
+	article {
+		position: absolute;
+		width: 40%;
+		top: 75vh;
+		left: 76vw;
+		transform: translate(-50%, -50%);
+		color: #EDE8E4;
+		text-align: center;
+		font-size: 3rem;
+		font-size: clamp(1.5rem, 4vw, 3.5rem);
+		margin-bottom: 0.5rem;
+	}
+}

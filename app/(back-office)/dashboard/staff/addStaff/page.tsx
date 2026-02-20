@@ -17,7 +17,7 @@ import { AddCircleRounded, AddIcCallRounded, AssignmentLateRounded, BadgeRounded
 export default function NewProducts() {
 	
 	const router = useRouter();
-	const fileRef = React.useRef();
+	const fileRef = React.useRef("");
 	const [getDOJ, setDOJ] = React.useState('');
 	const [getDOB, setDOB] = React.useState('');
 	const [getNote, setNote] = React.useState('');

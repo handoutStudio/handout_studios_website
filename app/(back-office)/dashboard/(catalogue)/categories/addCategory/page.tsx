@@ -17,7 +17,7 @@ import { AddCircleRounded, CloseRounded, DescriptionRounded, StyleRounded } from
 export default function NewCategory() {
 	
 	const router = useRouter();
-	const fileRef = React.useRef();
+	const fileRef = React.useRef("");
 	const [getTitle, setTitle] = React.useState('');
 	const [getOpen, setOpen] = React.useState(false);
 	const [getSelect, setSelect] = React.useState([]);

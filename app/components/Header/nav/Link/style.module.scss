@@ -1,0 +1,34 @@
+.link {
+    position: relative;
+    display: flex;
+    align-items: center;
+    .indicator{ width: 10px; height: 10px; background-color: white; border-radius: 50%; position: absolute; left: -30px; }
+}
+
+
+.linkDark {
+    position: relative;
+    display: flex;
+    align-items: center;
+    .indicator{ width: 10px; height: 10px; background-color: #7a0007; border-radius: 50%; position: absolute; left: -30px; }
+}
+
+
+
+
+
+// earthline-made design
+.linkE {
+    position: relative;
+    display: flex;
+    align-items: center;
+    .indicator{ width: 10px; height: 10px; background-color: #EDE8E4; border-radius: 50%; position: absolute; left: -30px; }
+}
+
+
+.linkDarkE {
+    position: relative;
+    display: flex;
+    align-items: center;
+    .indicator{ width: 10px; height: 10px; background-color: #564F47; border-radius: 50%; position: absolute; left: -30px; }
+}

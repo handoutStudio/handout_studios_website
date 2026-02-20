@@ -17,7 +17,7 @@ import { AddCircleRounded, CloseRounded, ConfirmationNumberRounded, InsertLinkRo
 export default function NewCategory() {
 	
 	const router = useRouter();
-	const fileRef = React.useRef();
+	const fileRef = React.useRef("");
 	const [getLink, setLink] = React.useState('');
 	const [getTitle, setTitle] = React.useState('');
 	const [getOpen, setOpen] = React.useState(false);
