@@ -18,7 +18,7 @@ export default function NewMarket() {
 	
 
 	const router = useRouter();
-	const fileRef = React.useRef();
+	const fileRef = React.useRef("");
 	const [getTitle, setTitle] = React.useState('');
 	const [getOpen, setOpen] = React.useState(false);
 	const [getError, setError] = React.useState(false);

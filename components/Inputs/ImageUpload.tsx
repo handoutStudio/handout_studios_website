@@ -1,39 +1,76 @@
+// 'use client';
+
+// import * as React from 'react';
+// import { DropzoneArea } from "mui-file-dropzone";
+
+// export function ImageUpload({limit, fileRef, dropzoneText, showPreviewsInDropzone, showPreviews, maxFileSize}: any) {
+
+// 	const [getFileUploadState, setFileUploadState] = React.useState([]);
+
+// 	React.useEffect(() => {
+// 		fileRef.current = getFileUploadState;
+// 	}, [getFileUploadState, fileRef]);
+
+// 	const handleSave = (files: any) => {
+// 		setFileUploadState(files);
+// 		fileRef.current = getFileUploadState;
+// 	}
+// 	const handleAdd = (newFileObjects: any) => {
+// 		setFileUploadState([].concat(getFileUploadState, newFileObjects));
+// 		fileRef.current = getFileUploadState;
+// 	}
+	
+// 	return (
+// 		<div className={`w-full`}>
+// 			<DropzoneArea
+// 				fileObjects={getFileUploadState}
+// 				onAdd={handleAdd}
+// 				showPreviews={showPreviews}
+// 				acceptedFiles={['image/*']}
+// 				showFileNamesInPreview={true}
+// 				showPreviewsInDropzone={showPreviewsInDropzone}
+// 				onChange={(files: any) => handleSave(files)}
+// 				filesLimit={limit}
+// 				dropzoneText={dropzoneText}
+// 				maxFileSize={maxFileSize}
+// 			/>
+// 		</div>
+// 	)
+// }
+
+
+
+
+
 'use client';
 
 import * as React from 'react';
 import { DropzoneArea } from "mui-file-dropzone";
 
-export function ImageUpload({limit, fileRef, dropzoneText, showPreviewsInDropzone, showPreviews, maxFileSize}: any) {
+export function ImageUpload({ limit, fileRef, dropzoneText, showPreviewsInDropzone, showPreviews, maxFileSize }: any) {
 
-	const [getFileUploadState, setFileUploadState] = React.useState([]);
+	const [files, setFiles] = React.useState<File[]>([]);
 
 	React.useEffect(() => {
-		fileRef.current = getFileUploadState;
-	}, [getFileUploadState, fileRef]);
+		fileRef.current = files;
+	}, [files, fileRef]);
 
-	const handleSave = (files: any) => {
-		setFileUploadState(files);
-		fileRef.current = getFileUploadState;
-	}
-	const handleAdd = (newFileObjects: any) => {
-		setFileUploadState([].concat(getFileUploadState, newFileObjects));
-		fileRef.current = getFileUploadState;
-	}
-	
+	const handleChange = (newFiles: File[]) => {
+		setFiles(newFiles);
+	};
+
 	return (
-		<div className={`w-full`}>
+		<div className="w-full">
 			<DropzoneArea
-				fileObjects={getFileUploadState}
-				onAdd={handleAdd}
+				onChange={handleChange}
 				showPreviews={showPreviews}
 				acceptedFiles={['image/*']}
-				showFileNamesInPreview={true}
+				showFileNamesInPreview
 				showPreviewsInDropzone={showPreviewsInDropzone}
-				onChange={(files: any) => handleSave(files)}
 				filesLimit={limit}
 				dropzoneText={dropzoneText}
 				maxFileSize={maxFileSize}
 			/>
 		</div>
-	)
+	);
 }
