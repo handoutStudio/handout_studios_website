@@ -1,19 +1,39 @@
 'use client';
 
-import { useRef } from 'react';
+import Link from 'next/link';
+import Card from '@mui/material/Card';
+import Modal from '@mui/material/Modal';
 import styles from './style.module.scss';
+import { useRef, useState } from 'react';
+import Button from '@mui/material/Button';
+import Divider from '@mui/material/Divider';
+import MenuItem from '@mui/material/MenuItem';
+import MenuList from '@mui/material/MenuList';
+import CardHeader from '@mui/material/CardHeader';
 import useScreenSize from '@/app/lib/useScreenSize';
+import CardActions from '@mui/material/CardActions';
+import CardContent from '@mui/material/CardContent';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import InstagramIcon from '@mui/icons-material/Instagram';
 import MagneticPage from '@/app/common/Magnetic/MagneticPage';
 import HandoutStudioLogo from '@/public/images/background.svg';
 import earthlineLogo from '@/public/images/earthline-made.svg';
 import { useScroll, motion, useTransform } from 'framer-motion';
 import RoundedPage from '@/app/common/RoundedButton/RoundedButtonPage';
+import MailOutlineOutlinedIcon from '@mui/icons-material/MailOutlineOutlined';
 import { ResponsiveImage } from '@/app/common/ResponsiveImage/ResponsiveImage';
+import LocalShippingOutlinedIcon from '@mui/icons-material/LocalShippingOutlined';
+
 
 interface ContactPageProps { caller?: string }
 
 
 export default function ContactPage({ caller }: ContactPageProps) {
+
+	const handleOpen = () => setOpen(true);
+	const [open, setOpen] = useState(false);
+	const handleClose = () => setOpen(false);
 
 	// check if the screen is Mobile or Tablet or Desktop
 	const screenSize = useScreenSize();
@@ -58,7 +78,7 @@ export default function ContactPage({ caller }: ContactPageProps) {
 						</span>
 						<h2>{`stay forever...!`}</h2>
 						<motion.div style={{x}} className={styles.buttonContainer}>
-							<RoundedPage backgroundColor={caller === "earthline-made" ? "#564F47" : "#7a0007"} className={styles.button}> <p>{`Get in touch`}</p> </RoundedPage>
+							<RoundedPage onClick={handleOpen} backgroundColor={caller === "earthline-made" ? "#564F47" : "#7a0007"} className={styles.button}> <p>{`Get in touch`}</p> </RoundedPage>
 						</motion.div>
 						<span className={styles.otherVenturesSpan}>{"Parent Company"}</span>
 						<motion.svg style={{rotate, scale: 2}} width="9" height="9" viewBox="0 0 9 9" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -77,12 +97,12 @@ export default function ContactPage({ caller }: ContactPageProps) {
 					<div className={styles.nav}>
 						<motion.div style={{x}} className={styles.buttonContainer}>
 							<RoundedPage backgroundColor={caller === "earthline-made" ? "#EDE8E4" : "#FFFFFF"} caller={caller}>
-								<p onClick={ () => window.open(`https://mail.google.com/mail/?view=cm&fs=1&to=handoutstudio@gmail.com`, '_blank') } className={styles.textP}>{`handoutstudio@gmail.com`}</p>
+								<p onClick={ () => window.open(`https://mail.google.com/mail/?view=cm&fs=1&to=handoutstudio3@gmail.com`, '_blank') } className={styles.textP}>{`handoutstudio3@gmail.com`}</p>
 							</RoundedPage>
 						</motion.div>
 						<motion.div style={{x}} className={styles.buttonContainer}>
 							<RoundedPage backgroundColor={caller === "earthline-made" ? "#EDE8E4" : "#FFFFFF"} caller={caller}>
-								<p className={styles.textP}>{`(+91) - 123 - 456 - 7890`}</p>
+								<p className={styles.textP}>{`(+91) - 823 - 800 - 4301`}</p>
 							</RoundedPage>
 						</motion.div>
 					</div>
@@ -131,6 +151,38 @@ export default function ContactPage({ caller }: ContactPageProps) {
 							</MagneticPage>
 						</motion.div>
 					</div>
+					<Modal open={open} onClose={handleClose}>
+						<Card className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-xl`}>
+							<CardHeader title={`Get in Touch`} subheader={`Contact us for any queries`} className={`text-center`} />
+							<Divider />
+							<CardContent className={`flex flex-col gap-10`}>
+								<MenuList className={`text-[#EDE8E4] w-full bg-[#564F47] rounded-xl`}>
+									<MenuItem>
+										<ListItemIcon>
+											<InstagramIcon sx={{ color: "#EDE8E4" }} />
+										</ListItemIcon>
+										<ListItemText primary={ <Link href={`https://www.instagram.com/earthline.made/`} target="_blank" rel="noopener noreferrer"> <p><i>{`@earthline.made`}</i></p> </Link> } />
+									</MenuItem>
+									<MenuItem>
+										<ListItemIcon>
+											<MailOutlineOutlinedIcon sx={{ color: "#EDE8E4" }} />
+										</ListItemIcon>
+										<ListItemText primary={ <Link href={`mailto:handoutstudio3@gmail.com`} target="_blank" rel="noopener noreferrer"> <p><i>{'handoutstudio3@gmail.com'}</i></p> </Link> } />
+									</MenuItem>
+									<MenuItem>
+										<ListItemIcon>
+											<LocalShippingOutlinedIcon sx={{ color: "#EDE8E4" }} />
+										</ListItemIcon>
+										<ListItemText primary={ <p><i>{`(+91) - 823 - 800 - 4301`}</i></p> } />
+									</MenuItem>
+								</MenuList>
+							</CardContent>
+							<Divider />
+							<CardActions className={`m-0! p-0!`}>
+								<Button variant='contained' sx={{ backgroundColor: "#564F47", color: "#EDE8E4", width: "100%" }} onClick={handleClose}>Close</Button>
+							</CardActions>
+						</Card>
+					</Modal>
 				</>
 			:
 				isTablet || isMobile
