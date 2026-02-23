@@ -28,9 +28,13 @@ import TimelineItem, { timelineItemClasses } from '@mui/lab/TimelineItem';
 import ChecklistOutlinedIcon from '@mui/icons-material/ChecklistOutlined';
 import ThumbUpAltOutlinedIcon from '@mui/icons-material/ThumbUpAltOutlined';
 import MailOutlineOutlinedIcon from '@mui/icons-material/MailOutlineOutlined';
+import ProductCard from '@/app/admin/earthline-made/products/productCard/page';
 import styles from "@/app/(front-end)/earthline-made/products/style.module.scss";
 import LocalShippingOutlinedIcon from '@mui/icons-material/LocalShippingOutlined';
 import ConnectWithoutContactOutlinedIcon from '@mui/icons-material/ConnectWithoutContactOutlined';
+
+
+type ProductType = { folder: string; product: string; images: { url: string; public_id: string; }[];};
 
 
 export default function Page() {
@@ -41,19 +45,22 @@ export default function Page() {
 
 	
 	const [isLoading, setIsLoading] = useState(true);
-	const [images, setImages] = useState<string[]>([]);
+	const [products, setProducts] = useState<ProductType[]>([]);
 	
 	const words: string[] = [ "Our Products...!", "Nos Produits...!", "I Nostri Prodotti...!", "Nossos Produtos...!", "Nuestros Productos...!", "Unsere Produkte...!", "Onze Producten...!", "Våra Produkter...!", "私たちの製品...!", "منتجاتنا...!", "우리의 제품...!", "我们的产品...!", "हमारे उत्पाद...!", "અમારા ઉત્પાદનો...!"];
 	
 	// 🔥 Fetch images from API
 	useLayoutEffect(() => {
-		const fetchImages = async () => {
-			const res = await fetch("/earthline-made/api/earthlineImages");
-			const data = await res.json();
-			setImages(data);
+		const fetchProducts = async () => {
+			try {
+				const res = await fetch("/admin/earthline-made/api/getAllProducts");
+				const data = await res.json();
+				setProducts(data);
+			}
+			catch (error) { console.error("Failed to fetch products:", error); }
 		};
 
-		fetchImages();
+		fetchProducts();
 	}, []);
 
 	useEffect( () => {
@@ -68,14 +75,6 @@ export default function Page() {
 
 		requestAnimationFrame(raf)
 	}, []);
-
-
-	// Helper for Name Cleansing
-	const formatImageName = (url: string) => {
-		const fileName = url.split('/').pop()?.split('.')[0] || '';
-		return fileName.replace(/[-_]/g, ' ').replace(/\b\w/g, char => char.toUpperCase());
-	};
-
 
 	// mobile and tablet hover effect
 	const [isTouch, setIsTouch] = useState(false);
@@ -103,21 +102,17 @@ export default function Page() {
 
 					<Masonry columns={{  xs: 2, sm: 3, lg:4, xl: 5,  xxl: 6 }} spacing={{  xs: 2, sm: 3, lg:3, xl: 2, xxl: 1 }}>
 						{
-							images.map((image: string, i: number) => {
-								const imageName = formatImageName(image);
-								return (
-									// <motion.div key={i} initial="rest" whileHover="hover" animate="rest" style={{ position: "relative", overflow: "hidden", borderRadius: 12, cursor: "pointer" }}>
-									<motion.div key={i} initial="rest" whileHover={isTouch ? undefined : "hover"} animate={isTouch ? "hover" : "reset"} style={{ position: "relative", overflow: "hidden", borderRadius: 12, cursor: "pointer" }}>
-										{/* Image */}
-										<motion.img src={image} alt={imageName} variants={{ rest: { scale: 1 }, hover: { scale: 1.08 } }} transition={{ duration: 0.6 }} style={{ width: "100", display: "block" }} />
-
-										{/* Overlay */}
-										<motion.div variants={{ rest: { y: "100%", opacity: 0 }, hover: { y: 0, opacity: 1 } }} transition={{ duration: 0.4 }} style={{ position: "absolute", bottom: 0, width: "100%", padding: "1rem", textAlign: "center", color: "#EDE8E4", backdropFilter: "blur(8px)", background: "linear-gradient(to top, rgba(0,0,0,0.7), transparent)"}}>
-											{imageName}
-										</motion.div>
-									</motion.div>
-								);
-							})
+							products.map((product) => (
+								<ProductCard
+									key={`${product.folder}-${product.product}`}
+									product={product}
+									isTouch={isTouch}
+									onDelete={async () => {
+										await fetch( "/admin/earthline-made/api/delete", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ folderName: product.folder, productName: product.product, }), } );
+										setProducts((prev) => prev.filter( (p) => !( p.folder === product.folder && p.product === product.product ) ) );
+									}}
+								/>
+							))
 						}
 					</Masonry>
 				</div>

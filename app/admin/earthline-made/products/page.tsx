@@ -2,7 +2,6 @@
 
 import Lenis from 'lenis';
 import Link from 'next/link';
-import Image from 'next/image';
 import Box from "@mui/material/Box";
 import Card from '@mui/material/Card';
 import Masonry from '@mui/lab/Masonry';
@@ -37,10 +36,11 @@ import styles from "@/app/(front-end)/earthline-made/products/style.module.scss"
 import LocalShippingOutlinedIcon from '@mui/icons-material/LocalShippingOutlined';
 import { useLayoutEffect, useState, useEffect, useRef, DragEvent, ChangeEvent } from "react";
 import ConnectWithoutContactOutlinedIcon from '@mui/icons-material/ConnectWithoutContactOutlined';
+import ProductCard from './productCard/page';
 
 
 
-
+type ProductType = { folder: string; product: string; images: { url: string; public_id: string; }[];};
 
 export default function Page() {
 
@@ -55,15 +55,18 @@ export default function Page() {
 	// Variables
 	const [getLoader, setLoader] = useState(false);
 	const [isLoading, setIsLoading] = useState(true);
-	const [images, setImages] = useState<string[]>([]);
+	const [products, setProducts] = useState<ProductType[]>([]);
+
 	const words: string[] = [ "Our Products...!", "Nos Produits...!", "I Nostri Prodotti...!", "Nossos Produtos...!", "Nuestros Productos...!", "Unsere Produkte...!", "Onze Producten...!", "Våra Produkter...!", "私たちの製品...!", "منتجاتنا...!", "우리의 제품...!", "我们的产品...!", "हमारे उत्पाद...!", "અમારા ઉત્પાદનો...!"];
 
 	// Handle file selection
 	const fileInputRef = useRef<HTMLInputElement | null>(null);
 
 	const [files, setFiles] = useState<File[]>([]);
-	const [previews, setPreviews] = useState<string[]>([]);
+	const [folderName, setFolderName] = useState("");
 	const [dragActive, setDragActive] = useState(false);
+	const [previews, setPreviews] = useState<string[]>([]);
+	const [uploadProgress, setUploadProgress] = useState<number[]>([]);
 
 	// Variables for add new product
 	const [productName, setProductName] = useState("");
@@ -98,15 +101,18 @@ export default function Page() {
 	
 	// 🔥 Fetch images from API
 	useLayoutEffect(() => {
-		const fetchImages = async () => {
-			const res = await fetch("/earthline-made/api/earthlineImages");
-			console.log("API Response:", res);
-			const data = await res.json();
-			setImages(data);
+		const fetchProducts = async () => {
+			try {
+				const res = await fetch("/admin/earthline-made/api/getAllProducts");
+				const data = await res.json();
+				setProducts(data);
+			}
+			catch (error) { console.error("Failed to fetch products:", error); }
 		};
 
-		fetchImages();
+		fetchProducts();
 	}, []);
+
 
 	useEffect( () => {
 		const lenis = new Lenis()
@@ -124,29 +130,59 @@ export default function Page() {
 
 	// Submit Upload Logic
 	const handleSubmitProduct = async () => {
-		setLoader(true);
-		if (!productName || files.length === 0) {
-			alert("Product name and image required");
+		if (!productName || !folderName || files.length === 0) {
+			alert("Folder name, product name and images required");
 			return;
 		}
 
-		for (const file of files) {
+		setLoader(true);
+		setUploadProgress(Array(files.length).fill(0));
+
+		const uploadedUrls: string[] = [];
+
+		for (let i = 0; i < files.length; i++) {
 			const formData = new FormData();
-			formData.append("file", file);
+			formData.append("folderName", folderName);
 			formData.append("productName", productName);
+			formData.append("files", files[i]);
 
-			const res = await fetch("/admin/earthline-made/api/upload", {
-				method: "POST",
-				body: formData,
+			await new Promise<void>((resolve, reject) => {
+				const xhr = new XMLHttpRequest();
+
+				xhr.open("POST", "/admin/earthline-made/api/upload");
+
+				xhr.upload.onprogress = (event) => {
+					if (event.lengthComputable) {
+						const percent = Math.round((event.loaded / event.total) * 100);
+						setUploadProgress(prev => {
+							const updated = [...prev];
+							updated[i] = percent;
+							return updated;
+						});
+					}
+				};
+
+				xhr.onload = () => {
+					if (xhr.status === 200) {
+						const data = JSON.parse(xhr.responseText);
+						uploadedUrls.push(data.images[0].secure_url);
+						resolve();
+					} else {
+						reject();
+					}
+				};
+
+				xhr.onerror = reject;
+				xhr.send(formData);
 			});
-
-			const data = await res.json();
-			setImages(prev => [data.secure_url, ...prev]);
 		}
 
+		setProducts(prev => [ { folder: folderName.toLowerCase().replace(/\s+/g, "-"), product: productName.toLowerCase().replace(/\s+/g, "-"), images: uploadedUrls.map(url => ({ url, public_id: "" })) }, ...prev]);
 		setFiles([]);
 		setPreviews([]);
 		setProductName("");
+		setFolderName("");
+		setUploadProgress([]);
 		handleCloseP();
 		setLoader(false);
 	};
@@ -157,6 +193,13 @@ export default function Page() {
 		const fileName = url.split('/').pop()?.split('.')[0] || '';
 		return fileName.replace(/[-_]/g, ' ').replace(/\b\w/g, char => char.toUpperCase());
 	};
+
+	// Cleanup for preview memory
+	useEffect(() => {
+		return () => {
+			previews.forEach((url) => URL.revokeObjectURL(url));
+		};
+	}, [previews]);
 
 
 
@@ -192,25 +235,20 @@ export default function Page() {
 						<span>Filter</span>
 					</div> */}
 
-					<Masonry columns={{  xs: 1, sm: 2, md: 3, lg:4, xl: 5,  xxl: 6 }} spacing={{  xs: 1, sm: 2, md: 3, lg:3, xl: 2, xxl: 1 }}>
+					<Masonry columns={{ xs: 1, sm: 2, md: 3, lg: 4, xl: 5 }} spacing={{ xs: 1, sm: 2, md: 3 }}>
 						{
-							images.map((image: string, i: number) => {
-								const imageName = formatImageName(image);
-
-								return (
-								// <motion.div key={i} initial="rest" whileHover="hover" animate="rest" style={{ position: "relative", overflow: "hidden", borderRadius: 12, cursor: "pointer" }}>
-									<motion.div key={i} initial="rest" whileHover={isTouch ? undefined : "hover"} animate={isTouch ? "hover" : "reset"} style={{ position: "relative", overflow: "hidden", borderRadius: 12, cursor: "pointer" }}>
-										{/* Image */}
-										<motion.img src={image} alt={imageName} variants={{ rest: { scale: 1 }, hover: { scale: 1.08 } }} transition={{ duration: 0.6 }} style={{ width: "100%", display: "block" }} />
-
-										{/* Overlay */}
-										<motion.div variants={{ rest: { y: "100%", opacity: 0 }, hover: { y: 0, opacity: 1 } }} transition={{ duration: 0.4 }} style={{ position: "absolute", bottom: 0, width: "100%", padding: "1rem", textAlign: "center", color: "#EDE8E4", backdropFilter: "blur(8px)", background: "linear-gradient(to top, rgba(0,0,0,0.7), transparent)" }}>
-											{imageName}
-										</motion.div>
-									</motion.div>
-								);
-							})
-							}
+							products.map((product) => (
+								<ProductCard
+									key={`${product.folder}-${product.product}`}
+									product={product}
+									isTouch={isTouch}
+									onDelete={async () => {
+										await fetch( "/admin/earthline-made/api/delete", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ folderName: product.folder, productName: product.product, }), } );
+										setProducts((prev) => prev.filter( (p) => !( p.folder === product.folder && p.product === product.product ) ) );
+									}}
+								/>
+							))
+						}
 					</Masonry>
 				</div>
 
@@ -305,6 +343,7 @@ export default function Page() {
 
 					<CardContent className="flex flex-col gap-6">
 
+						<TextField fullWidth value={folderName} label="Folder Name" id="folder_name" onChange={(e) => setFolderName(e.target.value)} />
 						<TextField fullWidth value={productName} label="Product Name" id="product_name" onChange={(e) => setProductName(e.target.value)} />
 						{/* <TextField fullWidth label="Product Description" multiline rows={3} />
 						<TextField fullWidth label="Product Price" type="number" />
@@ -320,24 +359,27 @@ export default function Page() {
 						{/* Preview Section */}
 						{
 							previews.length > 0 && (
-								<Box className="grid grid-cols-2 gap-4">
+								<Masonry columns={{  xs: 1, sm: 2, md: 3, lg:4, xl: 5,  xxl: 6 }} spacing={{  xs: 1, sm: 2, md: 3, lg:3, xl: 2, xxl: 1 }}>
 									{
 										files.map((file, index) => {
-											const isVideo = file.type.startsWith("video");
+											// const isVideo = file.type.startsWith("video");
 											return (
-												<Box key={index}>
+												<motion.div key={index} initial="rest" whileHover={isTouch ? undefined : "hover"} animate={isTouch ? "hover" : "reset"} style={{ position: "relative", overflow: "hidden", borderRadius: 12, cursor: "pointer" }}>
+													{/* Image */}
+													<motion.img src={previews[index]} alt={previews[index]} variants={{ rest: { scale: 1 }, hover: { scale: 1.08 } }} transition={{ duration: 0.6 }} style={{ width: "100%", display: "block" }} />
 													{
-														isVideo
-														?
-															(<video src={previews[index]} controls className="w-full rounded-lg" />)
-														:
-															(<Image src={previews[index]} alt="preview" width={0} height={0} className="w-full rounded-lg" />)
+														uploadProgress[index] !== undefined && ( 
+															<Box className="absolute bottom-0 left-0 w-full bg-black/60 p-2">
+																<Box sx={{ width: `${uploadProgress[index]}%`, height: "6px", backgroundColor: "#4caf50", transition: "0.3s", }} />
+																<Typography variant="caption" color="white"> {uploadProgress[index]}% </Typography>
+															</Box>
+														)
 													}
-												</Box>
+												</motion.div>
 											);
 										})
 									}
-								</Box>
+								</Masonry>
 							)
 						}
 
