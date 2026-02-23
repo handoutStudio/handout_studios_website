@@ -16,7 +16,18 @@ const CardPage = () => {
 	const trackRef = useRef<HTMLDivElement>(null);
 	const containerRef = useRef<HTMLDivElement>(null);
 
+	const [allImages, setAllImages] = useState<string[]>([]);
 	const [products, setProducts] = useState<ProductType[]>([]);
+
+	// Helper to shuffle images
+	const shuffleArray = (array: string[]) => {
+		const shuffled = [...array];
+		for (let i = shuffled.length - 1; i > 0; i--) {
+			const j = Math.floor(Math.random() * (i + 1));
+			[shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+		}
+		return shuffled;
+	};
 
 	// 🔥 Fetch products
 	useEffect(() => {
@@ -31,7 +42,15 @@ const CardPage = () => {
 	}, []);
 
 	// Flatten all product images into one array
-	const allImages = products.flatMap((p) => p.images.map((img) => img.url) );
+	useEffect(() => {
+		if (!products.length) return;
+
+		const flattened = products.flatMap((p) =>
+			p.images.map((img) => img.url)
+		);
+
+		setAllImages(shuffleArray(flattened));
+	}, [products]);
 
 	useLayoutEffect(() => {
 		if (!allImages.length) return;
@@ -76,7 +95,7 @@ const CardPage = () => {
 		<div ref={containerRef} className={styles.container}>
 			<div className={styles.stickyWrapper}>
 				<div ref={trackRef} className={styles.track}>
-					{ allImages.map((img, index) => ( <Card key={index} className={styles.card} elevation={0}> <CardMedia component="img" image={img} alt={`image_${index}`} /> </Card> )) }
+					{ allImages.map((img, index) => ( <Card key={index} className={styles.card} elevation={5}> <CardMedia component="img" image={img} alt={`image_${index}`} /> </Card> )) }
 				</div>
 			</div>
 		</div>

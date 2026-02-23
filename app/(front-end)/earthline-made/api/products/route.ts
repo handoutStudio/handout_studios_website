@@ -1,32 +1,3 @@
-// import { NextResponse } from 'next/server';
-// import fs from 'fs';
-// import path from 'path';
-
-// export async function GET() {
-// 	try {
-// 		const dirPath = path.join(process.cwd(), 'public', 'images', 'products');
-// 		const files = fs.readdirSync(dirPath);
-
-// 		const images = files.filter(file =>
-// 			/\.(jpg|jpeg|png|svg|webp)$/i.test(file)
-// 		);
-
-// 		const dirPathT = path.join(process.cwd(), 'public', 'captions', 'products');
-// 		const filesT = fs.readdirSync(dirPathT);
-
-// 		const captions = filesT.filter(file =>
-// 			/\.(txt|md)$/i.test(file)
-// 		);
-
-// 		return NextResponse.json({ images, captions });
-
-// 		// return NextResponse.json({ images });
-// 	} catch (err) {
-// 		console.error('Error reading product images:', err);
-// 		return NextResponse.json({ images: [] }, { status: 500 });
-// 	}
-// }
-
 import fs from 'fs';
 import path from 'path';
 import { NextResponse } from 'next/server';
