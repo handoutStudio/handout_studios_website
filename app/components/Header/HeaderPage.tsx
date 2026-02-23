@@ -49,7 +49,7 @@ export default function HeaderPage({caller}: HeaderPageProps) {
 
 	return (
 		<>
-			<div ref={header} className={`${caller === "earthline-made" ? pathname === "/earthline-made/products" || pathname === "/earthline-made/our-mission" ? `${styles.headerE} bg-[#564F47]!` : styles.headerE : caller === "handout-studios" ? styles.headerH : ""} ${scrollY > 200 && caller === "earthline-made" ? styles.scrolled : ""}`}>
+			<div ref={header} className={`${caller === "earthline-made" ?  styles.headerE : caller === "handout-studios" ? styles.headerH : ""} ${scrollY > 200 && caller === "earthline-made" ? styles.scrolled : ""}`}>
 				<div className={styles.logo} onClick={() => window.location.pathname !== '/earthline-made' && window.location.assign('/earthline-made')} style={{ cursor: 'pointer' }}>
 				{
 					caller === 'earthline-made'

@@ -11,13 +11,13 @@ import Divider from '@mui/material/Divider';
 import MenuItem from '@mui/material/MenuItem';
 import MenuList from '@mui/material/MenuList';
 import TimelineDot from '@mui/lab/TimelineDot';
+import { AnimatePresence } from "framer-motion";
 import CardHeader from '@mui/material/CardHeader';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import TimelineContent from '@mui/lab/TimelineContent';
-import { motion, AnimatePresence } from "framer-motion";
 import InstagramIcon from '@mui/icons-material/Instagram';
 import TimelineSeparator from '@mui/lab/TimelineSeparator';
 import TimelineConnector from '@mui/lab/TimelineConnector';
@@ -121,10 +121,12 @@ export default function Page() {
 			</div>
 
 			<Modal open={open} onClose={handleClose}>
-				<Card className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-xl`}>
-					<CardHeader title={`How To order`} subheader={`Let's Create something unique for your space.`} className={`text-center`} />
-					<Divider />
-					<CardContent className={`flex flex-col gap-10`}>
+				<Card sx={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)", width: { xs: "95%", sm: "85%", md: "70%", lg: "50%" }, height: { xs: "90vh", sm: "85vh" }, display: "flex", flexDirection: "column", borderRadius: 3, }}>
+					<CardHeader title="How To Order" subheader="Let's create something unique for your space." sx={{ textAlign: "center", flexShrink: 0, "& .MuiCardHeader-title": { fontSize: { xs: "1.2rem", sm: "1.4rem", md: "1.6rem" }, fontWeight: 600, }, "& .MuiCardHeader-subheader": { fontSize: { xs: "0.8rem", sm: "0.9rem", md: "1rem" }, }, }} />
+					<Divider sx={{ flexShrink: 0 }} />
+
+					{/* SCROLLABLE CONTENT */}
+					<CardContent sx={{ flex: 1, overflowY: "auto", display: "flex", flexDirection: "column", gap: { xs: 4, md: 6 }, px: { xs: 2, sm: 4 }, py: { xs: 3, sm: 4 }, }}>
 						<div>
 							<Timeline sx={{ [`& .${timelineItemClasses.root}:before`]: { flex: 0, padding: 0, } }} className={`text-[#EDE8E4]! bg-[#564F47] w-full rounded-xl`}>
 								<TimelineItem>
@@ -192,9 +194,13 @@ export default function Page() {
 							</MenuItem>
 						</MenuList>
 					</CardContent>
-					<Divider />
-					<CardActions className={`m-0! p-0!`}>
-						<Button variant='contained' sx={{ backgroundColor: "#564F47", color: "#EDE8E4", width: "100%" }} onClick={handleClose}>Close</Button>
+
+					<Divider sx={{ flexShrink: 0 }} />
+
+					<CardActions sx={{ p: 0, flexShrink: 0 }}>
+						<Button variant="contained" onClick={handleClose} sx={{ backgroundColor: "#564F47", color: "#EDE8E4", width: "100%", py: { xs: 1.5, md: 2 }, fontSize: { xs: "0.9rem", md: "1rem" }, }}>
+							{`Close`}
+						</Button>
 					</CardActions>
 				</Card>
 			</Modal>

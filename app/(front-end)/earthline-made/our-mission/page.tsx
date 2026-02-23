@@ -5,14 +5,14 @@ import Image from 'next/image';
 import { Masonry } from '@mui/lab';
 import Card  from '@mui/material/Card';
 import { useEffect, useState } from "react";
-import CardMedia from '@mui/material/CardMedia';
+// import CardMedia from '@mui/material/CardMedia';
 import { AnimatePresence } from "framer-motion";
 import CardHeader from '@mui/material/CardHeader';
 import CardContent from '@mui/material/CardContent';
 import ourMissionSVG from '@/public/images/our_mission.svg';
 import PreloaderPage from '@/app/components/Preloader/PreloaderPage';
+// import earthlineLogo from '@/public/images/earthline_made_landing_image.jpg';
 import styles from '@/app/(front-end)/earthline-made/our-mission/style.module.scss';
-import earthlineLogo from '@/public/images/earthline-made.svg';
 
 export default function Page() {
 

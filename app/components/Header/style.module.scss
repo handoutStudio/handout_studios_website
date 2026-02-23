@@ -21,7 +21,7 @@
 
 // earthline-design
 .headerE {
-	position: fixed; top: 0; left: 0; width: 100%; z-index: 50; display: flex; align-items: center; justify-content: space-between; box-sizing: border-box; color: #EDE8E4; background: transparent; transition: background-color 0.4s ease, backdrop-filter 0.4s ease;
+	position: fixed; top: 0; left: 0; width: 100%; z-index: 50; display: flex; align-items: center; justify-content: space-between; box-sizing: border-box; color: #564F47; background: transparent; transition: background-color 0.4s ease, backdrop-filter 0.4s ease;
 	.logo {
 		display: flex; cursor: pointer;
 		.copyright {
@@ -71,11 +71,11 @@
 			.links {
 				@media (max-width: 786px) { font-size: x-small; }
 			}
-			.indicator { position: absolute; bottom: -4px; left: 50%; width: 6px; height: 6px; background: #EDE8E4; border-radius: 50%; transform: translateX(-50%) scale(0); transition: 0.3s; }
+			.indicator { position: absolute; bottom: -4px; left: 50%; width: 6px; height: 6px; background: #564F47; border-radius: 50%; transform: translateX(-50%) scale(0); transition: 0.3s; }
 			&:hover .indicator { transform: translateX(-50%) scale(1);}
 			@media (max-width: 1200px) { padding: 0.2rem; }
 		}
 	}
 
-	&.scrolled { background-color: #564F47; backdrop-filter: blur(8px); }
+	&.scrolled { background-color: #564F47; color: #EDE8E4; backdrop-filter: blur(8px); .nav { .el { .indicator { background: #EDE8E4; } } } }
 }
