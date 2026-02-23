@@ -11,7 +11,7 @@ export default function LandingPage() {
 
 	return (
 		<motion.main initial="initial" animate="enter" className={styles.landing}>
-			<Image src={earthlineMadeLangingImage} fill priority alt="background" className={styles.bgImage} />
+			<Image src={earthlineMadeLangingImage} alt="background" className={styles.bgImage} />
 			<article>
 				{`Sustainable art for timeless space.`}
 			</article>
