@@ -242,6 +242,7 @@ export default function Page() {
 									key={`${product.folder}-${product.product}`}
 									product={product}
 									isTouch={isTouch}
+									caller="admin"
 									onDelete={async () => {
 										await fetch( "/admin/earthline-made/api/delete", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ folderName: product.folder, productName: product.product, }), } );
 										setProducts((prev) => prev.filter( (p) => !( p.folder === product.folder && p.product === product.product ) ) );
