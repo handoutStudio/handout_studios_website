@@ -28,9 +28,9 @@ import TimelineItem, { timelineItemClasses } from '@mui/lab/TimelineItem';
 import ChecklistOutlinedIcon from '@mui/icons-material/ChecklistOutlined';
 import ThumbUpAltOutlinedIcon from '@mui/icons-material/ThumbUpAltOutlined';
 import MailOutlineOutlinedIcon from '@mui/icons-material/MailOutlineOutlined';
-import ProductCard from '@/app/admin/earthline-made/products/productCard/page';
 import styles from "@/app/(front-end)/earthline-made/products/style.module.scss";
 import LocalShippingOutlinedIcon from '@mui/icons-material/LocalShippingOutlined';
+import ProductCard from '@/app/(front-end)/earthline-made/components/productCard/ProductCard';
 import ConnectWithoutContactOutlinedIcon from '@mui/icons-material/ConnectWithoutContactOutlined';
 
 

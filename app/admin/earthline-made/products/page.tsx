@@ -34,9 +34,9 @@ import ThumbUpAltOutlinedIcon from '@mui/icons-material/ThumbUpAltOutlined';
 import MailOutlineOutlinedIcon from '@mui/icons-material/MailOutlineOutlined';
 import styles from "@/app/(front-end)/earthline-made/products/style.module.scss";
 import LocalShippingOutlinedIcon from '@mui/icons-material/LocalShippingOutlined';
+import ProductCard from '@/app/(front-end)/earthline-made/components/productCard/ProductCard';
 import { useLayoutEffect, useState, useEffect, useRef, DragEvent, ChangeEvent } from "react";
 import ConnectWithoutContactOutlinedIcon from '@mui/icons-material/ConnectWithoutContactOutlined';
-import ProductCard from './productCard/page';
 
 
 
