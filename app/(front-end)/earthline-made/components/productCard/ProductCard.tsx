@@ -13,12 +13,13 @@ import CardContent from "@mui/material/CardContent";
 import CardActions from "@mui/material/CardActions";
 import { useState, useEffect, useRef } from "react";
 import DeleteIcon from '@mui/icons-material/Delete';
+import { Visibility } from "@mui/icons-material";
 
 
 type ProductType = { folder: string; product: string; images: { url: string; public_id: string }[]; };
 
 
-export default function ProductCard({ product, isTouch, onDelete, }: { product: ProductType; isTouch: boolean; onDelete: () => void; }) {
+export default function ProductCard({ product, isTouch, onDelete, caller }: { product: ProductType; isTouch: boolean; onDelete: () => void; caller: string; }) {
 
 	// Folder descriptions mapped by folder name
 	const FOLDER_DESCRIPTIONS: Record<string, string> = {
@@ -80,9 +81,13 @@ export default function ProductCard({ product, isTouch, onDelete, }: { product: 
 				<motion.div
 					variants={{ rest: { y: "100%", opacity: 0 }, hover: { y: 0, opacity: 1 }, }} transition={{ duration: 0.4 }} style={{ position: "absolute", bottom: 0, width: "100%", padding: "1rem", display: "flex", justifyContent: "space-between", alignItems: "center", color: "#EDE8E4", backdropFilter: "blur(8px)", background: "linear-gradient(to top, rgba(0,0,0,0.7), transparent)", }}>
 					<span>{productName}</span>
-					<IconButton size="small" className={`bg-transparent!`} onClick={(e) => { e.stopPropagation(); onDelete(); }} >
-						<DeleteIcon sx={{ color: "#EDE8E4" }} />
-					</IconButton>
+					{
+						caller === "admin" && (
+							<IconButton size="small" className={`bg-transparent!`} onClick={(e) => { e.stopPropagation(); onDelete(); }} >
+								<DeleteIcon sx={{ color: "#EDE8E4" }} />
+							</IconButton>
+						)
+					}
 				</motion.div>
 
 			</motion.div>
