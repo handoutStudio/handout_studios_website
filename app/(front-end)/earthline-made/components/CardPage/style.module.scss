@@ -1,0 +1,14 @@
+.container {
+    position: relative; height: clamp(250vh, 320vh, 380vh); background: #EDE8E4;
+	.stickyWrapper {
+		position: sticky; top: 0; height: 100svh; overflow: hidden; display: flex; align-items: center; perspective: 1200px;
+		@media (max-width: 768px) { perspective: 800px; }
+		.track {
+			display: flex; gap: clamp(1rem, 3vw, 3rem); transform-style: preserve-3d; will-change: transform;
+			.card {
+				width: clamp(180px, 22vw, 340px); height: clamp(260px, 38vw, 500px); border-radius: clamp(16px, 2.5vw, 40px); overflow: hidden; flex: 0 0 auto; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1); background: transparent !important;
+				img { width: 100%; height: 100%; object-fit: cover; }
+			}
+		}
+	}
+}

@@ -19,7 +19,7 @@ import { AddCircleRounded, CloseRounded, DateRangeRounded, LocalOfferRounded, Lo
 export default function NewCoupons() {
 	
 	const router = useRouter();
-	const fileRef = React.useRef();
+	const fileRef = React.useRef("");
 	const [getCode, setCode] = React.useState('');
 	const [getDate, setDate] = React.useState('');
 	const [getTitle, setTitle] = React.useState('');

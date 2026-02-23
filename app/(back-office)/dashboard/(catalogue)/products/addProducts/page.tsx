@@ -18,7 +18,7 @@ import { AddCircleRounded, Category, CloseRounded, CurrencyRupeeRounded, Descrip
 export default function NewProducts() {
 	
 	const router = useRouter();
-	const fileRef = React.useRef();
+	const fileRef = React.useRef("");
 	const [getSKU, setSKU] = React.useState(1);
 	const [getTitle, setTitle] = React.useState('');
 	const [getOpen, setOpen] = React.useState(false);

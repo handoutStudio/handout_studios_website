@@ -63,7 +63,7 @@ export default function BestSellingProductChart() {
 										cornerRadius: 5, 
 										startAngle: 0, 
 										endAngle: 360, 
-										highlightScope: { faded: 'global', highlighted: 'item' },
+										highlightScope: { fade: 'global', highlight: 'item' },
 										faded: { innerRadius: 30, additionalRadius: -30, color: '#2D333A' }
 									}
 								]}
