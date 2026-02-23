@@ -89,21 +89,21 @@ export default function ProductCard({ product, isTouch, onDelete, }: { product: 
 
 			{/* MODAL */}
 			<Modal open={open} onClose={() => setOpen(false)} closeAfterTransition slotProps={{ backdrop: { sx: { backdropFilter: "blur(6px)", backgroundColor: "rgba(0,0,0,0.5)", }, }, }}>
-				<Card sx={{ position: { xs: "fixed", md: "absolute" }, top: { xs: 0, md: "50%" }, left: { xs: 0, md: "50%" }, transform: { xs: "none", md: "translate(-50%, -50%)" }, width: { xs: "100%", md: "85%" }, height: { xs: "100%" }, borderRadius: { xs: 0, md: 3 }, display: "flex", flexDirection: "column", overflow: "hidden", }}>
-					<CardHeader title={product.folder} action={ <IconButton onClick={() => setOpen(false)}> <CloseIcon /> </IconButton> } sx={{ borderBottom: "1px solid rgba(0,0,0,0.08)", "& .MuiCardHeader-title": { fontWeight: 600, fontSize: { xs: "1.1rem", sm: "1.3rem" }, }, }} />
-					<CardContent sx={{ flex: 1, overflowY: "auto", WebkitOverflowScrolling: "touch", p: { xs: 2, sm: 3, md: 4 }, }}>
+				<Card sx={{position: { xs: "fixed", md: "absolute" }, top: { xs: 0, md: "50%" }, left: { xs: 0, md: "50%" }, transform: { xs: "none", md: "translate(-50%, -50%)" }, width: { xs: "100%", sm: "90%", md: "80%", lg: "70%", }, height: { xs: "100%", sm: "85vh", md: "85vh", }, maxWidth: "1200px", borderRadius: { xs: 0, md: 3 }, display: "flex", flexDirection: "column", overflow: "hidden",}}>
+					<CardHeader title={product.folder} action={ <IconButton onClick={() => setOpen(false)}> <CloseIcon /> </IconButton> } sx={{ position: "sticky", top: 0, zIndex: 2, backgroundColor: "background.paper", borderBottom: "1px solid rgba(0,0,0,0.08)", "& .MuiCardHeader-title": { fontWeight: 600, fontSize: { xs: "1rem", sm: "1.2rem", md: "1.3rem" }, }, }} />
+					<CardContent sx={{ flex: 1, overflowY: "auto", WebkitOverflowScrolling: "touch", p: { xs: 1.5, sm: 2.5, md: 3 }, }}>
 						<Masonry columns={{ xs: 1, sm: 2, md: 3 }} spacing={{ xs: 1.5, sm: 2, md: 2.5 }}>
 							{
 								images.map((img, index) => (
 									<div key={index}>
-										<motion.img src={img.url} alt={product.product} style={{ width: "100%", height: "auto", objectFit: "cover", borderRadius: 16, }} transition={{ duration: 0.4 }} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.98 }} />
+										<motion.img src={img.url} alt={product.product} style={{ width: "100%", height: "100%", objectFit: "cover", borderRadius: 16, }} transition={{ duration: 0.4 }} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.98 }} />
 									</div>
 								))
 							}
 						</Masonry>
 					</CardContent>
 					<Divider />
-					<CardActions sx={{ p: 2, justifyContent: "flex-end", }}>
+					<CardActions sx={{ p: { xs: 1.5, sm: 2 }, justifyContent: "flex-end", display: { xs: "none", sm: "flex"} }}>
 						<Button variant="contained" className="bg-[#564F47]! text-[#EDE8E4]! hover:bg-[#EDE8E4]! hover:text-[#564F47]! " onClick={() => setOpen(false)}> Close </Button>
 					</CardActions>
 				</Card>

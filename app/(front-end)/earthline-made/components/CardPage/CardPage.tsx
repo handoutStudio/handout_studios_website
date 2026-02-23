@@ -10,72 +10,73 @@ import styles from "@/app/(front-end)/earthline-made/components/CardPage/style.m
 
 gsap.registerPlugin(ScrollTrigger);
 
+type ProductType = { folder: string; product: string; images: { url: string; public_id: string }[]; };
+
 const CardPage = () => {
 	const trackRef = useRef<HTMLDivElement>(null);
 	const containerRef = useRef<HTMLDivElement>(null);
 
-	const [images, setImages] = useState<string[]>([]);
+	const [products, setProducts] = useState<ProductType[]>([]);
 
-	// 🔥 Fetch images from API
-	useLayoutEffect(() => {
-		const fetchImages = async () => {
-			const res = await fetch("/earthline-made/api/earthlineImages");
-			console.log("API Response:", res);
-			const data = await res.json();
-			setImages(data);
-			console.log("Images:", data);
+	// 🔥 Fetch products
+	useEffect(() => {
+		const fetchProducts = async () => {
+			try {
+				const res = await fetch( "/admin/earthline-made/api/getAllProducts" );
+				const data = await res.json();
+				setProducts(data);
+			} catch (error) { console.error("Failed to fetch products:", error); }
 		};
-
-		fetchImages();
+		fetchProducts();
 	}, []);
 
-	useEffect(() => {
-		if (!images.length) return;
+	// Flatten all product images into one array
+	const allImages = products.flatMap((p) => p.images.map((img) => img.url) );
+
+	useLayoutEffect(() => {
+		if (!allImages.length) return;
+
 		const track = trackRef.current;
 		const container = containerRef.current;
 		if (!track || !container) return;
 
 		const cards = gsap.utils.toArray<HTMLDivElement>(`.${styles.card}`);
-
 		const totalWidth = track.scrollWidth - window.innerWidth;
 
-		// Horizontal scroll animation
-		gsap.to(track, { x: -totalWidth, ease: "none", scrollTrigger: { trigger: container, start: "top top", end: "bottom bottom", scrub: 1.2 } });
-
-		// Coverflow effect tied to scroll
-		ScrollTrigger.create({
-
-			trigger: container, start: "top top", end: "bottom bottom", scrub: 1.2,
-
-			onUpdate: () => {
-				const center = window.innerWidth / 2;
-
-				cards.forEach((card: any) => {
-					const rect = card.getBoundingClientRect();
-					const distance = rect.left + rect.width / 2 - center;
-
-					const base = window.innerWidth < 768 ? 450 : 900;
-
-					const rotation = distance * -0.05;
-					const scale = 1 - Math.min(Math.abs(distance) / base, 0.35);
-					const blur = Math.min(Math.abs(distance) / (base / 2), 6);
-
-					// detect center card
-					if (Math.abs(distance) < 120) card.classList.add(styles.centerCard);
-					else card.classList.remove(styles.centerCard);
-
-					gsap.set(card, { rotateY: rotation, scale: scale, z: scale * 120, filter: `blur(${blur}px)` });
-				});
-			}
+		const ctx = gsap.context(() => {
+			// Horizontal scroll animation
+			gsap.to(track, { x: -totalWidth, ease: "none", scrollTrigger: { trigger: container, start: "top top", end: "bottom bottom", scrub: 1.2, }, });
+			// Coverflow effect
+			ScrollTrigger.create({
+				trigger: container, start: "top top", end: "bottom bottom", scrub: 1.2,
+				onUpdate: () => {
+					const center = window.innerWidth / 2;
+					cards.forEach((card: any) => {
+						const rect = card.getBoundingClientRect();
+						const distance = rect.left + rect.width / 2 - center;
+						const base = window.innerWidth < 768 ? 450 : 900;
+						const rotation = distance * -0.05;
+						const scale = 1 - Math.min(Math.abs(distance) / base, 0.35);
+						const blur = Math.min(Math.abs(distance) / (base / 2), 6);
+						if (Math.abs(distance) < 120) card.classList.add(styles.centerCard);
+						else card.classList.remove(styles.centerCard);
+						gsap.set(card, { rotateY: rotation, scale: scale, z: scale * 120, filter: `blur(${blur}px)`, });
+					});
+				},
+			});
 		});
 
-	}, [images]);
+		return () => {
+			ctx.revert(); // clean GSAP properly
+			ScrollTrigger.getAll().forEach((t) => t.kill() );
+		};
+	}, [allImages.length]);
 
 	return (
 		<div ref={containerRef} className={styles.container}>
 			<div className={styles.stickyWrapper}>
 				<div ref={trackRef} className={styles.track}>
-					{ images.map((img, index) => ( <Card key={index} className={styles.card} elevation={0}> <CardMedia component="img" image={img} alt={`image_${index}`} /> </Card> )) }
+					{ allImages.map((img, index) => ( <Card key={index} className={styles.card} elevation={0}> <CardMedia component="img" image={img} alt={`image_${index}`} /> </Card> )) }
 				</div>
 			</div>
 		</div>

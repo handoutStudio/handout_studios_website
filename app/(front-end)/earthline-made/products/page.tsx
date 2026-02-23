@@ -45,7 +45,6 @@ export default function Page() {
 
 	
 	const [isLoading, setIsLoading] = useState(true);
-	const [images, setImages] = useState<string[]>([]);
 	const [products, setProducts] = useState<ProductType[]>([]);
 	
 	const words: string[] = [ "Our Products...!", "Nos Produits...!", "I Nostri Prodotti...!", "Nossos Produtos...!", "Nuestros Productos...!", "Unsere Produkte...!", "Onze Producten...!", "Våra Produkter...!", "私たちの製品...!", "منتجاتنا...!", "우리의 제품...!", "我们的产品...!", "हमारे उत्पाद...!", "અમારા ઉત્પાદનો...!"];
@@ -76,14 +75,6 @@ export default function Page() {
 
 		requestAnimationFrame(raf)
 	}, []);
-
-
-	// Helper for Name Cleansing
-	const formatImageName = (url: string) => {
-		const fileName = url.split('/').pop()?.split('.')[0] || '';
-		return fileName.replace(/[-_]/g, ' ').replace(/\b\w/g, char => char.toUpperCase());
-	};
-
 
 	// mobile and tablet hover effect
 	const [isTouch, setIsTouch] = useState(false);
