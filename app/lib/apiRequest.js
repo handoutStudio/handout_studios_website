@@ -4,7 +4,6 @@ export const makePostRequest = async(endPoint, data, resourceName) => {
 	{
 		const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 		const callingURL = endPoint;
-		console.log(callingURL);
 		const response = await fetch(callingURL, {
 			method: "POST",
 			headers: { "Content-Type": "application/json", },

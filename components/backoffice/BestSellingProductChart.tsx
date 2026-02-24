@@ -4,6 +4,7 @@ import React from 'react'
 import { PieChart } from '@mui/x-charts';
 import { Typography } from '@mui/material';
 import BestSellingProductChartSkeleton from '@/components/backoffice/skeletons/BestSellingProductChartSkeleton';
+import { visuallyHidden } from '@mui/utils';
 
 export default function BestSellingProductChart() {
 	const [getIsLoading, setIsLoading] = React.useState(true);
@@ -67,7 +68,7 @@ export default function BestSellingProductChart() {
 										faded: { innerRadius: 30, additionalRadius: -30, color: '#2D333A' }
 									}
 								]}
-								slotProps={{ legend: { position: { horizontal: `middle`, vertical: `top` }, direction: 'row', hidden: isDesktop ? false : true } }}
+								slotProps={{ legend: { position: { horizontal: `center`, vertical: `middle` }, direction: "vertical", sx: isDesktop ? { display: `flex`, paddingRight: `2vw` } : { display: `none` } } }}
 								height={470}
 								sx={{ '@media screen and (max-width: 500px)': { width: `100% !important`, height: '54vh !important' }, '@media screen and (min-width: 501px) and (max-width: 800px)': { width: `100% !important`, height: '400px !important' } }}
 							/>

@@ -13,20 +13,12 @@ import CardContent from "@mui/material/CardContent";
 import CardActions from "@mui/material/CardActions";
 import { useState, useEffect, useRef } from "react";
 import DeleteIcon from '@mui/icons-material/Delete';
-import { Visibility } from "@mui/icons-material";
 
 
 type ProductType = { folder: string; product: string; images: { url: string; public_id: string }[]; };
 
 
 export default function ProductCard({ product, isTouch, onDelete, caller }: { product: ProductType; isTouch: boolean; onDelete: () => void; caller: string; }) {
-
-	// Folder descriptions mapped by folder name
-	const FOLDER_DESCRIPTIONS: Record<string, string> = {
-		"vase-trio": "Premium resin-crafted living room installations designed for elegance and durability.",
-		"bedroom-collection": "Luxury resin decor pieces curated for modern bedroom aesthetics.",
-		"office-space": "Functional yet artistic resin solutions tailored for workspace environments.",
-	};
 
 	const [open, setOpen] = useState(false);
 	const [isPaused, setIsPaused] = useState(false);
@@ -50,9 +42,7 @@ export default function ProductCard({ product, isTouch, onDelete, caller }: { pr
 	}, [images.length, isPaused]);
 
 	// Reset index if image list changes
-	useEffect(() => {
-		setCurrentIndex(0);
-	}, [images.length]);
+	useEffect(() => setCurrentIndex(0), [images.length]);
 
 	return (
 		<>
@@ -94,22 +84,21 @@ export default function ProductCard({ product, isTouch, onDelete, caller }: { pr
 
 			{/* MODAL */}
 			<Modal open={open} onClose={() => setOpen(false)} closeAfterTransition slotProps={{ backdrop: { sx: { backdropFilter: "blur(6px)", backgroundColor: "rgba(0,0,0,0.5)", }, }, }}>
-				<Card sx={{position: { xs: "fixed", md: "absolute" }, top: { xs: 0, md: "50%" }, left: { xs: 0, md: "50%" }, transform: { xs: "none", md: "translate(-50%, -50%)" }, width: { xs: "100%", sm: "90%", md: "80%", lg: "70%", }, height: { xs: "100%", sm: "85vh", md: "85vh", }, maxWidth: "1200px", borderRadius: { xs: 0, md: 3 }, display: "flex", flexDirection: "column", overflow: "hidden",}}>
-					<CardHeader title={product.folder} action={ <IconButton onClick={() => setOpen(false)}> <CloseIcon /> </IconButton> } sx={{ position: "sticky", top: 0, zIndex: 2, backgroundColor: "background.paper", borderBottom: "1px solid rgba(0,0,0,0.08)", "& .MuiCardHeader-title": { fontWeight: 600, fontSize: { xs: "1rem", sm: "1.2rem", md: "1.3rem" }, }, }} />
-					<CardContent sx={{ flex: 1, overflowY: "auto", WebkitOverflowScrolling: "touch", p: { xs: 1.5, sm: 2.5, md: 3 }, }}>
-						<Masonry columns={{ xs: 1, sm: 2, md: 3 }} spacing={{ xs: 1.5, sm: 2, md: 2.5 }}>
-							{
-								images.map((img, index) => (
-									<div key={index}>
-										<motion.img src={img.url} alt={product.product} style={{ width: "100%", height: "100%", objectFit: "cover", borderRadius: 16, }} transition={{ duration: 0.4 }} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.98 }} />
-									</div>
-								))
-							}
+				<Card sx={{ position: { xs: "fixed", sm: "absolute", }, top: { xs: 0, sm: "50%", }, left: { xs: 0, sm: "50%", }, transform: { xs: "none", sm: "translate(-50%, -50%)", }, width: { xs: "100%", sm: "92%", md: "85%", lg: "75%", xl: "65%", }, height: { xs: "100%", sm: "65vh", }, maxWidth: "1300px", borderRadius: { xs: 0, sm: 3, }, display: "flex", flexDirection: "column", overflow: "hidden", }}>
+					<CardHeader title={product.folder} action={ <IconButton onClick={() => setOpen(false)}> <CloseIcon /> </IconButton> } sx={{ position: "sticky", top: 0, zIndex: 2, backgroundColor: "background.paper", borderBottom: "1px solid rgba(0,0,0,0.08)", px: { xs: 1.5, sm: 2.5 }, py: { xs: 1.2, sm: 1.5 }, "& .MuiCardHeader-title": { fontWeight: 600, fontSize: { xs: "1rem", sm: "1.2rem", md: "1.3rem", lg: "1.4rem", }, }, }} />
+					<CardContent sx={{ display: "flex", justifyContent: "space-around", alignContent: "center", overflowY: "auto", WebkitOverflowScrolling: "touch", px: { xs: 1.5, sm: 2.5, md: 3 }, py: { xs: 1.5, sm: 2 }, }}>
+						{/* <div className={`flex flex-col items-center justify-center h-full w-1/2`}>
+							<span>
+								{`A Very Long Description A Very Long Description A Very Long Description A Very Long Description A Very Long Description A Very Long Description A Very Long Description A Very Long Description A Very Long Description A Very Long Description A Very Long Description A Very Long Description A Very Long Description A Very Long Description A Very Long Description `}
+							</span>
+						</div> */}
+						<Masonry columns={{ xs: 1, sm: 2, md: 3, lg: 4, }} spacing={{ xs: 1.5, sm: 2, md: 2.5, }}>
+							{ images.map((img, index) => <div key={img.public_id ?? index}> <motion.img src={img.url} alt={product.product} style={{ width: "100%", borderRadius: 16, objectFit: "cover", }} transition={{ duration: 0.4 }} whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.98 }} /> </div> ) }
 						</Masonry>
 					</CardContent>
 					<Divider />
-					<CardActions sx={{ p: { xs: 1.5, sm: 2 }, justifyContent: "flex-end", display: { xs: "none", sm: "flex"} }}>
-						<Button variant="contained" className="bg-[#564F47]! text-[#EDE8E4]! hover:bg-[#EDE8E4]! hover:text-[#564F47]! " onClick={() => setOpen(false)}> Close </Button>
+					<CardActions sx={{ p: { xs: 1.5, sm: 2 }, justifyContent: "flex-end", display: { xs: "none", sm: "flex" }, backgroundColor: "background.paper", }}>
+						<Button variant="contained" onClick={() => setOpen(false)} sx={{ backgroundColor: "#564F47", color: "#EDE8E4", px: { sm: 3, md: 4 }, py: 1, fontSize: { sm: "0.9rem", md: "1rem" }, }}> {`Close`} </Button>
 					</CardActions>
 				</Card>
 			</Modal>
