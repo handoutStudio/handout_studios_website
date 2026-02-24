@@ -1,6 +1,6 @@
 import * as React from 'react';
 import LargeCard from './LargeCard';
-import Grid from '@mui/material/Grid2';
+import Grid from '@mui/material/Grid';
 import { CurrencyRupee, ShoppingCart } from '@mui/icons-material';
 
 export default function LargeCards() {

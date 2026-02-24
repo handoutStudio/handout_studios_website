@@ -33,7 +33,7 @@ const CardPage = () => {
 	useEffect(() => {
 		const fetchProducts = async () => {
 			try {
-				const res = await fetch( "/admin/earthline-made/api/getAllProducts" );
+				const res = await fetch( "/admin/earthline-made/api/getAllProducts?limit=20" );
 				const data = await res.json();
 				setProducts(data);
 			} catch (error) { console.error("Failed to fetch products:", error); }

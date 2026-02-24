@@ -1,6 +1,6 @@
 import * as React from 'react';
 import SmallCard from './SmallCard';
-import Grid from '@mui/material/Grid2';
+import Grid from '@mui/material/Grid';
 import { Autorenew, Check, LocalShipping, ShoppingCart } from '@mui/icons-material';
 
 
