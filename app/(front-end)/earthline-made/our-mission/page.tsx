@@ -36,29 +36,27 @@ export default function Page() {
 	}, []);
 
 	return (
-		<>
+		<div className={isLoading ? '' : styles.main}>
 			<AnimatePresence mode='wait'> {isLoading && <PreloaderPage words={ words } caller='earthline-made' />} </AnimatePresence>
-			<div className={styles.main}>
-				<div className={styles.title}>{ `Our Mission` }</div>
-				<Masonry columns={{  xs: 1, sm: 2, md:3, lg: 4, xl: 5, xxl: 6 }} spacing={{  xs: 1, sm: 2, md:3, lg: 4, xl: 5, xxl: 6 }}>
-					{
-						cardContents.map((cardContent: any, i: number) => {
-							return (
-								<Card key={i} className={`rounded-2xl!`}>
-									{/* <div>
-										<Image src={earthlineLogo} width={0} height={350} alt="Our Mission SVG Image" />
-									</div> */}
-									<CardHeader title={cardContent.title} subheader={cardContent.caption} />
-									<CardContent>
-										<span className={styles.innerCardbody}>{ cardContent.body }</span>
-									</CardContent>
-								</Card>
-							);
-						})
-					}
-				</Masonry>
-				<Image className={styles.svgImage} src={ourMissionSVG} width={0} height={0} alt="Our Mission SVG Image" />
-			</div>
-		</>
+			<div className={styles.title}>{ `Our Mission` }</div>
+			<Masonry columns={{  xs: 1, sm: 2, md:3, lg: 4, xl: 5, xxl: 6 }} spacing={{  xs: 1, sm: 2, md:3, lg: 4, xl: 5, xxl: 6 }}>
+				{
+					cardContents.map((cardContent: any, i: number) => {
+						return (
+							<Card key={i} className={`rounded-2xl!`}>
+								{/* <div>
+									<Image src={earthlineLogo} width={0} height={350} alt="Our Mission SVG Image" />
+								</div> */}
+								<CardHeader title={cardContent.title} subheader={cardContent.caption} />
+								<CardContent>
+									<span className={styles.innerCardbody}>{ cardContent.body }</span>
+								</CardContent>
+							</Card>
+						);
+					})
+				}
+			</Masonry>
+			<Image className={styles.svgImage} src={ourMissionSVG} width={0} height={0} alt="Our Mission SVG Image" />
+		</div>
 	);
 }

@@ -7,7 +7,7 @@ import BrandPage from '@/app/common/BrandCard/BrandPage';
 import { Loading } from '@/app/shared/components/Loading/Loading';
 import earthlineLogo from '@/public/images/earthline_only_logo.png';
 
-export default function Home() {
+export default function Homes() {
 
 	const screenSize = useScreenSize();
 	const [getIsLoading, setIsLoading] = useState(true);

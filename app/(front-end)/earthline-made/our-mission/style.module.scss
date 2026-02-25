@@ -1,36 +1,8 @@
 .main {
-	min-height: 100svh;
-	background-color: #EDE8E4;
-	color: #564F47;
-	padding: clamp(1.5rem, 4vw, 4rem);
-	padding-top: 15vh;
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	box-sizing: border-box;
-	overflow-x: hidden;
-	gap: 5vh;
-
-	.title {
-		font-size: clamp(1.8rem, 4vw, 3rem);
-		font-weight: 500;
-		color: #564F47;
-	}
-
+	min-height: 100svh; background-color: #EDE8E4; color: #564F47; padding: clamp(1.5rem, 4vw, 4rem); padding-top: 15vh; display: flex; flex-direction: column; justify-content: center; box-sizing: border-box; overflow-x: hidden; gap: 5vh;
+	.title { font-size: clamp(1.8rem, 4vw, 3rem); font-weight: 500; color: #564F47; }
 	.svgImage {
-		flex: 1;
-		max-width: 400px;
-		width: 100%;
-		height: auto;
-		object-fit: contain;
-		align-self: center;
-		position: absolute;
-		right: 0;
-		bottom: 0;
-
-		@media (max-width: 1199px) {
-			visibility: hidden;
-			display: none;
-		}
+		flex: 1; max-width: 400px; width: 100%; height: auto; object-fit: contain; align-self: center; position: absolute; right: 0; bottom: 0;
+		@media (max-width: 1199px) { visibility: hidden; display: none; }
 	}
 }
