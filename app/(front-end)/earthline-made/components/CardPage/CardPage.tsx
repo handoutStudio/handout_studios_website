@@ -33,7 +33,7 @@ const CardPage = () => {
 	useEffect(() => {
 		const fetchProducts = async () => {
 			try {
-				const res = await fetch( "/admin/earthline-made/api/getAllProducts?limit=20" );
+				const res = await fetch("/admin/earthline-made/api/getAllProducts?limit=20");
 				const data = await res.json();
 				setProducts(data);
 			} catch (error) { console.error("Failed to fetch products:", error); }
@@ -44,11 +44,7 @@ const CardPage = () => {
 	// Flatten all product images into one array
 	useEffect(() => {
 		if (!products.length) return;
-
-		const flattened = products.flatMap((p) =>
-			p.images.map((img) => img.url)
-		);
-
+		const flattened = products.flatMap((p) => p.images.map((img) => img.url) );
 		setAllImages(shuffleArray(flattened));
 	}, [products]);
 
@@ -59,36 +55,70 @@ const CardPage = () => {
 		const container = containerRef.current;
 		if (!track || !container) return;
 
-		const cards = gsap.utils.toArray<HTMLDivElement>(`.${styles.card}`);
-		const totalWidth = track.scrollWidth - window.innerWidth;
+		let resizeTimeout: NodeJS.Timeout;
 
 		const ctx = gsap.context(() => {
+
+			const cards = gsap.utils.toArray<HTMLDivElement>(`.${styles.card}`);
+
+			const getTotalWidth = () => track.scrollWidth - (window.innerWidth < 768 ? window.innerWidth * 0.9 : window.innerWidth);
+
+			// const totalWidth = track.scrollWidth - window.innerWidth;
+			let totalWidth = getTotalWidth();
+
 			// Horizontal scroll animation
-			gsap.to(track, { x: -totalWidth, ease: "none", scrollTrigger: { trigger: container, start: "top top", end: "bottom bottom", scrub: 1.2, }, });
+			const horizontalTween = gsap.to(track, { x: () => -getTotalWidth(), ease: "none", scrollTrigger: { trigger: container, start: "top top", end: "bottom bottom", scrub: 1.2, invalidateOnRefresh: true, }, });
+
 			// Coverflow effect
 			ScrollTrigger.create({
 				trigger: container, start: "top top", end: "bottom bottom", scrub: 1.2,
 				onUpdate: () => {
 					const center = window.innerWidth / 2;
+
 					cards.forEach((card: any) => {
 						const rect = card.getBoundingClientRect();
 						const distance = rect.left + rect.width / 2 - center;
-						const base = window.innerWidth < 768 ? 450 : 900;
-						const rotation = distance * -0.05;
-						const scale = 1 - Math.min(Math.abs(distance) / base, 0.35);
-						const blur = Math.min(Math.abs(distance) / (base / 2), 6);
+
+						// only desktop
+						// const base = window.innerWidth < 768 ? 450 : 900;
+						// const rotation = distance * -0.05;
+						// const scale = 1 - Math.min(Math.abs(distance) / base, 0.35);
+						// const blur = Math.min(Math.abs(distance) / (base / 2), 6);
+
+						// with Mobile and Tablet
+						const isMobile = window.innerWidth < 768;
+						const isTablet = window.innerWidth < 1024;
+						const base = isMobile ? 350 : isTablet ? 600 : 900;
+						const rotation = isMobile ? distance * -0.025 : distance * -0.05;
+						const scale = 1 - Math.min(Math.abs(distance) / base, isMobile ? 0.25 : 0.35);
+						const blur = Math.min(Math.abs(distance) / (base / 2), isMobile ? 3 : 6);
+
 						if (Math.abs(distance) < 120) card.classList.add(styles.centerCard);
 						else card.classList.remove(styles.centerCard);
+
 						gsap.set(card, { rotateY: rotation, scale: scale, z: scale * 120, filter: `blur(${blur}px)`, });
 					});
 				},
 			});
-		});
+
+			// 🔥 Refresh after layout stabilizes
+			ScrollTrigger.refresh();
+
+			// 🔥 Debounced resize handling
+			const handleResize = () => { clearTimeout(resizeTimeout); resizeTimeout = setTimeout(() => { totalWidth = getTotalWidth(); ScrollTrigger.refresh(); }, 200); };
+
+			window.addEventListener("resize", handleResize);
+
+			// Cleanup resize inside context
+			return () => window.removeEventListener("resize", handleResize);
+
+		}, container);
 
 		return () => {
 			ctx.revert(); // clean GSAP properly
-			ScrollTrigger.getAll().forEach((t) => t.kill() );
+			ScrollTrigger.getAll().forEach((t) => t.kill());
 		};
+
 	}, [allImages.length]);
 
 	return (

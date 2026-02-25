@@ -194,8 +194,8 @@ export default function ContactPage({ caller }: ContactPageProps) {
 							<div className={`flex flex-col items-start gap-6`}>
 
 								<div className={`flex items-center gap-4`}>
-									<div className={`w-60 h-60 bg-[#EDE8E4] rounded-xl flex items-center justify-center p-10 max-[1000px]:p-0`}>
-										<ResponsiveImage src={caller === "earthline-made" ? earthlineLogo : HandoutStudioLogo} alt="logo" fill={false} />
+									<div className={`w-60 h-60 ${caller === 'earthline-made' ? '' : 'bg-white'} rounded-xl flex items-center justify-center p-10 max-[1000px]:p-0`}>
+										<ResponsiveImage className={`${caller === 'earthline-made' ? 'rounded-lg' : ''}`} src={caller === "earthline-made" ? earthlineLogo : HandoutStudioLogo} alt="logo" fill={false} />
 									</div>
 									<h2 className={`text-xl md:text-3xl font-light leading-tight`}> {`We make things that `} <br /> {` stay forever.`} </h2>
 								</div>
