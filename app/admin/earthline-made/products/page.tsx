@@ -57,6 +57,12 @@ export default function Page() {
 	const [isLoading, setIsLoading] = useState(true);
 	const [products, setProducts] = useState<ProductType[]>([]);
 
+	// New Folder Creations
+	const [folderError, setFolderError] = useState("");
+	const [newFolderName, setNewFolderName] = useState("");
+	const [createFolderOpen, setCreateFolderOpen] = useState(false);
+	const [folderOptions, setFolderOptions] = useState<string[]>([]);
+
 	const words: string[] = [ "Our Products...!", "Nos Produits...!", "I Nostri Prodotti...!", "Nossos Produtos...!", "Nuestros Productos...!", "Unsere Produkte...!", "Onze Producten...!", "Våra Produkter...!", "私たちの製品...!", "منتجاتنا...!", "우리의 제품...!", "我们的产品...!", "हमारे उत्पाद...!", "અમારા ઉત્પાદનો...!"];
 
 	// Handle file selection
@@ -112,6 +118,30 @@ export default function Page() {
 
 		fetchProducts();
 	}, []);
+
+	// API to fetch Folder Names
+	const fetchFolders = async () => {
+		try {
+			const res = await fetch("/admin/earthline-made/api/getFolders");
+			const data = await res.json();
+			setFolderOptions(data.map((f: any) => f.name.toLowerCase()));
+		}
+		catch (err) { console.error("Failed to fetch folders:", err); }
+	};
+
+	useEffect(() => {
+		fetchFolders();
+	}, []);
+
+
+	// Handling new Folder Name Logic
+	useEffect(() => {
+		if (folderName === "__new__") {
+			const name = prompt("Enter new folder name");
+			if (name) setFolderName(name.toLowerCase().replace(/\s+/g, "-"));
+			else setFolderName("");
+		}
+	}, [folderName]);
 
 
 	useEffect( () => {
@@ -182,6 +212,7 @@ export default function Page() {
 		setPreviews([]);
 		setProductName("");
 		setFolderName("");
+		await fetchFolders();
 		setUploadProgress([]);
 		handleCloseP();
 		setLoader(false);
@@ -210,6 +241,19 @@ export default function Page() {
 		const hasTouch = window.matchMedia("(hover: none)").matches;
 		setIsTouch(hasTouch);
 	}, []);
+
+
+	// Folder Duplication Check Logic
+	const handleCreateFolder = () => {
+		const cleaned = newFolderName.trim().toLowerCase().replace(/\s+/g, "-");
+		if (!cleaned) { setFolderError("Folder name cannot be empty"); return; }
+		if (folderOptions.includes(cleaned)) { setFolderError("Folder already exists"); return; }
+		setFolderName(cleaned);
+		setFolderOptions((prev) => [...prev, cleaned]);
+		setCreateFolderOpen(false);
+		setNewFolderName("");
+		setFolderError("");
+	};
 
 
 	return (
@@ -350,7 +394,12 @@ export default function Page() {
 
 					<CardContent className="flex flex-col gap-6">
 
-						<TextField fullWidth value={folderName} label="Folder Name" id="folder_name" onChange={(e) => setFolderName(e.target.value)} />
+						{/* <TextField fullWidth value={folderName} label="Folder Name" id="folder_name" onChange={(e) => setFolderName(e.target.value)} /> */}
+						<TextField select fullWidth value={folderName} label="Select Folder" onChange={(e) => { const value = e.target.value; if (value === "__create__") setCreateFolderOpen(true); else setFolderName(value); }}>
+							{ folderOptions.map((folder) => ( <MenuItem key={folder} value={folder}> {folder} </MenuItem> )) }
+							<Divider />
+							<MenuItem value="__create__"> {`+ Create New Folder`} </MenuItem>
+						</TextField>
 						<TextField fullWidth value={productName} label="Product Name" id="product_name" onChange={(e) => setProductName(e.target.value)} />
 						{/* <TextField fullWidth label="Product Description" multiline rows={3} />
 						<TextField fullWidth label="Product Price" type="number" />
@@ -396,6 +445,17 @@ export default function Page() {
 						<Button variant="contained" sx={{ backgroundColor: "#EDE8E4", color: "#564F47" }} onClick={handleCloseP}> Close </Button>
 						<Button variant="contained" sx={{ backgroundColor: "#564F47", color: "#EDE8E4" }} onClick={handleSubmitProduct}> Submit </Button>
 					</CardActions>
+				</Card>
+			</Modal>
+
+			<Modal open={createFolderOpen} onClose={() => setCreateFolderOpen(false)}>
+				<Card className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-md p-6 flex flex-col gap-6">
+					<Typography variant="h6">Create New Folder</Typography>
+					<TextField fullWidth label="Folder Name" value={newFolderName} error={!!folderError} helperText={folderError} onChange={(e) => { setNewFolderName(e.target.value); setFolderError(""); }} />
+					<div className="flex justify-end gap-4">
+						<Button variant="outlined" onClick={() => { setCreateFolderOpen(false); setNewFolderName(""); setFolderError(""); }}> {`Cancel`} </Button>
+						<Button variant="contained" onClick={() => handleCreateFolder()}> {`Create`} </Button>
+					</div>
 				</Card>
 			</Modal>
 		</>
