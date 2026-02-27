@@ -20,7 +20,7 @@ export default function NavPage({scrollY, caller}: NavPageProps) {
 		{ title: caller === 'earthline-made' ? "Our Mission" : "Work", href: caller === 'earthline-made' ? `/${caller}/our-mission` : `/${caller}/work` },
 		{ title: "Products", href: `/${caller}/products` },
 		{ title: caller === 'earthline-made' ? "" : "About", href: caller === 'earthline-made' ? `/${caller}/` : `/${caller}/about` },
-		{ title: "Contact", href: `/${caller}/#contact` },
+		{ title: "Contact", href: `/${caller}/contact` },
 	]
 	return (
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any

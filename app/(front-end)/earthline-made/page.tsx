@@ -2,7 +2,6 @@
 
 import Lenis from '@studio-freight/lenis';
 import { useEffect, useState } from 'react';
-// import { projects } from '@/app/earthline-made/data';
 import { AnimatePresence } from 'framer-motion';
 import styles from '@/app/(front-end)/earthline-made/style.module.scss';
 

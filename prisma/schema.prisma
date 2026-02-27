@@ -164,3 +164,24 @@ model User {
 	createdAt DateTime @default(now())
 	updatedAt DateTime? @updatedAt
 }
+
+
+// Enum Brand
+enum Brand {
+	EARTHLINE_MADE
+	HANDOUT_STUDIOS
+}
+
+
+// Model ContactUs
+model ContactUs {
+	id        String   @id @default(auto()) @map("_id") @db.ObjectId
+	name      String
+	email     String
+	phone     String?
+	subject   String?
+	message   String
+  	brand     Brand    // Hidden field (EARTHLINE_MADE or HANDOUT_STUDIOS)
+	isRead    Boolean  @default(false)
+	createdAt DateTime @default(now())
+}

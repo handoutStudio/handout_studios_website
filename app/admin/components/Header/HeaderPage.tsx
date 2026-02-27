@@ -4,6 +4,7 @@ import gsap from 'gsap';
 import Link from 'next/link';
 import styles from './style.module.scss';
 import { signOut } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import { AnimatePresence } from 'framer-motion';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import NavPage from '@/app/components/Header/nav/NavPage';
@@ -14,11 +15,16 @@ import RoundedPage from '@/app/common/RoundedButton/RoundedButtonPage';
 
 
 export default function HeaderPage() {
+
 	const header = useRef(null);
 	const button = useRef(null);
-	const [isActive, setIsActive] = useState(false);
-
 	const [scrollY, setScrollY] = useState(0);
+	
+	// Session Data Manipulation
+	const { data: session, status } = useSession();
+	const fullName = session?.user?.name?.split(" ")[0] + '...!';
+	
+	const [isActive, setIsActive] = useState(false);
 	useEffect(() => {
 		const handleScroll = () => setScrollY(window.scrollY);
 
@@ -45,8 +51,8 @@ export default function HeaderPage() {
 				<div className={styles.logo} onClick={() => window.location.pathname !== '/admin' && window.location.assign('/admin')} style={{ cursor: 'pointer' }}>
 					<div className={styles.name}>
 						<p className={styles.handOut}>{"Welcome"}</p>
-						<p className={styles.studios}>{"Admin!"}</p>
-						<p className={styles.aishiniRuzal}>{'By Handout Studios'}</p>
+						{/* <p className={styles.studios}>{"Admin!"}</p> */}
+						<p className={styles.studios}> { status === "loading" ? "..." : fullName ?? "Admin" } </p>
 					</div>
 
 				</div>

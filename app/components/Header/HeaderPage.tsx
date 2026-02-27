@@ -6,10 +6,9 @@ import styles from './style.module.scss';
 import { usePathname } from 'next/navigation';
 import { AnimatePresence } from 'framer-motion';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import earthLineMade from '@/public/images/earthline-made.svg';
-import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import NavPage from '@/app/components/Header/nav/NavPage';
 import MagneticPage from '@/app/common/Magnetic/MagneticPage';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import RoundedPage from '@/app/common/RoundedButton/RoundedButtonPage';
 import handoutStudios from '@/public/Assets/logo/compressed/final stamp 1.svg';
 import { ResponsiveImage } from '@/app/common/ResponsiveImage/ResponsiveImage';
@@ -120,14 +119,14 @@ export default function HeaderPage({caller}: HeaderPageProps) {
 							{/* <a onClick={() => { const aboutSection = document.getElementById('contact'); if (aboutSection) aboutSection.scrollIntoView({ behavior: 'smooth' }); }} style={{ cursor: 'pointer' }}>
 								{`Contact`}
 							</a> */}
-							<Link className={styles.links} href={`/${caller}/#contact`} onClick={() => window.scrollTo({ behavior: 'smooth' })}> {`Contact`} </Link>
+							<Link className={styles.links} href={`/${caller}/contact`} onClick={() => window.scrollTo({ behavior: 'smooth' })}> {`Contact`} </Link>
 							<div className={styles.indicator}></div>
 						</div>
 					</MagneticPage>
 				</div>
 			</div>
 			<div ref={button} className={scrollY > 1150 && scrollY < 5900 || scrollY > 7050 ? caller === "earthline-made" ? "" : styles.headerButtonContainerD : caller === "earthline-made" ? "" : styles.headerButtonContainerHD}>
-				<RoundedPage caller={caller} backgroundColor={scrollY > 1150 && scrollY < 5900 || scrollY > 7050 ? caller === "earthline-made" ? "" : "#7a0007" : caller === "earthline-made" ? "" : "#FFFFFF"} onClick={() => { setIsActive(!isActive) }} className={`${styles.button}`}>
+				<RoundedPage caller={caller} backgroundColor={scrollY > 1150 && scrollY < 5900 || scrollY > 7050 ? "#7a0007" : "#FFFFFF"} onClick={() => { setIsActive(!isActive) }} className={`${styles.button}`}>
 					<div className={`${styles.burger} ${isActive ? styles.burgerActive : ""}`}></div>
 				</RoundedPage>
 			</div>
