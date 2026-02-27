@@ -5,7 +5,7 @@ import useScreenSize from '@/app/lib/useScreenSize';
 import handoutLogo from '@/public/images/background.svg';
 import BrandPage from '@/app/common/BrandCard/BrandPage';
 import { Loading } from '@/app/shared/components/Loading/Loading';
-import earthlineLogo from '@/public/images/earthline_only_logo.png';
+import earthlineLogo from '@/public/images/earthline_made_landing_image_mobile.png';
 
 export default function Homes() {
 
@@ -37,8 +37,8 @@ export default function Homes() {
 					<Loading setIsLoading={setIsLoading} />
 				:
 					(
-						<div className="min-h-screen w-full flex flex-col lg:flex-row items-center justify-center gap-6 sm:gap-10 lg:gap-16 px-4 sm:px-8 lg:px-16 py-10 bg-linear-to-r from-[#e1c292] to-[#7a0007]">
-							{ brandPageData.map((data: any, index: number) => <BrandPage key={index} logo={data.logo} alt={data.alt} para={data.para} caller={data.caller} screenSize={data.screenSize} /> ) }
+						<div className="h-screen w-screen bg-[#EDE8E4] flex items-center justify-center overflow-hidden relative">
+							<div className="absolute z-20 scale-100"> <BrandPage /> </div>
 						</div>
 					)
 			}

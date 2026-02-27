@@ -78,13 +78,6 @@ const CardPage = () => {
 					cards.forEach((card: any) => {
 						const rect = card.getBoundingClientRect();
 						const distance = rect.left + rect.width / 2 - center;
-
-						// only desktop
-						// const base = window.innerWidth < 768 ? 450 : 900;
-						// const rotation = distance * -0.05;
-						// const scale = 1 - Math.min(Math.abs(distance) / base, 0.35);
-						// const blur = Math.min(Math.abs(distance) / (base / 2), 6);
-
 						// with Mobile and Tablet
 						const isMobile = window.innerWidth < 768;
 						const isTablet = window.innerWidth < 1024;
@@ -92,10 +85,8 @@ const CardPage = () => {
 						const rotation = isMobile ? distance * -0.025 : distance * -0.05;
 						const scale = 1 - Math.min(Math.abs(distance) / base, isMobile ? 0.25 : 0.35);
 						const blur = Math.min(Math.abs(distance) / (base / 2), isMobile ? 3 : 6);
-
 						if (Math.abs(distance) < 120) card.classList.add(styles.centerCard);
 						else card.classList.remove(styles.centerCard);
-
 						gsap.set(card, { rotateY: rotation, scale: scale, z: scale * 120, filter: `blur(${blur}px)`, });
 					});
 				},

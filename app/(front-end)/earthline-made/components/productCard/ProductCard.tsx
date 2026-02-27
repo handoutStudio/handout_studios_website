@@ -7,7 +7,6 @@ import Modal from "@mui/material/Modal";
 import Button from "@mui/material/Button";
 import Divider from '@mui/material/Divider';
 import IconButton from "@mui/material/IconButton";
-import CloseIcon from '@mui/icons-material/Close';
 import CardHeader from "@mui/material/CardHeader";
 import CardContent from "@mui/material/CardContent";
 import CardActions from "@mui/material/CardActions";
@@ -83,24 +82,26 @@ export default function ProductCard({ product, isTouch, onDelete, caller }: { pr
 			</motion.div>
 
 			{/* MODAL */}
-			<Modal open={open} onClose={() => setOpen(false)} closeAfterTransition slotProps={{ backdrop: { sx: { backdropFilter: "blur(6px)", backgroundColor: "rgba(0,0,0,0.5)", }, }, }}>
-				<Card sx={{ position: { xs: "fixed", sm: "absolute", }, top: { xs: 0, sm: "50%", }, left: { xs: 0, sm: "50%", }, transform: { xs: "none", sm: "translate(-50%, -50%)", }, width: { xs: "100%", sm: "92%", md: "85%", lg: "75%", xl: "65%", }, height: { xs: "100%", sm: "65vh", }, maxWidth: "1300px", borderRadius: { xs: 0, sm: 3, }, display: "flex", flexDirection: "column", overflow: "hidden", }}>
-					<CardHeader title={product.folder} action={ <IconButton onClick={() => setOpen(false)}> <CloseIcon /> </IconButton> } sx={{ position: "sticky", top: 0, zIndex: 2, backgroundColor: "background.paper", borderBottom: "1px solid rgba(0,0,0,0.08)", px: { xs: 1.5, sm: 2.5 }, py: { xs: 1.2, sm: 1.5 }, "& .MuiCardHeader-title": { fontWeight: 600, fontSize: { xs: "1rem", sm: "1.2rem", md: "1.3rem", lg: "1.4rem", }, }, }} />
-					<CardContent sx={{ display: "flex", justifyContent: "space-around", alignContent: "center", overflowY: "auto", WebkitOverflowScrolling: "touch", px: { xs: 1.5, sm: 2.5, md: 3 }, py: { xs: 1.5, sm: 2 }, }}>
-						{/* <div className={`flex flex-col items-center justify-center h-full w-1/2`}>
-							<span>
-								{`A Very Long Description A Very Long Description A Very Long Description A Very Long Description A Very Long Description A Very Long Description A Very Long Description A Very Long Description A Very Long Description A Very Long Description A Very Long Description A Very Long Description A Very Long Description A Very Long Description A Very Long Description `}
-							</span>
-						</div> */}
-						<Masonry columns={{ xs: 1, sm: 2, md: 3, lg: 4, }} spacing={{ xs: 1.5, sm: 2, md: 2.5, }}>
-							{ images.map((img, index) => <div key={img.public_id ?? index}> <motion.img src={img.url} alt={product.product} style={{ width: "100%", borderRadius: 16, objectFit: "cover", }} transition={{ duration: 0.4 }} whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.98 }} /> </div> ) }
-						</Masonry>
-					</CardContent>
-					<Divider />
-					<CardActions sx={{ p: { xs: 1.5, sm: 2 }, justifyContent: "flex-end", display: { xs: "none", sm: "flex" }, backgroundColor: "background.paper", }}>
-						<Button variant="contained" onClick={() => setOpen(false)} sx={{ backgroundColor: "#564F47", color: "#EDE8E4", px: { sm: 3, md: 4 }, py: 1, fontSize: { sm: "0.9rem", md: "1rem" }, }}> {`Close`} </Button>
-					</CardActions>
-				</Card>
+			<Modal open={open} onClose={() => setOpen(false)} closeAfterTransition slotProps={{ backdrop: { sx: { backdropFilter: "blur(6px)", backgroundColor: "rgba(0,0,0,0.5)", }, }, }} disableScrollLock>
+				<div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100%", width: "100%", padding: "1rem", }}>
+					<Card sx={{ width: { xs: "100%", sm: "90%", md: "80%", lg: "70%", xl: "65%", }, height: { xs: "100dvh", sm: "85vh", }, maxWidth: "1300px", borderRadius: { xs: 0, sm: 3, }, display: "flex", flexDirection: "column", overflow: "hidden", }}>
+						<CardHeader title={product.folder} sx={{ position: "sticky", top: 0, zIndex: 2, backgroundColor: "#EDE8E4", borderBottom: "1px solid rgba(0,0,0,0.08)", px: { xs: 1.5, sm: 2.5 }, py: { xs: 1.2, sm: 1.5 }, "& .MuiCardHeader-title": { fontWeight: 600, fontSize: { xs: "1rem", sm: "1.2rem", md: "1.3rem", lg: "1.4rem", }, }, }} />
+						<CardContent sx={{ display: "flex", justifyContent: "space-around", alignContent: "center", overflowY: "auto", WebkitOverflowScrolling: "touch",  flex: 1, minHeight: 0, px: { xs: 1.5, sm: 2.5, md: 3 }, py: { xs: 1.5, sm: 2 },}}>
+							{/* <div className={`flex flex-col items-center justify-center h-full w-1/2`}>
+								<span>
+									{`A Very Long Description A Very Long Description A Very Long Description A Very Long Description A Very Long Description A Very Long Description A Very Long Description A Very Long Description A Very Long Description A Very Long Description A Very Long Description A Very Long Description A Very Long Description A Very Long Description A Very Long Description `}
+								</span>
+							</div> */}
+							<Masonry columns={{ xs: 1, sm: 2, md: 2, lg: 3 }} spacing={{ xs: 3, sm: 2.5, md: 2, lg: 1.5 }}>
+								{ images.map((img, index) => <div key={img.public_id ?? index}> <motion.img src={img.url} alt={product.product} style={{ width: "100%", borderRadius: 16, objectFit: "cover", }} transition={{ duration: 0.4 }} whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.98 }} /> </div> ) }
+							</Masonry>
+						</CardContent>
+						<Divider />
+						<CardActions sx={{ p: { xs: 1.5, sm: 2 }, justifyContent: "flex-end", display: "flex", backgroundColor: "#EDE8E4", }}>
+							<Button variant="contained" onClick={() => setOpen(false)} sx={{ backgroundColor: "#564F47", color: "#EDE8E4", px: { sm: 3, md: 4 }, py: 1, fontSize: { xs: "0.4rem", sm: "0.6rem", md: "0.8rem" , lg: "1rem" }, }}> {`Close`} </Button>
+						</CardActions>
+					</Card>
+				</div>
 			</Modal>
 		</>
 	);

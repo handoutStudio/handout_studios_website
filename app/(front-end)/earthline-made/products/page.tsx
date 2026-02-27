@@ -88,8 +88,8 @@ export default function Page() {
 
 	return (
 		<>
+			<AnimatePresence mode='wait'> {isLoading && <PreloaderPage words={ words } caller='earthline-made' />} </AnimatePresence>
 			<div className={isLoading ? '' :styles.main}>
-				<AnimatePresence mode='wait'> {isLoading && <PreloaderPage words={ words } caller='earthline-made' />} </AnimatePresence>
 				<div className={styles.titleMain}>
 					<span className={styles.title}> { `Products` } </span>
 					<div> <Button variant="contained" onClick={handleOpen}>{`How to Order`}</Button> </div>
