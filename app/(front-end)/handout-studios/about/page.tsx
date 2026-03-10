@@ -11,7 +11,7 @@ import { useScroll, useTransform, motion, AnimatePresence, TargetAndTransition }
 
 // Photos Import
 import Pic1 from '@/public/images/background.svg';
-import Pic8 from '@/public/images/earthline-made.svg';
+import Pic8 from '@/public/images/earthline_made_landing_image_mobile.png';
 import Pic2 from '@/public/images/owners/L-A-R-R.jpeg';
 import Pic3 from '@/public/images/owners/L-R-R-A.jpeg';
 import Pic4 from '@/public/images/owners/U-R-D-A.jpeg';
