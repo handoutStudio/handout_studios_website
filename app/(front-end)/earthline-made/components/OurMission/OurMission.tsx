@@ -45,18 +45,18 @@ const OurMission = () => {
         <div className={`h-svh`}>
             <AnimatePresence mode='wait'> {isLoading && <PreloaderPage words={words} caller='earthline-made' />} </AnimatePresence>
             <>
-                <div className="reveal bg-[#EDE8E4] text-[#564F47]!">
+                <div className="reveal bg-[#EDE8E4]!">
                     <div className="slides">
-                        <section>
-                            <h3 className={`text-start`}> <a href='#'> {`Our Mission`} </a> </h3>
+                        <section className={`bg-[#EDE8E4]!`}>
+                            <h3 className={`text-start`}> <a href='#' className={`text-[#564F47]!`}> {`Our Mission`} </a> </h3>
                             {
                                 cardContents.map((cardContent: any, i: number) => {
                                     return (
                                         <div key={i}>
                                             <div className={`text-start`}>
-                                                <h4 className='text-[#564F47]'>{ cardContent.srno + ' ' + cardContent.title }</h4>
-                                                <p className={`text-lg`}>{ cardContent.caption }</p>
-                                                <p className={`text-xl`}>{ cardContent.body }</p>
+                                                <h4 className='text-[#564F47]!'>{ cardContent.srno + ' ' + cardContent.title }</h4>
+                                                <p className={`text-lg text-[#564F478A]!`}>{ cardContent.caption }</p>
+                                                <p className={`text-xl text-[#564F47]!`}>{ cardContent.body }</p>
                                             </div>
                                             <Divider />
                                         </div>

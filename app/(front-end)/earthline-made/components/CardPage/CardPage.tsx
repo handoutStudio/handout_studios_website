@@ -3,6 +3,7 @@
 
 import { gsap } from "gsap";
 import Card from "@mui/material/Card";
+import { useRouter } from "next/navigation";
 import CardMedia from "@mui/material/CardMedia";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
@@ -10,9 +11,11 @@ import styles from "@/app/(front-end)/earthline-made/components/CardPage/style.m
 
 gsap.registerPlugin(ScrollTrigger);
 
-type ProductType = { folder: string; product: string; images: { url: string; public_id: string }[]; };
+type ProductType = { folder: string; product: string; images: { secure_url: string; public_id: string }[]; };
 
 const CardPage = () => {
+
+	const router = useRouter();
 	const trackRef = useRef<HTMLDivElement>(null);
 	const containerRef = useRef<HTMLDivElement>(null);
 
@@ -29,22 +32,24 @@ const CardPage = () => {
 		return shuffled;
 	};
 
-	// 🔥 Fetch products
-	useEffect(() => {
-		const fetchProducts = async () => {
-			try {
-				const res = await fetch("/admin/earthline-made/api/getAllProducts?limit=20");
-				const data = await res.json();
-				setProducts(data);
-			} catch (error) { console.error("Failed to fetch products:", error); }
-		};
-		fetchProducts();
+	useLayoutEffect(() => {
+			const fetchProducts = async () => {
+				try {
+					const res = await fetch("/admin/earthline-made/api/getAllProducts?limit=all");
+					const data = await res.json();
+					const productsArray = Array.isArray(data) ? data : data.products || data.data || [];
+					setProducts(productsArray);
+				}
+				catch (error) { console.error("Failed to fetch products:", error); }
+			};
+	
+			fetchProducts();
 	}, []);
 
 	// Flatten all product images into one array
 	useEffect(() => {
 		if (!products.length) return;
-		const flattened = products.flatMap((p) => p.images.map((img) => img.url) );
+		const flattened = products.flatMap((p) => p.images.map((img) => img.secure_url) );
 		setAllImages(shuffleArray(flattened));
 	}, [products]);
 
@@ -116,7 +121,12 @@ const CardPage = () => {
 		<div ref={containerRef} className={styles.container}>
 			<div className={styles.stickyWrapper}>
 				<div ref={trackRef} className={styles.track}>
-					{ allImages.map((img, index) => ( <Card key={index} className={styles.card} elevation={5}> <CardMedia component="img" image={img} alt={`image_${index}`} /> </Card> )) }
+					{
+						allImages.map((img, index) => {
+							const product = products.find(p => p.images.some(i => i.secure_url === img) );
+							return <Card key={index} className={styles.card} elevation={5} onClick={() => { if (!product) return; const slug = `${product.folder}-${product.product}`; router.push(`/earthline-made/products?product=${slug}`); }} sx={{ cursor: "pointer" }}> <CardMedia component="img" image={img} alt={`image_${index}`} /> </Card>;
+						})
+					}
 				</div>
 			</div>
 		</div>

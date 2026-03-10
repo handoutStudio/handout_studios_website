@@ -5,7 +5,7 @@
 	.stickyWrapper {
 		position: sticky; top: 0; height: 100svh; overflow: hidden; display: flex; align-items: center; perspective: 1200px;
 		@media (max-width: 1024px) { perspective: 900px; }
-		@media (max-width: 768px) { perspective: 200px; padding-inline: 1rem; }
+		@media (max-width: 768px) { perspective: 400px; padding-inline: 1rem; }
 		.track {
 			gap: 3rem; display: flex; gap: clamp(1rem, 3vw, 3rem); transform-style: preserve-3d; will-change: transform;
 			@media (max-width: 1024px) { gap: 2rem; }
