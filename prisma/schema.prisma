@@ -184,4 +184,5 @@ model ContactUs {
   	brand     Brand    // Hidden field (EARTHLINE_MADE or HANDOUT_STUDIOS)
 	isRead    Boolean  @default(false)
 	createdAt DateTime @default(now())
+	isDeleted Boolean?  @default(false)
 }
