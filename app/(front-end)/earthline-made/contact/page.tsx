@@ -8,8 +8,8 @@ import PreloaderPage from '@/app/components/Preloader/PreloaderPage';
 
 export default function Page() {
     const [isLoading, setIsLoading] = useState(true);
-    
-    const words: string[] = [ "Our Products...!", "Nos Produits...!", "I Nostri Prodotti...!", "Nossos Produtos...!", "Nuestros Productos...!", "Unsere Produkte...!", "Onze Producten...!", "Våra Produkter...!", "私たちの製品...!", "منتجاتنا...!", "우리의 제품...!", "我们的产品...!", "हमारे उत्पाद...!", "અમારા ઉત્પાદનો...!"];
+
+    const words: string[] = [ "Contact Us...!", "Contactez-nous...!", "Contattaci...!", "Entre em Contato...!", "Contáctanos...!", "Kontaktieren Sie uns...!", "Neem contact met ons op...!", "Kontakta oss...!", "お問い合わせ...!", "اتصل بنا...!", "문의하기...!", "联系我们...!", "संपर्क करें...!", "અમારો સંપર્ક કરો...!" ];
 
     useEffect( () => {
         const lenis = new Lenis()
