@@ -6,6 +6,7 @@ import Masonry from "@mui/lab/Masonry";
 import Modal from "@mui/material/Modal";
 import Button from "@mui/material/Button";
 import Divider from '@mui/material/Divider';
+import { useSearchParams } from "next/navigation";
 import IconButton from "@mui/material/IconButton";
 import CardHeader from "@mui/material/CardHeader";
 import CardContent from "@mui/material/CardContent";
@@ -14,31 +15,34 @@ import { useState, useEffect, useRef } from "react";
 import DeleteIcon from '@mui/icons-material/Delete';
 
 
-type ProductType = { folder: string; product: string; images: { url: string; public_id: string }[]; };
+type ProductType = { folder: string; product: string; images: { secure_url: string; public_id: string }[]; };
 
+export default function ProductCard({ product, isTouch, onDelete, caller, pageReady, slideTick }: { product: ProductType; isTouch: boolean; onDelete: () => void; caller: string; pageReady: boolean; slideTick: number; }) {
 
-export default function ProductCard({ product, isTouch, onDelete, caller }: { product: ProductType; isTouch: boolean; onDelete: () => void; caller: string; }) {
+	// read product slug from URL
+	const searchParams = useSearchParams();
+	const productSlug = searchParams.get("product");
+	const slug = `${product.folder}-${product.product}`;
 
 	const [open, setOpen] = useState(false);
 	const [isPaused, setIsPaused] = useState(false);
 	const [currentIndex, setCurrentIndex] = useState(0);
-	const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
-	const slideDuration = 3000;
-
-	const images = product.images ?? [];
+	const images = Array.isArray(product.images) ? product.images : [];
 	const productName = product.product.replace(/-/g, " ");
 
-	// Auto slide
 	useEffect(() => {
 		if (images.length <= 1 || isPaused) return;
 
-		intervalRef.current = setInterval(() => {
-			setCurrentIndex((prev) => prev === images.length - 1 ? 0 : prev + 1 );
-		}, slideDuration);
+		setCurrentIndex((prev) =>
+			prev === images.length - 1 ? 0 : prev + 1
+		);
+	}, [slideTick]);
 
-		return () => { if (intervalRef.current) clearInterval(intervalRef.current); };
-	}, [images.length, isPaused]);
+	useEffect(() => {
+		if (!pageReady) return;
+		if (productSlug === slug) setOpen(true);
+	}, [productSlug, slug, pageReady]);
 
 	// Reset index if image list changes
 	useEffect(() => setCurrentIndex(0), [images.length]);
@@ -54,7 +58,7 @@ export default function ProductCard({ product, isTouch, onDelete, caller }: { pr
 							(
 								images.map((img, i) => (
 									<div key={i} style={{ flex: `0 0 ${100 / images.length}%`, height: "100%", }}>
-										<motion.img src={img.url} alt={product.product} animate={{ scale: currentIndex === i ? 1.05 : 1 }} transition={{ duration: 1.5 }} style={{ width: "100%", height: "100%", objectFit: "cover", }} />
+										<motion.img src={img.secure_url} alt={product.product} animate={{ scale: currentIndex === i ? 1.05 : 1 }} transition={{ duration: 1.5 }} style={{ width: "100%", height: "100%", objectFit: "cover", }} />
 									</div>
 								))
 							)
@@ -64,7 +68,7 @@ export default function ProductCard({ product, isTouch, onDelete, caller }: { pr
 				</div>
 
 				{/* Progress Bar */}
-				{!isPaused && images.length > 1 && ( <motion.div key={currentIndex} initial={{ width: 0 }} animate={{ width: "100%" }} transition={{ duration: slideDuration / 1000, ease: "linear" }} style={{ position: "absolute", bottom: 0, left: 0, height: "3px", background: "#EDE8E4", }} /> )}
+				{!isPaused && images.length > 1 && ( <motion.div key={currentIndex} initial={{ width: 0 }} animate={{ width: "100%" }} transition={{ ease: "linear" }} style={{ position: "absolute", bottom: 0, left: 0, height: "3px", background: "#EDE8E4", }} /> )}
 
 				{/* Overlay */}
 				<motion.div
@@ -93,7 +97,7 @@ export default function ProductCard({ product, isTouch, onDelete, caller }: { pr
 								</span>
 							</div> */}
 							<Masonry columns={{ xs: 1, sm: 2, md: 2, lg: 3 }} spacing={{ xs: 3, sm: 2.5, md: 2, lg: 1.5 }}>
-								{ images.map((img, index) => <div key={img.public_id ?? index}> <motion.img src={img.url} alt={product.product} style={{ width: "100%", borderRadius: 16, objectFit: "cover", }} transition={{ duration: 0.4 }} whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.98 }} /> </div> ) }
+								{ images.map((img, index) => <div key={img.public_id ?? index}> <motion.img src={img.secure_url} alt={product.product} style={{ width: "100%", borderRadius: 16, objectFit: "cover", }} transition={{ duration: 0.4 }} whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.98 }} /> </div> ) }
 							</Masonry>
 						</CardContent>
 						<Divider />

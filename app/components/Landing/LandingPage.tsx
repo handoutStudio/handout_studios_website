@@ -14,7 +14,7 @@ export default function LandingPage() {
 	// check if the screen is Mobile or Tablet or Desktop
 	const screenSize = useScreenSize();
 
-	const isMobile = screenSize?.width && screenSize.width <= 768;
+	const isMobile = screenSize?.width && screenSize.width <= 830;
 	const isTablet = screenSize?.width && screenSize.width <= 1024;
 	const isDesktop = screenSize?.width && screenSize.width >= 1025;
 
@@ -35,9 +35,6 @@ export default function LandingPage() {
 						:
 							null
 			}
-			<article  className={ isMobile ? styles.articleMobile : isTablet ? styles.articleTablet : styles.article }>
-				{`Sustainable art for timeless space.`}
-			</article>
 		</motion.main>
 	)
 }

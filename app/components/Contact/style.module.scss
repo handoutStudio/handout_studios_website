@@ -121,22 +121,35 @@
 			span {
 				display: flex;
 				align-items: center;
-				.imageContainer { width: 10vw; height: 20vh; position: relative; border-radius: 5vw; overflow: hidden;
-					img { object-fit: contain; }
+				.imageContainer {
+					.copyright {
+						position: relative;
+						width: clamp(8vw, 8vw, 9vw);
+						aspect-ratio: 1;
+						border-radius: 50%;
+						overflow: hidden;
+						img { width: 100%; height: 100%; object-fit: cover; object-position: -3.5vw -.01vw; }
+					}
 					p { margin: 0px; transition: all 0.8s cubic-bezier(0.76, 0, 0.24, 1); }
 					&:hover { .copyright { transform: scale(1.1); } }
 				}
-				h2 { margin-left: 0.3em; }
+				h2 { margin-left: 0.3em; font-size: 3vw; text-align: start; }
 			}
-			h2 { font-size: 4vw; margin: 0px; font-weight: 300; }
+			h2 {  font-size: 2vw; margin: 0px; font-weight: 300; width: 38%; text-align: end; }
 			.buttonContainer { visibility: hidden; }
 
 			.imageContainerOtherVenture {
-				display: flex; flex-direction: row; justify-content: end; align-items: center; gap: 1vw; position: fixed; top: 6vh; right: 5vw;
-				img { width: 20%; height: 20%; object-fit: contain; }
+				display: flex; flex-direction: row; justify-content: end; align-items: center; gap: 1vw; position: fixed; top: 20vh; right: 6vw; display: none;
+				img { width: 15%; height: 15%; object-fit: contain; }
 			}
 		}
-		.nav { display: flex; gap: 1.5vw; margin-top: 7vh; margin-left: 10vw; margin-right: 12vw; }
+		.nav { display: flex; gap: 1.5vw; margin-top: 7vh; margin-left: 10vw; margin-right: 20vw; justify-content: space-between;
+			.reachus { display: flex; gap: 1vw; align-items: flex-end;
+				@media (max-width: 1500px ) {
+					flex-direction: column;
+				}
+			}
+		}
 		.info { display: flex; justify-content: space-between; margin-top: 20vh; padding: 2vw;
 			div { display: flex; gap: 1vw; align-items: flex-end;
 				a, p, h3 { padding: 0.03vw; cursor: pointer; }
