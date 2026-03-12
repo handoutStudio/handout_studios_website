@@ -4,14 +4,10 @@ import gsap from "gsap";
 import Image from "next/image";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
-import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { useSearchParams } from "next/navigation";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import ButtonGroup from "@mui/material/ButtonGroup";
 import { useState, useEffect, useRef } from "react";
-import DeleteIcon from '@mui/icons-material/Delete';
-import CreateIcon from '@mui/icons-material/Create';
 import { AnimatePresence, motion } from "framer-motion";
 import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
 
@@ -21,7 +17,7 @@ gsap.registerPlugin(ScrollTrigger);
 
 type ProductType = { folder: string; product: string; description: string; images: { secure_url: string; public_id: string }[]; };
 
-export default function ProductCard({ product, onEdit, onDelete, caller, pageReady, index }: { product: ProductType; onEdit: () => void; onDelete: () => void; caller: string; pageReady: boolean; index: number; }) {
+export default function ProductCard({ product, pageReady, index }: { product: ProductType; pageReady: boolean; index: number; }) {
 
 	// read product slug from URL
 	const searchParams = useSearchParams();
@@ -72,18 +68,6 @@ export default function ProductCard({ product, onEdit, onDelete, caller, pageRea
 							<ArrowRightAltIcon fontSize="large" className={`text-[#564F47]`} />
 						</span>
 					</div>
-					{
-						caller === "admin" && (
-							<ButtonGroup variant="text" disableElevation sx={{ backgroundColor: "#EDE8E4", borderRadius: "10px", overflow: "hidden", "& .MuiButtonGroup-grouped": { borderColor: "#564F47" } }}>
-								<Button sx={{ color: "#564F47 !important", backgroundColor: "transparent !important", fontWeight: 500, letterSpacing: ".04em", transition: "all .25s ease", "&:hover": { backgroundColor: "#564F47 !important", color: "#EDE8E4 !important" } }} startIcon={ <CreateIcon /> } onClick={(e) => { e.stopPropagation(); onEdit(); }}>
-									{`Edit`}
-								</Button>
-								<Button sx={{ color: "#7a0007 !important", backgroundColor: "transparent !important", fontWeight: 500, letterSpacing: ".04em", transition: "all .25s ease", "&:hover": { backgroundColor: "#7a0007 !important", color: "#EDE8E4 !important" } }} endIcon={ <DeleteIcon /> } onClick={(e) => { e.stopPropagation(); onDelete(); }}>
-									{`Delete`}
-								</Button>
-							</ButtonGroup>
-						)
-					}
 				</Box>
 			</Box>
 

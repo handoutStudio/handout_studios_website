@@ -47,11 +47,10 @@ export default function HeaderPage() {
 
 	return (
 		<>
-			<div ref={header} className={styles.headerE}>
+			<div ref={header} className={`${styles.headerE} ${scrollY > 200 ? styles.scrolled : ""}`}>
 				<div className={styles.logo} onClick={() => window.location.pathname !== '/admin' && window.location.assign('/admin')} style={{ cursor: 'pointer' }}>
 					<div className={styles.name}>
 						<p className={styles.handOut}>{"Welcome"}</p>
-						{/* <p className={styles.studios}>{"Admin!"}</p> */}
 						<p className={styles.studios}> { status === "loading" ? "..." : fullName ?? "Admin" } </p>
 					</div>
 
