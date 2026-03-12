@@ -10,7 +10,6 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import NavPage from '@/app/components/Header/nav/NavPage';
 import MagneticPage from '@/app/common/Magnetic/MagneticPage';
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
-import RoundedPage from '@/app/common/RoundedButton/RoundedButtonPage';
 
 
 
@@ -81,11 +80,6 @@ export default function HeaderPage() {
 						</div>
 					</MagneticPage>
 				</div>
-			</div>
-			<div ref={button} className={scrollY > 1150 && scrollY < 5900 || scrollY > 7050 ? styles.headerButtonContainerD : styles.headerButtonContainerHD}>
-				<RoundedPage backgroundColor={scrollY > 1150 && scrollY < 5900 || scrollY > 7050 ? "#7a0007" : "#FFFFFF"} onClick={() => { setIsActive(!isActive) }} className={`${styles.button}`}>
-					<div className={`${styles.burger} ${isActive ? styles.burgerActive : ""}`}></div>
-				</RoundedPage>
 			</div>
 			<AnimatePresence mode="wait"> {isActive && <NavPage scrollY={scrollY} />} </AnimatePresence>
 		</>

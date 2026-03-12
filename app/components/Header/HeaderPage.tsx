@@ -110,7 +110,7 @@ export default function HeaderPage({caller}: HeaderPageProps) {
 					</MagneticPage>
 				</div>
 			</div>
-			<div ref={button} className={scrollY > 1150 && scrollY < 5900 || scrollY > 7050 ? caller === "earthline-made" ? "" : styles.headerButtonContainerD : caller === "earthline-made" ? "" : styles.headerButtonContainerHD}>
+			<div ref={button} className={scrollY > 1150 && scrollY < 5900 || scrollY > 7050 ? caller === "earthline-made" ? "hidden!" : styles.headerButtonContainerD : caller === "earthline-made" ? "hidden" : styles.headerButtonContainerHD}>
 				<RoundedPage caller={caller} backgroundColor={scrollY > 1150 && scrollY < 5900 || scrollY > 7050 ? "#7a0007" : "#FFFFFF"} onClick={() => { setIsActive(!isActive) }} className={`${styles.button}`}>
 					<div className={`${styles.burger} ${isActive ? styles.burgerActive : ""}`}></div>
 				</RoundedPage>

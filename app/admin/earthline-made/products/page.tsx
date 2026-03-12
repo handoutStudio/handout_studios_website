@@ -3,18 +3,23 @@
 import Lenis from 'lenis';
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
+import Grid from '@mui/material/Grid';
 import Masonry from '@mui/lab/Masonry';
 import Button from '@mui/material/Button';
 import Avatar from '@mui/material/Avatar';
+import AddIcon from '@mui/icons-material/Add';
 import MenuItem from "@mui/material/MenuItem";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
+import CardActions from '@mui/material/CardActions';
 import CardContent from "@mui/material/CardContent";
 import SearchIcon from "@mui/icons-material/Search";
 import { AnimatePresence, motion } from "framer-motion";
 import InputAdornment from "@mui/material/InputAdornment";
+import Inventory2Icon from '@mui/icons-material/Inventory2';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import { useLayoutEffect, useState, useEffect } from "react";
+import PhotoLibraryIcon from '@mui/icons-material/PhotoLibrary';
 import PreloaderPage from '@/app/components/Preloader/PreloaderPage';
 import styles from "@/app/(front-end)/earthline-made/products/style.module.scss";
 import HowToOrder from '@/app/(front-end)/earthline-made/components/HowToOrder/HowToOrder';
@@ -22,6 +27,7 @@ import AddEditModal from "@/app/admin/earthline-made/components/AddEditModal/Add
 import AdminProductCard from '@/app/admin/earthline-made/components/AdminProductCard/AdminProductCard';
 import CreateFolderModal from "@/app/admin/earthline-made/components/CreateFolderModal/CreateFolderModal";
 import DeleteConfirmation from "@/app/admin/earthline-made/components/DeleteConfirmation/DeleteConfirmation";
+
 
 type ProductType = { id: string; folder: string; product: string; description: string; images: { secure_url: string; public_id: string }[]; };
 
@@ -299,11 +305,13 @@ export default function Page() {
 		<>
 			<AnimatePresence mode='wait'> {isLoading && <PreloaderPage words={ words } caller='earthline-made' />} </AnimatePresence>
 			<div className={styles.mainAdmin}>
-				<div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6 px-6 mb-8">
-					<h1 className="text-3xl font-semibold tracking-tight"> {`Shop Management`} </h1>
-				</div>
+				<Box className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 px-6 mb-10">
+					<Typography variant="h4" className="font-semibold text-[#564F47] md:text-3xl! text-lg!"> {`Product Management`} </Typography>
+					<Button variant="contained" onClick={handleOpenP} startIcon={<AddIcon />} sx={{ backgroundColor: "#564F47", "&:hover": { backgroundColor: "#3e3731" } }}> {`Add Product`} </Button>
+				</Box>
+
 				<div className={styles.howToOrder}>
-					<Avatar className={`bg-[#564F47]! text-[#EDE8E4]! cursor-pointer! ${showFloatingFilterScroll ? "" : "hidden!"}`} onClick={ () => setShowFloatingFilter(!showFloatingFilter) }>
+					<Avatar className={`bg-[#564F47]! text-[#EDE8E4]! cursor-pointer! shadow-lg ${showFloatingFilterScroll ? "" : "hidden!"}`} onClick={ () => setShowFloatingFilter(!showFloatingFilter) }>
 						<FilterListIcon />
 					</Avatar>
 				</div>
@@ -311,62 +319,77 @@ export default function Page() {
 				<AnimatePresence>
 					{
 						showFloatingFilter && showFloatingFilterScroll && (
-							<Box component={motion.div} initial={{opacity:0,y:-40}} animate={{opacity:1,y:0}} exit={{opacity:0,y:-40}} transition={{duration:.25}} className="fixed top-6 left-1/2 -translate-x-1/2 z-40 shadow-xl rounded-xl p-3 flex flex-col sm:flex-row gap-3 items-stretch sm:items-center w-[92%] sm:w-auto max-w-180" sx={{ backgroundColor:"#564F47", backdropFilter:"blur(10px)", border:"1px solid rgba(0,0,0,0.1)" }}>
-								<Box className="flex flex-col md:flex-row gap-3 items-stretch md:items-center">
-									{/* SEARCH */}
-									<TextField size="small" placeholder="Search..." value={search} onChange={(e)=>setSearch(e.target.value)} fullWidth sx={{ backgroundColor:"#fff", borderRadius:"6px", minWidth:{sm:220} }} InputProps={{ startAdornment:( <InputAdornment position="start"> <SearchIcon/> </InputAdornment> ) }} />
-									{/* FOLDER FILTER */}
-									<TextField select size="small" value={activeFolder} onChange={(e)=>setActiveFolder(e.target.value)} fullWidth sx={{ backgroundColor:"#fff", borderRadius:"6px", minWidth:{sm:180} }}>
-										<MenuItem value="all">{`All Folders`}</MenuItem>
-										{ folderOptions.map(folder=> <MenuItem key={`folder-${folder}`} value={folder}> {folder} </MenuItem> ) }
-									</TextField>
-									<Button variant="contained" onClick={()=>{ resetStates(); }} sx={{ backgroundColor:"#EDE8E4", color:"#564F47", fontWeight:600, minWidth:"110px", "&:hover":{ backgroundColor:"#dcd5d0" } }}> {`Reset`} </Button>
-								</Box>
-								{/* SECONDARY ACTION - ADD PRODUCT */}
-								<Box className="flex justify-end">
-									<Button variant="contained" onClick={handleOpenP} sx={{ backgroundColor:"#EDE8E4", color:"#564F47", fontWeight:600, px:3, "&:hover":{ backgroundColor:"#dcd5d0" } }}> {`Add Product`} </Button>
-								</Box>
+							<Box component={motion.div} initial={{opacity:0,y:-30}} animate={{opacity:1,y:0}} exit={{opacity:0,y:-30}} transition={{duration:.25}} className="fixed top-6 left-1/2 -translate-x-1/2 z-50">
+								<Card className="rounded-2xl shadow-xl px-4 py-3 flex flex-col md:flex-row items-center gap-3" sx={{ background:"#564F47" }}>
+									<CardContent className="flex flex-col gap-3">
+										<TextField size="small" placeholder="Search..." value={search} onChange={(e)=>setSearch(e.target.value)} sx={{background:"#fff",borderRadius:"8px"}} />
+										<TextField select size="small" value={activeFolder} onChange={(e)=>setActiveFolder(e.target.value)} sx={{background:"#fff",borderRadius:"8px"}}>
+											<MenuItem value="all">All Folders</MenuItem>
+											{ folderOptions.map(folder => <MenuItem key={folder} value={folder}>{folder}</MenuItem> ) }
+										</TextField>
+									</CardContent>
+									<CardActions className={`md:flex md:gap-2 md:flex-col md:items-center`}>
+										<Button variant="contained" onClick={handleOpenP} sx={{ background:"#EDE8E4 !important", color:"#564F47 !important", "&:hover":{background:"#ddd6d0 !important"} }}> {`Add Product`} </Button>
+										<Button variant="contained" onClick={resetStates} sx={{ background:"#EDE8E4 !important", color:"#564F47 !important", "&:hover":{background:"#ddd6d0 !important"} }}> {`Reset`} </Button>
+									</CardActions>
+								</Card>
 							</Box>
 						)
 					}
 				</AnimatePresence>
 
-				<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6">
-					<Card className="shadow-md rounded-xl bg-[#564F471F]! text-[#564F47]! flex justify-between items-center p-5">
-						<Typography variant="h5" className="font-semibold"> {`Total Products`} </Typography>
-						<Typography variant="h4" className="font-semibold"> {products.length} </Typography>
-					</Card>
+				{/* Updated Stats */}
+				<Grid container spacing={3} className="mb-8 px-6">
 
+					<Grid size={{ xs:12, md:4 }}>
+						<Card className="rounded-2xl shadow-md bg-[#564F4712]!">
+							<CardContent className="flex items-center justify-between">
+								<Box>
+									<Typography className="text-[#564F47]! text-sm"> {`Total Products`} </Typography>
+									<Typography variant="h4" className="text-[#564F47]! font-bold"> {products.length} </Typography>
+								</Box>
+								<Inventory2Icon className="text-[#564F47]! opacity-60" fontSize="large"/>
+							</CardContent>
+						</Card>
+					</Grid>
 
-					<Card className="shadow-md rounded-xl bg-[#564F471F]! text-[#564F47]! flex justify-between items-center p-5">
-						<Typography variant="h5" className="font-semibold"> {`Total Images (All Folders)`} </Typography>
-						<Typography variant="h4" className="font-semibold"> {products.reduce((a,p)=>a+p.images.length,0)} </Typography>
-					</Card>
+					<Grid size={{ xs:12, md:4 }}>
+						<Card className="rounded-2xl shadow-md bg-[#564F4712]!">
+							<CardContent className="flex items-center justify-between">
+								<Box>
+									<Typography className="text-[#564F47]! text-sm"> {`Total Images`} </Typography>
+									<Typography variant="h4" className="text-[#564F47]! font-bold"> {products.reduce((a,p)=>a+p.images.length,0)} </Typography>
+								</Box>
+								<PhotoLibraryIcon className="text-[#564F47]! opacity-60" fontSize="large"/>
+							</CardContent>
+						</Card>
+					</Grid>
 
+					<Grid size={{ xs:12, md:4 }}>
+						<Card className="rounded-2xl shadow-md bg-[#564F4712]! backdrop-blur-sm">
+							<CardContent className="flex flex-col gap-3">
+								<TextField size="small" placeholder="Search products..." value={search} onChange={(e)=>setSearch(e.target.value)} fullWidth InputProps={{ startAdornment:( <InputAdornment position="start"> <SearchIcon/> </InputAdornment> ) }} />
+								<TextField select size="small" label="Folder" value={activeFolder} onChange={(e)=>setActiveFolder(e.target.value)}>
+									<MenuItem value="all">{`All Folders`}</MenuItem>
+									{ folderOptions.map(folder => <MenuItem key={folder} value={folder}>{folder}</MenuItem> ) }
+								</TextField>
+								<Button variant="contained" onClick={resetStates}> {`Reset Filters`} </Button>
+							</CardContent>
+						</Card>
+					</Grid>
+				</Grid>
 
-					<Card className="shadow-md rounded-xl bg-[#EDE8E4]/30! backdrop-blur-sm! lg:col-span-1 sm:col-span-2" elevation={0}>
-						<CardContent className="flex flex-col gap-4">
-							<TextField sx={{ "& label": { color: "#564F47 !important" }, "& label.Mui-focused": { color: "#564F47 !important" }, "& .MuiOutlinedInput-root": { "& fieldset": { borderColor: "#564F47 !important" }, "&:hover fieldset": { borderColor: "#564F47 !important" }, "&.Mui-focused fieldset": { borderColor: "#564F47 !important" } } }} fullWidth size="small" placeholder="Search products..." value={search} onChange={(e)=>setSearch(e.target.value)} InputProps={{ startAdornment:( <InputAdornment position="start"> <SearchIcon/> </InputAdornment> ) }} />
-							<TextField sx={{ "& label": { color: "#564F47" }, "& label.Mui-focused": { color: "#564F47" }, "& .MuiOutlinedInput-root": { "& fieldset": { borderColor: "#564F47" }, "&:hover fieldset": { borderColor: "#564F47" }, "&.Mui-focused fieldset": { borderColor: "#564F47" } } }} select label="Folder" size="small" value={activeFolder} onChange={(e)=>setActiveFolder(e.target.value)}>
-								<MenuItem value="all">All Folders</MenuItem>
-								{ folderOptions.map(folder=> <MenuItem key={folder} value={folder}> {folder} </MenuItem> ) }
-							</TextField>
-							<Button variant="contained" onClick={()=>{ resetStates(); }}> {`Reset`} </Button>
-							<div className="flex gap-2 w-full">
-								<Button variant="contained" onClick={handleOpen} className=" w-full shadow-xl" > {`How To Order`} </Button>
-								<Button variant="contained" onClick={handleOpenP} className=" w-full shadow-xl"> {`Add Product`} </Button>
-							</div>
-						</CardContent>
-					</Card>
-
-				</div>
-
-				{filteredProducts.length === 0 && ( <div className="text-center py-20 text-gray-500 text-lg"> {`No products match the current filters`} </div> )}
-
+				{filteredProducts.length === 0 && ( 
+					<Box className="flex flex-col items-center justify-center py-24 text-center">
+						<Inventory2Icon sx={{fontSize:60,color:"#c5beb7"}}/>
+						<Typography variant="h6" className="text-[#8b8178] mt-4"> {`No products found`} </Typography>
+						<Typography className="text-[#b0a69e]"> {`Try adjusting your filters or add a new product.`} </Typography>
+					</Box>
+				)}
+				
 				<Masonry columns={{ xs: 1, sm: 2, lg: 3, xl: 4 }} spacing={{ xs: 1, sm: 2, lg: 3, xl: 4 }} className={`m-0!`}>
 					{ filteredProducts.map(product=>( <AdminProductCard key={product.id} product={product} onEdit={()=>handleEditClick(product)} onDelete={()=>handleDeleteClick(product)} /> )) }
 				</Masonry>
-
 			</div>
 
 			<HowToOrder open={open} handleClose={handleClose} />
