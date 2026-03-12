@@ -26,8 +26,8 @@
 	}
 	.nav {
 		display: flex; gap: 1rem; opacity: 0; transform: translateY(-10px); pointer-events: none; transition: all 0.3s ease;
-		@media (min-width: 320px) { display: flex; gap: 1rem;}
-		@media (max-width: 320px) { display: flex; gap: 1rem; visibility: hidden;}
+		@media (min-width: 320px) { display: flex; gap: 1rem; }
+		@media (max-width: 1000px) { opacity: 1; transform: translateY(0); pointer-events: auto; }
 		.el {
 			position: relative; padding: 1rem 5rem; font-size: clamp(0.9rem, 1vw, 1rem);
 			.links {
@@ -39,7 +39,7 @@
 		}
 	}
 
-	&.scrolled { background-color: #564F47; color: #EDE8E4; backdrop-filter: blur(8px); .nav { .el { .indicator { background: #EDE8E4; } } } }
+	&.scrolled { color: #564F47; backdrop-filter: blur(8px); .nav { .el { .indicator { background: #564F47; } } } }
 
 }
-.headerE:hover .nav { opacity: 1; transform: translateY(0); pointer-events: auto; }
+.headerE:hover { .nav { opacity: 1; transform: translateY(0); pointer-events: auto; } .logo { opacity: 1; } }

@@ -78,7 +78,6 @@ export default function AddEditModal({ open, handleClose, getLoader, productName
 
 	return (
 		<Modal open={open} onClose={handleClose}>
-			{/* <Card sx={{ position: "absolute", top: { xs: "50%", md: "50%" }, left: "50%", transform: "translate(-50%, -50%)", width: { xs: "95%", sm: "90%", md: "80%", lg: "60%", xl: "50%" }, maxHeight: { xs: "92vh", md: "90vh" }, borderRadius: 3, display: "flex", flexDirection: "column" }}> */}
 			<Card sx={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)", width: { xs: "94%", sm: "88%", md: "72%", lg: "58%", xl: "46%" }, maxHeight: "92vh", borderRadius: 3, overflow: "hidden", boxShadow: "0 20px 60px rgba(0,0,0,0.25)", display: "flex", flexDirection: "column", background: "#F8F6F4" }}>
 
 				<Backdrop sx={(theme) => ({ color: "#fff", zIndex: theme.zIndex.drawer + 1 })} open={getLoader}>
@@ -87,7 +86,6 @@ export default function AddEditModal({ open, handleClose, getLoader, productName
 
 				<CardHeader title={productName ? "Edit Product" : "Add New Product"} sx={{ textAlign: "center", borderBottom: "1px solid rgba(0,0,0,0.08)", py: { xs: 2, md: 2.5 }, "& .MuiCardHeader-title": { fontSize: { xs: "18px", md: "22px" }, fontWeight: 600, color: "#564F47" } }} />
 
-				{/* <CardContent sx={{ display: "flex", flexDirection: "column", gap: 3, overflowY: "auto", maxHeight: "70vh", pr: 1 }}> */}
 				<CardContent sx={{ display: "flex", flexDirection: "column", gap: { xs: 2, md: 3 }, overflowY: "auto", px: { xs: 2.5, md: 4 }, py: { xs: 2.5, md: 3 }, flex: 1 }}>
 
 					<TextField sx={{ "& label": { color: "#564F47" }, "& label.Mui-focused": { color: "#564F47" }, "& .MuiOutlinedInput-root": { "& fieldset": { borderColor: "#564F47" }, "&:hover fieldset": { borderColor: "#564F47" }, "&.Mui-focused fieldset": { borderColor: "#564F47" } } }} select fullWidth value={folderName} label="Select Folder" onChange={(e) => { const value = e.target.value; value === "__create__" ? setCreateFolderOpen(true) : setFolderName(value); }}>
@@ -99,8 +97,6 @@ export default function AddEditModal({ open, handleClose, getLoader, productName
                     <TextField sx={{ "& label": { color: "#564F47" }, "& label.Mui-focused": { color: "#564F47" }, "& .MuiOutlinedInput-root": { "& fieldset": { borderColor: "#564F47" }, "&:hover fieldset": { borderColor: "#564F47" }, "&.Mui-focused fieldset": { borderColor: "#564F47" } } }} fullWidth label="Product Description" multiline rows={3} value={productDescription} onChange={(e) => setProductDescription(e.target.value)} />
 
 					<Box onDrop={handleDrop} onDragOver={handleDragOver} onDragLeave={handleDragLeave} onClick={handleClickUpload} sx={{ border: "2px dashed #564F47", backgroundColor: dragActive ? "#564F4715" : "#564F4708", padding: { xs: 2.5, sm: 3, md: 4 }, textAlign: "center", borderRadius: 2, cursor: "pointer", transition: "all .25s ease", "&:hover": { backgroundColor: "#564F4715" } }}>
-						{/* <Typography>Drag & Drop Images Here</Typography>
-						<Typography variant="caption"> {`or click to upload`} </Typography> */}
 						<Typography sx={{ fontWeight: 500, color: "#564F47" }}> {`Drag & Drop Images Here`} </Typography>
 						<Typography variant="caption" sx={{ opacity: 0.7 }}> {`or click to upload`} </Typography>
 						<input ref={fileInputRef} type="file" hidden multiple accept="image/*,video/*" onChange={handleChange} />

@@ -55,7 +55,7 @@ export async function PATCH(req: Request) {
 			const img = existingImages[i];
 			const newPublicId = `${newPath}/${newSlug}_${i + 1}`;
 			if (img.public_id !== newPublicId) {
-				const result = await cloudinary.uploader.rename(img.public_id, newPublicId, { overwrite: true, });
+				const result = await cloudinary.uploader.rename(img.public_id, newPublicId, { overwrite: true, invalidate: true });
 				updatedImages.push({ public_id: result.public_id, secure_url: result.secure_url, });
 			}
 			else updatedImages.push(img);

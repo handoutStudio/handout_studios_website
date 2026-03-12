@@ -71,18 +71,12 @@ export default function HeaderPage({caller}: HeaderPageProps) {
 				<div className={`${styles.nav}`}>
 					<MagneticPage>
 						<div className={styles.el}>
-							{/* <a onClick={() => window.location.pathname !== '/' && window.location.assign('/')} style={{ cursor: 'pointer' }}>
-								{`Home`}
-							</a> */}
 							<Link className={styles.links} href={`/${caller}`}> {`Home`} </Link>
 							<div className={styles.indicator}></div>
 						</div>
 					</MagneticPage>
 					<MagneticPage>
 						<div className={styles.el}>
-							{/* <a onClick={() => window.location.pathname !== '/work' && window.location.assign('/work')} style={{ cursor: 'pointer' }}>
-								{`Work`}
-							</a> */}
 							{
 								caller === 'earthline-made'
 								?
@@ -95,9 +89,6 @@ export default function HeaderPage({caller}: HeaderPageProps) {
 					</MagneticPage>
 					<MagneticPage>
 						<div className={styles.el}>
-							{/* <a onClick={() => window.location.pathname !== '/products' && window.location.assign('/products')} style={{ cursor: 'pointer' }}>
-								{`Products`}
-							</a> */}
 							<Link className={styles.links} href={`/${caller}/products`}> {`Products`} </Link>
 							<div className={styles.indicator}></div>
 						</div>
@@ -106,9 +97,6 @@ export default function HeaderPage({caller}: HeaderPageProps) {
 						caller !== 'earthline-made' && 
 						<MagneticPage>
 							<div className={styles.el}>
-								{/* <a onClick={() => window.location.pathname !== '/about' && window.location.assign('/about')} style={{ cursor: 'pointer' }}>
-									{`About`}
-								</a> */}
 								<Link className={styles.links} href={`/${caller}/about`}> {`About`} </Link>
 								<div className={styles.indicator}></div>
 							</div>
@@ -116,9 +104,6 @@ export default function HeaderPage({caller}: HeaderPageProps) {
 					}
 					<MagneticPage>
 						<div className={styles.el}>
-							{/* <a onClick={() => { const aboutSection = document.getElementById('contact'); if (aboutSection) aboutSection.scrollIntoView({ behavior: 'smooth' }); }} style={{ cursor: 'pointer' }}>
-								{`Contact`}
-							</a> */}
 							<Link className={styles.links} href={`/${caller}/contact`} onClick={() => window.scrollTo({ behavior: 'smooth' })}> {`Contact`} </Link>
 							<div className={styles.indicator}></div>
 						</div>
