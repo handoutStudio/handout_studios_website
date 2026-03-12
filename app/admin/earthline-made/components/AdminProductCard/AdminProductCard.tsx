@@ -1,6 +1,7 @@
 'use client'
 
 import gsap from "gsap";
+import Image from "next/image";
 import { useState } from "react";
 import Card from "@mui/material/Card";
 import Modal from "@mui/material/Modal";
@@ -35,8 +36,7 @@ export default function AdminProductCard({ product, onEdit, onDelete }:{ product
 
 	return (
 		<>
-			<Card className="bg-[#EDE8E41F]! hover:shadow-xl! transition-all duration-300 cursor-pointer rounded-xl overflow-hidden" onClick={() => setOpen(true)}>
-
+			<Card className="bg-[#564F4712]! hover:shadow-xl! transition-all duration-300 cursor-pointer rounded-xl overflow-hidden" onClick={() => setOpen(true)}>
 				<CardHeader action={
 						<>
 							<Tooltip title="Edit product">
@@ -52,9 +52,7 @@ export default function AdminProductCard({ product, onEdit, onDelete }:{ product
 						</>
 					}
 					title={product.product} titleTypographyProps={{ variant: "h6", className: "font-semibold! text-[#564F47]!" }} />
-
 				<CardMedia component="img" image={product.images[0]?.secure_url} alt={product.product} className="object-contain w-full h-100 " />
-
 				<CardContent className="flex flex-col gap-5">
 					<div className="max-w-2xl text-[#564F47] text-sm md:text-base leading-relaxed">
 						<Typography variant="subtitle1" className="text-[#564F47]!">
@@ -68,7 +66,7 @@ export default function AdminProductCard({ product, onEdit, onDelete }:{ product
 							{
 								product.images.map((img, i) => (
 									<button key={i} onClick={() => setActive(i)} className={`w-15 h-15 shrink-0 rounded-md! overflow-hidden cursor-pointer! hover:scale-105`}>
-										<img src={img.secure_url} className="w-full h-full object-cover" />
+										<Image src={img.secure_url} alt={product.product} width={1000} height={1000} className="w-full h-full object-cover" />
 									</button>
 								))
 							}
@@ -83,15 +81,13 @@ export default function AdminProductCard({ product, onEdit, onDelete }:{ product
 						open && (
 							<motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-50 bg-black/70 backdrop-blur-md overflow-y-auto">
 								<div className="min-h-screen flex items-center justify-center p-4">
-									{/* <motion.div initial={{ scale: .95, opacity: 0, y: 40 }} animate={{ scale: 1, opacity: 1, y: 0 }} exit={{ scale: .95, opacity: 0 }} transition={{ duration: .35 }} className="bg-[#EDE8E4] w-full max-w-7xl rounded-2xl shadow-2xl overflow-hidden flex flex-col lg:flex-row"> */}
 									<motion.div initial={{ scale: .95, opacity: 0, y: 40 }} animate={{ scale: 1, opacity: 1, y: 0 }} exit={{ scale: .95, opacity: 0 }} transition={{ duration: .35 }} className="relative bg-[#EDE8E4] w-full max-w-7xl rounded-2xl shadow-2xl overflow-hidden flex flex-col lg:flex-row">
-
 										{/* CLOSE BUTTON */}
 										<IconButton onClick={() => setOpen(false)} sx={{ position: "absolute", top: 12, right: 12, zIndex: 10, color: "#564F47", backgroundColor: "rgba(255,255,255,0.6)", backdropFilter: "blur(4px)", transition: "all .2s ease", "&:hover": { backgroundColor: "#564F47", color: "#EDE8E4" } }}>
 											<CloseIcon />
 										</IconButton>
 										{/* IMAGE SECTION */}
-										<div className="flex flex-col lg:w-[60%] bg-[#f5f1ee]">
+										<div className="flex flex-col lg:w-[60%]">
 											{/* MAIN IMAGE */}
 											<div className="flex items-center justify-center p-6 md:p-10">
 												<AnimatePresence mode="wait">
@@ -105,7 +101,7 @@ export default function AdminProductCard({ product, onEdit, onDelete }:{ product
 													{
 														product.images.map((img, i) => (
 															<button key={i} onClick={() => setActive(i)} className={`w-20 h-20 max-[700px]:w-15 max-[700px]:h-15 shrink-0 rounded-lg overflow-hidden border-2 transition ${active === i ? "border-[#564F47]" : "border-transparent hover:border-neutral-400"} `}>
-																<img src={img.secure_url} className="w-full h-full object-cover" />
+																<Image src={img.secure_url} alt={product.product} width={1000} height={1000} className="w-full h-full object-cover" />
 															</button>
 														))
 													}
@@ -136,8 +132,6 @@ export default function AdminProductCard({ product, onEdit, onDelete }:{ product
 					}
 				</AnimatePresence>
 			</Modal>
-
 		</>
-
 	)
 }
