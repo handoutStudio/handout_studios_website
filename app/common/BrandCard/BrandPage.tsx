@@ -3,10 +3,11 @@
 import { gsap } from "gsap";
 import Image from "next/image";
 import { signIn } from "next-auth/react";
-import { useEffect, useRef } from "react";
-import { useRouter } from "next/navigation";
+import { useEffect, useRef,useState } from "react";
+import { useRouter, usePathname } from "next/navigation";
 import handoutLogo from "@/public/images/background.svg";
 import FingerprintIcon from '@mui/icons-material/Fingerprint';
+import { Loading } from '@/app/shared/components/Loading/Loading';
 import earthlineLogo from "@/public/images/earthline_made_landing_image_mobile.png";
 
 export default function BrandPage() {
@@ -21,6 +22,19 @@ export default function BrandPage() {
 	const mercuryTween = useRef<gsap.core.Tween | null>(null);
 
 	const router = useRouter();
+
+	const pathname = usePathname();
+	const prevPath = useRef(pathname);
+
+	const [getIsLoading, setIsLoading] = useState(false);
+
+	useEffect(() => {
+		if (prevPath.current !== pathname) {
+			setIsLoading(false);
+			resumeOrbits();
+			prevPath.current = pathname;
+		}
+	}, [pathname]);
 
 	useEffect(() => {
 
@@ -130,50 +144,61 @@ export default function BrandPage() {
 	/* ----------------------------------
 	ADMIN LOGIN
 	---------------------------------- */
-	const handleAdminLogin = async () => { pauseOrbits(); await signIn("google", { callbackUrl: "/admin" }); };
+	const handleAdminLogin = async () => { pauseOrbits(); setIsLoading(true); await signIn("google", { callbackUrl: "/admin" }); };
+
+	/* ----------------------------------
+	Earth-line Made Page
+	---------------------------------- */
+	const earthlineMadePage = () => { pauseOrbits(); setIsLoading(true); router.push("/earthline-made"); };
 
 	return (
-		<div className="h-screen w-screen bg-[#EDE8E4] flex items-center justify-center relative overflow-hidden">
-			<div id="milkyway" className="absolute inset-0 z-0 pointer-events-none">
-				<div id="galaxy-core" className="absolute left-1/2 top-1/2"></div>
-				<div id="nebula-1" className="absolute"></div>
-				<div id="nebula-2" className="absolute"></div>
-				<div id="nebula-3" className="absolute"></div>
-			</div>
-			
-			<div className="relative w-[90vw] sm:w-[80vw] md:w-[70vw] lg:w-[60vw] max-w-200 aspect-square flex items-center justify-center">
 
-				{/* MERCURY ORBIT */}
-				<div ref={mercuryOrbitRef} className="absolute w-[60%] h-[60%] rounded-full border border-[#564F47]/20 pointer-events-none z-10">
-					<div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-auto">
-						{/* <div ref={mercuryRef} onMouseEnter={pauseOrbits} onMouseLeave={resumeOrbits} onClick={handleAdminLogin} className="relative w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 rounded-full bg-[#564F47] shadow-lg cursor-pointer hover:scale-110 transition" title="Admin Login" /> */}
-						<div ref={mercuryRef} onMouseEnter={pauseOrbits} onMouseLeave={resumeOrbits} onClick={handleAdminLogin} className="relative flex flex-col items-center cursor-pointer" title="Admin Login">
-							<div className="relative w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 lg:w-16 lg:h-16 rounded-full bg-[#FFFFFF] shadow-lg flex items-center justify-center">
-								<FingerprintIcon fontSize="large" className="text-[#7A0007] text-[18px] sm:text-[20px] md:text-[22px]" />
+		getIsLoading
+		?
+			<Loading setIsLoading={setIsLoading} />
+		:
+
+			<div className="h-screen w-screen bg-[#EDE8E4] flex items-center justify-center relative overflow-hidden">
+				<div id="milkyway" className="absolute inset-0 z-0 pointer-events-none">
+					<div id="galaxy-core" className="absolute left-1/2 top-1/2"></div>
+					<div id="nebula-1" className="absolute"></div>
+					<div id="nebula-2" className="absolute"></div>
+					<div id="nebula-3" className="absolute"></div>
+				</div>
+				
+				<div className="relative w-[90vw] sm:w-[80vw] md:w-[70vw] lg:w-[60vw] max-w-200 aspect-square flex items-center justify-center">
+
+					{/* MERCURY ORBIT */}
+					<div ref={mercuryOrbitRef} className="absolute w-[60%] h-[60%] rounded-full border border-[#564F47]/20 pointer-events-none z-10">
+						<div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-auto">
+							{/* <div ref={mercuryRef} onMouseEnter={pauseOrbits} onMouseLeave={resumeOrbits} onClick={handleAdminLogin} className="relative w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 rounded-full bg-[#564F47] shadow-lg cursor-pointer hover:scale-110 transition" title="Admin Login" /> */}
+							<div ref={mercuryRef} onMouseEnter={pauseOrbits} onMouseLeave={resumeOrbits} onClick={handleAdminLogin} className="relative flex flex-col items-center cursor-pointer" title="Admin Login">
+								<div className="relative w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 lg:w-16 lg:h-16 rounded-full bg-[#FFFFFF] shadow-lg flex items-center justify-center">
+									<FingerprintIcon fontSize="large" className="text-[#7A0007] text-[18px] sm:text-[20px] md:text-[22px]" />
+								</div>
+								<div className="mt-2 text-[10px] sm:text-xs uppercase text-[#7A0007]"> {'Admin'} </div>
 							</div>
-							<div className="mt-2 text-[10px] sm:text-xs uppercase text-[#7A0007]"> {'Admin'} </div>
 						</div>
 					</div>
-				</div>
 
-				{/* EARTH ORBIT */}
-				<div ref={earthOrbitRef} className="absolute w-full h-full rounded-full border border-[#564F47] opacity-40 pointer-events-none z-0">
-					<div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-auto">
-						<div ref={earthRef} onMouseEnter={pauseOrbits} onMouseLeave={resumeOrbits} onClick={() => router.push("/earthline-made")} className="relative flex flex-col items-center cursor-pointer">
-							<div className="relative w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-28 lg:h-28 rounded-full overflow-hidden shadow-xl">
-								<Image src={earthlineLogo} alt="Earthline Made" fill className="object-cover" />
+					{/* EARTH ORBIT */}
+					<div ref={earthOrbitRef} className="absolute w-full h-full rounded-full border border-[#564F47] opacity-40 pointer-events-none z-0">
+						<div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-auto">
+							<div ref={earthRef} onMouseEnter={pauseOrbits} onMouseLeave={resumeOrbits} onClick={earthlineMadePage} className="relative flex flex-col items-center cursor-pointer">
+								<div className="relative w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-28 lg:h-28 rounded-full overflow-hidden shadow-xl">
+									<Image src={earthlineLogo} alt="Earthline Made" fill className="object-cover" />
+								</div>
+								<div className="mt-2 text-xs uppercase text-[#7A0007]"> {`by Handout Studios`} </div>
 							</div>
-							<div className="mt-2 text-xs uppercase text-[#7A0007]"> {`by Handout Studios`} </div>
 						</div>
 					</div>
-				</div>
 
-				{/* SUN */}
-				<div className="relative z-10 w-28 h-28 sm:w-36 sm:h-36 md:w-48 md:h-48 lg:w-64 lg:h-64 rounded-full bg-white shadow-2xl flex items-center justify-center cursor-pointer" onClick={() => router.push("/")}>
-					<Image src={handoutLogo} alt="Handout Studios" fill className="object-contain p-3" />
-				</div>
+					{/* SUN */}
+					<div className="relative z-10 w-28 h-28 sm:w-36 sm:h-36 md:w-48 md:h-48 lg:w-64 lg:h-64 rounded-full bg-white shadow-2xl flex items-center justify-center cursor-pointer" onClick={() => router.push("/")}>
+						<Image src={handoutLogo} alt="Handout Studios" fill className="object-contain p-3" />
+					</div>
 
+				</div>
 			</div>
-		</div>
 	);
 }

@@ -1,6 +1,6 @@
 'use client';
 
-import Lenis from '@studio-freight/lenis';
+import Lenis from 'lenis';
 import { useEffect, useState, useRef } from 'react';
 import { AnimatePresence, useScroll } from 'framer-motion';
 import { projects } from '@/app/(front-end)/handout-studios/data';
