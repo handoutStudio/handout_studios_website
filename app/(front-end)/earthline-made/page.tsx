@@ -1,6 +1,6 @@
 'use client';
 
-import Lenis from '@studio-freight/lenis';
+import Lenis from 'lenis';
 import { useEffect, useState } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import styles from '@/app/(front-end)/earthline-made/style.module.scss';

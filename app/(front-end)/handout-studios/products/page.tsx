@@ -1,16 +1,16 @@
 'use client';
 
 import gsap from 'gsap';
+import Lenis from 'lenis';
 import Flip from 'gsap/Flip';
 import Image from 'next/image';
 import CustomEase from 'gsap/CustomEase';
-import Lenis from '@studio-freight/lenis';
 import { TextPlugin } from 'gsap/TextPlugin';
 import CustomWiggle from 'gsap/CustomWiggle';
 import { AnimatePresence } from 'framer-motion';
-import styles from '@/app/(front-end)/handout-studios/products/style.module.scss';
 import React, { useEffect, useRef, useState } from 'react';
 import PreloaderPage from '@/app/components/Preloader/PreloaderPage';
+import styles from '@/app/(front-end)/handout-studios/products/style.module.scss';
 
 
 export default function Page() {
