@@ -1,34 +1,33 @@
 "use client";
 
 
-import Image from "next/image";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
+import List from "@mui/material/List";
 import Masonry from '@mui/lab/Masonry';
 import Badge from "@mui/material/Badge";
-import Stack from "@mui/material/Stack";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
+import Tooltip from "@mui/material/Tooltip";
 import Divider from "@mui/material/Divider";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
+import ListItem from "@mui/material/ListItem";
 import AddIcon from "@mui/icons-material/Add";
-import Accordion from '@mui/material/Accordion';
-import ImageList from '@mui/material/ImageList';
 import CardHeader from "@mui/material/CardHeader";
 import Typography from "@mui/material/Typography";
 import EmailIcon from '@mui/icons-material/Email';
 import ButtonGroup from "@mui/material/ButtonGroup";
 import CardContent from "@mui/material/CardContent";
-import ImageListItem from '@mui/material/ImageListItem';
+import ListItemText from "@mui/material/ListItemText";
+import Inbox from "@/app/admin/components/Inbox/Inbox";
+import ListItemAvatar from "@mui/material/ListItemAvatar";
+import ListItemButton from "@mui/material/ListItemButton";
 import SlideshowIcon from "@mui/icons-material/Slideshow";
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import VisibilityIcon from '@mui/icons-material/Visibility';
 import Inventory2Icon from "@mui/icons-material/Inventory2";
-import AccordionSummary from '@mui/material/AccordionSummary';
-import AccordionDetails from '@mui/material/AccordionDetails';
 import MarkEmailUnreadIcon from "@mui/icons-material/MarkEmailUnread";
 
-import Inbox from "@/app/admin/components/Inbox/Inbox";
 
 
 interface Message { id: string; name: string; email: string; phone?: string; subject?: string; message: string; brand: string; isRead: boolean; createdAt: string; isDeleted: boolean; }
@@ -94,13 +93,14 @@ export default function Homes() {
 	}
 
 	// Latest Uploads
-	const latestImages = products.flatMap(p => p.images.map((img:any)=>img.secure_url)).slice(0,12);
+	// const latestImages = products.flatMap(p => p.images.map((img:any)=>img.secure_url)).slice(0,12);
+	const latestImages = products.flatMap(p => p.images.map((img:any)=>({ url: img.secure_url, productId: p.id }))).slice(0,12);
 
 	// Recent Products
 	const recentProducts = products.slice(0,5);
 
 	// Accordians
-	const [expanded, setExpanded] = useState<string | false>(false);
+	const [expanded, setExpanded] = useState<string | false>('recent');
 	const handleChange = (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => { setExpanded(isExpanded ? panel : false); };
 
 	return (
@@ -144,65 +144,49 @@ export default function Homes() {
 				</Card>
 			</Masonry>
 
-			{/* ================= INBOX ================= */}
-			<Card sx={{ borderRadius: 3, mt: { xs: 3, sm: 4 }, }} className={`bg-[#564F4712]! text-[#564F47]!`} elevation={5}>
-				<CardHeader title={
-					<div className={`flex justify-between items-center gap-2`}>
-						{`Inbox`}
-						<Badge badgeContent={unreadCount} color="error">
-							<EmailIcon fontSize="small" />
-						</Badge>
-					</div>
-				} titleTypographyProps={{ fontSize: { xs: "16px", sm: "18px" } }} />
-				<CardContent sx={{ p: 0 }}>
-					<Inbox messages={messages} loading={loading} />
-				</CardContent>
-			</Card>
+			<Masonry columns={1} spacing={2}>
 
-			{/* ================= DASHBOARD GRID ================= */}
-			<Box mt={{ xs: 3, sm: 4 }}>
+				{/* ================= INBOX ================= */}
+				<Card sx={{ borderRadius: 3, mt: { xs: 3, sm: 4 }, }} className={`bg-[#564F4712]! text-[#564F47]!`} elevation={5}>
+					<CardHeader title={
+						<div className={`flex justify-between items-center gap-2`}>
+							{`Inbox`}
+							<Badge badgeContent={unreadCount} color="error">
+								<EmailIcon fontSize="small" />
+							</Badge>
+						</div>
+					} titleTypographyProps={{ fontSize: { xs: "16px", sm: "18px" } }} />
+					<CardContent className={`p-0!`}>
+						<Inbox messages={messages} loading={loading} refreshMessages={fetchMessages} />
+					</CardContent>
+				</Card>
 
-				{/* ACCORDION */}
-				<Accordion expanded={expanded === 'panel1'} onChange={handleChange('panel1')} className={`bg-[#564F4712]! text-[#564F47]!`}>
-					<AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls="panel1bh-content" id="panel1bh-header">
-						<Typography variant="caption"> {`Latest Uploads`} </Typography>
-					</AccordionSummary>
-					<AccordionDetails>
-						<ImageList cols={6} gap={8} sx={{ gridTemplateColumns: { xs: "repeat(2,1fr)!important", sm: "repeat(3,1fr)!important", md: "repeat(4,1fr)!important", lg: "repeat(6,1fr)!important", }, }}>
+				{/* ================= DASHBOARD GRID ================= */}
+				<Card sx={{ borderRadius: 3, mt: { xs: 3, sm: 4 }, }} className={`bg-[#564F4712]! text-[#564F47]!`} elevation={5}>
+					<CardHeader title={`Recent Uploads`} titleTypographyProps={{ fontSize: { xs: "16px", sm: "18px" } }} />
+					<CardContent className={`p-0!`}>
+						<List disablePadding>
 							{
-								latestImages.map((img, i) => 
-									<ImageListItem key={i}>
-										<Image src={img} alt="product" width={200} height={200} style={{ width: "100%", height: "100%", borderRadius: 8, objectFit: "cover", }} loading="eager" />
-									</ImageListItem>
-								)
-							}
-						</ImageList>
-					</AccordionDetails>
-				</Accordion>
-				<Accordion expanded={expanded === 'panel2'} onChange={handleChange('panel2')} className={`bg-[#564F4712]! text-[#564F47]!`}>
-					<AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls="panel2bh-content" id="panel2bh-header">
-						<Typography variant="caption"> {`Recent Products`} </Typography>
-					</AccordionSummary>
-					<AccordionDetails>
-						<Stack spacing={2}>
-							{
-								recentProducts.map((p: any) => (
-									<>
-										<Stack key={p.id} direction="row" spacing={2} alignItems="center">
-											<Avatar  variant="square" src={p.images?.[0]?.secure_url} sx={{ width: { xs: 32, sm: 36 }, height: { xs: 32, sm: 36 }, borderRadius: 1 }} />
-											<Box>
-												<Typography fontWeight={600} fontSize={{ xs: "13px", sm: "14px" }}> {p.product} </Typography>
-												<Typography variant="body2" fontSize={{ xs: "11px", sm: "12px" }}> {p.folder} </Typography>
-											</Box>
-										</Stack>
-										<Divider />
-									</>
+								recentProducts.map((p:any, i:number) => (
+									<div key={p.id}>
+										<ListItem disablePadding>
+											<Tooltip title={`View ${p.product}`} arrow followCursor placement="right">
+												<ListItemButton onClick={() => router.push(`/admin/earthline-made/products?product=${p.id}`)} sx={{ transition:"all .2s", "&:hover":{ background:"#564F47 !important", color:"#EDE8E4 !important" }, "&:hover .recent-folder-text":{ color:"#EDE8E4" } }}>
+													<ListItemAvatar>
+														<Avatar variant="square" src={p.images?.[0]?.secure_url} sx={{ width:{xs:32,sm:36}, height:{xs:32,sm:36}, borderRadius:1 }} />
+													</ListItemAvatar>
+													<ListItemText primary={p.product} secondary={p.folder} primaryTypographyProps={{ fontWeight:600, fontSize:{xs:"13px",sm:"14px"} }} secondaryTypographyProps={{ fontSize:{xs:"11px",sm:"12px"}, color:"#564F47", className:"recent-folder-text" }} />
+												</ListItemButton>
+											</Tooltip>
+										</ListItem>
+										{i !== recentProducts.length-1 && <Divider component="li" className={`border-[#564F47]!`} />}
+									</div>
 								))
 							}
-						</Stack>
-					</AccordionDetails>
-				</Accordion>
-			</Box>
+						</List>
+					</CardContent>
+				</Card>
+			</Masonry>
 		</div>
 	);
 

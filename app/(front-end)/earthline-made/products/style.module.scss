@@ -3,7 +3,7 @@ $text: #564F47;
 $mobile: 786px;
 
 %page-base {
-	background-color: $bg; color: $text; padding-top: 5vh; min-height: 100svh;
+	background-color: $bg; color: $text; padding-top: 5vh; min-height: 100svh; padding-bottom: 1.5vh;
 	.titleMain {
 		display: flex; font-size: 3rem; font-weight: 400; color: $text; padding: 0 2vw;
 		@media (max-width: $mobile) { font-size: 1.5rem; justify-content: center; }

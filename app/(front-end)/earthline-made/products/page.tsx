@@ -11,8 +11,10 @@ import Typography from "@mui/material/Typography";
 import SearchIcon from "@mui/icons-material/Search";
 import { AnimatePresence, motion } from "framer-motion";
 import InputAdornment from "@mui/material/InputAdornment";
+import RestartAltIcon from '@mui/icons-material/RestartAlt';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import { useLayoutEffect, useState, useEffect } from "react";
+import PsychologyAltIcon from '@mui/icons-material/PsychologyAlt';
 import PreloaderPage from '@/app/components/Preloader/PreloaderPage';
 import styles from "@/app/(front-end)/earthline-made/products/style.module.scss";
 import HowToOrder from '@/app/(front-end)/earthline-made/components/HowToOrder/HowToOrder';
@@ -87,7 +89,8 @@ export default function Page() {
 	return (
 		<>
 			<AnimatePresence mode='wait'> {isLoading && <PreloaderPage words={ words } caller='earthline-made' />} </AnimatePresence>
-			<div className={isLoading ? '' :styles.main}>
+			{/* <div className={isLoading ? '' :styles.main}> */}
+			<motion.div className={isLoading ? '' : styles.main} initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .8, ease: "easeOut" }}>
 				<div className={styles.howToOrder}>
 					<Avatar className={`bg-[#564F47]! text-[#EDE8E4]! cursor-pointer! ${showFloatingFilterScroll ? "" : "hidden!"}`} onClick={ () => setShowFloatingFilter(!showFloatingFilter) }>
 						<FilterListIcon />
@@ -99,7 +102,7 @@ export default function Page() {
 					<AnimatePresence>
 						{
 							showFloatingFilterScroll && showFloatingFilter && (
-								<Box component={motion.div} initial={{ opacity:0, y:-40 }} animate={{ opacity:1, y:0 }} exit={{ opacity:0, y:-40 }} transition={{ duration:.25 }} className="fixed top-6 md:top-10 lg:top-14 left-1/2 -translate-x-1/2 z-40 shadow-xl rounded-xl p-4 flex flex-col gap-3 w-[95%] md:w-auto max-w-190" sx={{ backgroundColor:"#564F47", backdropFilter:"blur(12px)", border:"1px solid rgba(0,0,0,0.08)" }}>
+								<Box component={motion.div} initial={{ opacity:0, y:-40 }} animate={{ opacity:1, y:0 }} exit={{ opacity:0, y:-40 }} transition={{ duration:.25 }} className="fixed top-7 md:top-10 lg:top-14 left-1/2 -translate-x-1/2 z-40 shadow-xl rounded-xl p-4 flex flex-col gap-3 w-[95%] md:w-auto max-w-190" sx={{ backgroundColor:"#564F47", backdropFilter:"blur(12px)", border:"1px solid rgba(0,0,0,0.08)" }}>
 									{/* PRIMARY FILTER CONTROLS */}
 									<Box className="flex flex-col md:flex-row gap-3 items-stretch md:items-center">
 										<TextField size="small" placeholder="Search..." value={search} onChange={(e)=>setSearch(e.target.value)} fullWidth sx={{ backgroundColor:"#fff", borderRadius:"6px", minWidth:{ md:220 } }} InputProps={{ startAdornment:( <InputAdornment position="start"> <SearchIcon/> </InputAdornment> ) }} />
@@ -107,11 +110,11 @@ export default function Page() {
 											<MenuItem value="all"> {`All Products`} </MenuItem>
 											{ folders.slice(1).map(folder=> <MenuItem key={folder} value={folder}> {folder} </MenuItem> ) }
 										</TextField>
-										<Button variant="contained" onClick={()=>{ resetStates(); }} sx={{ backgroundColor:"#EDE8E4", color:"#564F47", fontWeight:600, minWidth:"110px", "&:hover":{ backgroundColor:"#dcd5d0" } }}> {`Reset`} </Button>
+										<Button variant="contained" onClick={()=>{ resetStates(); }} sx={{ backgroundColor:"#EDE8E4", color:"#564F47", fontWeight:600, minWidth:"110px", "&:hover":{ backgroundColor:"#dcd5d0" } }} startIcon={ <RestartAltIcon /> }> {`Reset`} </Button>
 									</Box>
 									{/* SECONDARY ACTION */}
-									<Box className="flex justify-end">
-										<Button variant="contained" onClick={handleOpen} sx={{ backgroundColor:"#3f3833", color:"#EDE8E4", fontWeight:500, px:3, "&:hover":{ backgroundColor:"#2e2925" } }}> {`How To Order`} </Button>
+									<Box className="flex justify-end w-full!">
+										<Button className={`w-full`} variant="contained" onClick={handleOpen} sx={{ backgroundColor:"#3f3833", color:"#EDE8E4", fontWeight:500, px:3, "&:hover":{ backgroundColor:"#2e2925" } }} startIcon={ <PsychologyAltIcon /> }> {`How To Order`} </Button>
 									</Box>
 								</Box>
 							)
@@ -123,17 +126,18 @@ export default function Page() {
 							<MenuItem value="all">{`All Products`}</MenuItem>
 							{ folders.slice(1).map(folder=> <MenuItem key={`folder-${folder}`} value={folder}> {folder} </MenuItem> )}
 						</TextField>
-						<Button variant="contained" onClick={()=>{ resetStates(); }}> {`Reset`} </Button>
-						<Button variant="contained" onClick={handleOpen}>{`How to Order`}</Button>
+						<Button variant="contained" onClick={()=>{ resetStates(); }} startIcon={ <RestartAltIcon /> }> {`Reset`} </Button>
+						<Button variant="contained" onClick={handleOpen} startIcon={ <PsychologyAltIcon /> }> {`How to Order`} </Button>
 					</Box>
 				</div>
 
-				<Masonry columns={{ xs: 1 }} spacing={{ xs: 1 }} className={`m-0!`}>
+				<Masonry columns={1} spacing={0}>
 					{filteredProducts.length === 0 && ( <div className="text-center py-20 text-[#564F47] text-lg"> {`No products found...!`} </div> ) }
 					{ filteredProducts.map((product, index) => <ProductCard key={`${product.folder}-${product.product}`} product={product} index={index} pageReady={!isLoading} /> ) }
 				</Masonry>
 
-			</div>
+			{/* </div> */}
+			</motion.div>
 
 			<HowToOrder open={open} handleClose={handleClose} />
 		</>

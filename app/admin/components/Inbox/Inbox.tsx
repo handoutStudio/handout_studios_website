@@ -38,9 +38,9 @@ import MarkEmailUnreadIcon from "@mui/icons-material/MarkEmailUnread";
 
 interface Message { id: string; name: string; email: string; phone?: string; subject?: string; message: string; brand: string; isRead: boolean; createdAt: string; isDeleted: boolean; }
 
-interface InboxProps { messages: Message[]; loading: boolean; }
+interface InboxProps { messages: Message[]; loading: boolean; refreshMessages: () => void; }
 
-export default function Inbox({ messages, loading }: InboxProps) {
+export default function Inbox({ messages, loading, refreshMessages }: InboxProps) {
 
 	const theme = useTheme();
 	const [page, setPage] = useState(0);
@@ -48,15 +48,12 @@ export default function Inbox({ messages, loading }: InboxProps) {
 	const [rowsPerPage, setRowsPerPage] = useState(10);
 	const [selected, setSelected] = useState<string[]>([]);
 	const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
-	const isTablet = useMediaQuery(theme.breakpoints.down("md"));
 	const [current, setCurrent] = useState<Message | null>(null);
 	const [menuAnchor, setMenuAnchor] = useState<null | HTMLElement>(null);
-	const selectedItems = selected.length > 0 ? ` ${selected.length} ${selected.length === 1 ? " Item" : " Items"}` : '';
 
 	// For sorting and searching
 	const [generalSearch, setGeneralSearch] = useState("");
 	const [debouncedSearch, setDebouncedSearch] = useState("");
-	const [columnSearch, setColumnSearch] = useState({ name: "", email: "" });
 	const [sortConfig, setSortConfig] = useState<{ key: keyof Message | null; direction: "asc" | "desc"; }>({ key: "createdAt", direction: "desc", });
 
 	// Processed Messages for Filtering + sorting logic
@@ -134,18 +131,21 @@ export default function Inbox({ messages, loading }: InboxProps) {
 	const markAsRead = async (ids: string[]) => {
 		await fetch("/api/contact-us/mark-read", { method: "PATCH", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ ids }), });
 		setSelected([]);
+		refreshMessages();
 	};
 
 	const markAsUnread = async (ids: string[]) => {
 		await fetch("/api/contact-us/mark-unread", { method: "PATCH", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ ids }), });
 		setSelected([]);
 		setOpen(false);
+		refreshMessages();
 	};
 
 	const deleteMessages = async (ids: string[]) => {
 		await fetch("/api/contact-us/delete", { method: "DELETE", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ ids }), });
 		setSelected([]);
 		setOpen(false);
+		refreshMessages();
 	};
 
 	const handleRowClick = (msg: Message) => { setCurrent(msg); setOpen(true); markAsRead([msg.id]); };
@@ -172,9 +172,9 @@ export default function Inbox({ messages, loading }: InboxProps) {
 		<div className={`bg-[#564F4712]! text-[#564F47]!`}>
 			{/* HEADER */}
 			<Stack direction="row" justifyContent="space-between" alignItems="center" mb={3} spacing={2} p={2}>
-				<TextField size="small" placeholder="Search messages..." value={generalSearch} onChange={(e) => setGeneralSearch(e.target.value)} sx={{ width: "100%", background: "#564F4712", borderRadius: 2 }} InputProps={{ startAdornment: ( <InputAdornment position="start"> <SearchIcon /> </InputAdornment> ) }} />
+				<TextField size="small" placeholder="Search messages..." value={generalSearch} onChange={(e) => setGeneralSearch(e.target.value)} sx={{ width: "100%", borderRadius: 2 }} InputProps={{ startAdornment: ( <InputAdornment position="start"> <SearchIcon /> </InputAdornment> ) }} />
 				<Tooltip title="More Actions" arrow>
-					<IconButton onClick={openMenu}> <MoreVertIcon /> </IconButton>
+					<IconButton onClick={openMenu}> <MoreVertIcon sx={{ color: "#564F47" }} /> </IconButton>
 				</Tooltip>
 				<Menu anchorEl={menuAnchor} open={Boolean(menuAnchor)} onClose={closeMenu}>
 					<ListSubheader component="div" id="nested-list-subheader"> {`More Actions`} </ListSubheader>
@@ -189,7 +189,7 @@ export default function Inbox({ messages, loading }: InboxProps) {
 					</MenuItem>
 				</Menu>
 			</Stack>
-			<TableContainer component={Paper} sx={{ overflowX: "auto" }}>
+			<TableContainer component={Paper} sx={{ overflowX: "auto", borderRadius: 0 }}>
 				<Table size={isMobile ? "small" : "medium"} stickyHeader>
 					<TableHead>
 						<TableRow>
@@ -254,9 +254,7 @@ export default function Inbox({ messages, loading }: InboxProps) {
 					</TableBody>
 				</Table>
 			</TableContainer>
-			<Paper sx={{ display: "flex", justifyContent: "flex-end", gap: 2, }} elevation={0}>
-				<TablePagination component="div" count={processedMessages.length} page={page} onPageChange={(event, newPage) => setPage(newPage)} rowsPerPage={rowsPerPage} onRowsPerPageChange={(event) => { setRowsPerPage(parseInt(event.target.value, 10)); setPage(0); }} rowsPerPageOptions={[10, 20, 50, 100]} sx={{ display: "flex", justifyContent: "flex-end", }} />
-			</Paper>
+			<TablePagination component="div" count={processedMessages.length} page={page} onPageChange={(event, newPage) => setPage(newPage)} rowsPerPage={rowsPerPage} onRowsPerPageChange={(event) => { setRowsPerPage(parseInt(event.target.value, 10)); setPage(0); }} rowsPerPageOptions={[10, 20, 50, 100]} sx={{ display: "flex", justifyContent: "flex-end", backgroundColor: "#EDE8E4", color: "#564F47" }} />
 
 			{/* MESSAGE MODAL */}
 			<Modal open={open} onClose={() => setOpen(false)} closeAfterTransition slotProps={{ backdrop: { sx: { backdropFilter: "blur(6px)", backgroundColor: "rgba(0,0,0,0.45)", }, }, }}>

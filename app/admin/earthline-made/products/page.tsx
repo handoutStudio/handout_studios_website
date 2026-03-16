@@ -1,9 +1,9 @@
 'use client';
 
 import Lenis from 'lenis';
+import { Suspense } from "react";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
-import Grid from '@mui/material/Grid';
 import Masonry from '@mui/lab/Masonry';
 import Button from '@mui/material/Button';
 import Avatar from '@mui/material/Avatar';
@@ -17,6 +17,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import { AnimatePresence, motion } from "framer-motion";
 import InputAdornment from "@mui/material/InputAdornment";
 import Inventory2Icon from '@mui/icons-material/Inventory2';
+import RestartAltIcon from '@mui/icons-material/RestartAlt';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import { useLayoutEffect, useState, useEffect } from "react";
 import PhotoLibraryIcon from '@mui/icons-material/PhotoLibrary';
@@ -27,6 +28,7 @@ import AddEditModal from "@/app/admin/earthline-made/components/AddEditModal/Add
 import AdminProductCard from '@/app/admin/earthline-made/components/AdminProductCard/AdminProductCard';
 import CreateFolderModal from "@/app/admin/earthline-made/components/CreateFolderModal/CreateFolderModal";
 import DeleteConfirmation from "@/app/admin/earthline-made/components/DeleteConfirmation/DeleteConfirmation";
+import ProductHighlightHandler from "@/app/admin/earthline-made/components/ProductHighlightHandler/ProductHighlightHandler";
 
 
 type ProductType = { id: string; folder: string; product: string; description: string; images: { secure_url: string; public_id: string }[]; };
@@ -301,12 +303,28 @@ export default function Page() {
 	const resetStates = () => { setSearch(""); setActiveFolder("all"); setShowFloatingFilter(false); };
 
 
+	// Animated Counter
+	function AnimatedNumber({value}:{value:number}){
+		const [display,setDisplay] = useState(0);
+		useEffect(()=>{
+			let start = 0;
+			const step = value / 30;
+			const interval = setInterval(()=>{ start += step; if(start >= value){ setDisplay(value); clearInterval(interval); } else setDisplay(Math.floor(start)); },20);
+			return ()=>clearInterval(interval);
+		},[value]);
+
+		return <Typography variant="h4">{display}</Typography>;
+	}
+
 	return (
 		<>
+			<Suspense fallback={null}>
+				<ProductHighlightHandler />
+			</Suspense>
 			<AnimatePresence mode='wait'> {isLoading && <PreloaderPage words={ words } caller='earthline-made' />} </AnimatePresence>
 			<div className={styles.mainAdmin}>
-				<Box className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 px-6 mb-10">
-					<Typography variant="h4" className="font-semibold text-[#564F47] md:text-3xl! text-lg!"> {`Product Management`} </Typography>
+				<Box className="flex flex-row items-center justify-between gap-4 px-6 mb-10">
+					<Typography variant="h4" className="font-semibold text-[#564F47] md:text-2xl! text-sm!"> {`Product Management`} </Typography>
 					<Button variant="contained" onClick={handleOpenP} startIcon={<AddIcon />} sx={{ backgroundColor: "#564F47", "&:hover": { backgroundColor: "#3e3731" } }}> {`Add Product`} </Button>
 				</Box>
 
@@ -319,18 +337,18 @@ export default function Page() {
 				<AnimatePresence>
 					{
 						showFloatingFilter && showFloatingFilterScroll && (
-							<Box component={motion.div} initial={{opacity:0,y:-30}} animate={{opacity:1,y:0}} exit={{opacity:0,y:-30}} transition={{duration:.25}} className="fixed top-6 left-1/2 -translate-x-1/2 z-50">
+							<Box component={motion.div} initial={{opacity:0,y:-30}} animate={{opacity:1,y:0}} exit={{opacity:0,y:-30}} transition={{duration:.25}} className="fixed top-7 min-[850]:top-9 min-[1200px]:top-13 left-1/2 -translate-x-1/2 z-50 max-[850px]:w-2/3 ">
 								<Card className="rounded-2xl shadow-xl px-4 py-3 flex flex-col md:flex-row items-center gap-3" sx={{ background:"#564F47" }}>
-									<CardContent className="flex flex-col gap-3">
-										<TextField size="small" placeholder="Search..." value={search} onChange={(e)=>setSearch(e.target.value)} sx={{background:"#fff",borderRadius:"8px"}} />
-										<TextField select size="small" value={activeFolder} onChange={(e)=>setActiveFolder(e.target.value)} sx={{background:"#fff",borderRadius:"8px"}}>
+									<CardContent className="flex flex-col gap-3 w-full">
+										<TextField size="small" placeholder="Search..." value={search} onChange={(e)=>setSearch(e.target.value)} sx={{background:"#EDE8E4",borderRadius:"8px"}} />
+										<TextField select size="small" value={activeFolder} onChange={(e)=>setActiveFolder(e.target.value)} sx={{background:"#EDE8E4",borderRadius:"8px"}}>
 											<MenuItem value="all">All Folders</MenuItem>
 											{ folderOptions.map(folder => <MenuItem key={folder} value={folder}>{folder}</MenuItem> ) }
 										</TextField>
 									</CardContent>
-									<CardActions className={`md:flex md:gap-2 md:flex-col md:items-center`}>
-										<Button variant="contained" onClick={handleOpenP} sx={{ background:"#EDE8E4 !important", color:"#564F47 !important", "&:hover":{background:"#ddd6d0 !important"} }}> {`Add Product`} </Button>
-										<Button variant="contained" onClick={resetStates} sx={{ background:"#EDE8E4 !important", color:"#564F47 !important", "&:hover":{background:"#ddd6d0 !important"} }}> {`Reset`} </Button>
+									<CardActions className={`flex flex-col gap-3 items-center w-full`}>
+										<Button variant="contained" onClick={resetStates} sx={{ width: "100%", background:"#EDE8E4 !important", color:"#564F47 !important", "&:hover":{background:"#ddd6d0 !important"} }} startIcon={<RestartAltIcon />}> {`Reset All`} </Button>
+										<Button variant="contained" onClick={handleOpenP} sx={{ width: "100%", background:"#EDE8E4 !important", color:"#564F47 !important", "&:hover":{background:"#ddd6d0 !important"} }} startIcon={<AddIcon />}> {`Add Product`} </Button>
 									</CardActions>
 								</Card>
 							</Box>
@@ -339,45 +357,38 @@ export default function Page() {
 				</AnimatePresence>
 
 				{/* Updated Stats */}
-				<Grid container spacing={3} className="mb-8 px-6">
+				<Masonry columns={2}>
+					<Card className={`bg-[#564F4712]! text-[#564F47]!`} elevation={5}>
+						<CardContent className="flex justify-between items-center">
+							<Box className={`flex flex-col gap-2`}>
+								<Typography className="text-[#564F47E4]!" variant="body2"> {`Total Products`} </Typography>
+								<AnimatedNumber value={products.length} />
+							</Box>
+							<Inventory2Icon className="text-[#564F47]!" fontSize="large"/>
+						</CardContent>
+					</Card>
 
-					<Grid size={{ xs:12, md:4 }}>
-						<Card className="rounded-2xl shadow-md bg-[#564F4712]!">
-							<CardContent className="flex items-center justify-between">
-								<Box>
-									<Typography className="text-[#564F47]! text-sm"> {`Total Products`} </Typography>
-									<Typography variant="h4" className="text-[#564F47]! font-bold"> {products.length} </Typography>
-								</Box>
-								<Inventory2Icon className="text-[#564F47]! opacity-60" fontSize="large"/>
-							</CardContent>
-						</Card>
-					</Grid>
+					<Card className={`bg-[#564F4712]! text-[#564F47]!`} elevation={5}>
+						<CardContent className="flex justify-between items-center">
+							<Box className={`flex flex-col gap-2`}>
+								<Typography className="text-[#564F47]!" variant="body2"> {`Total Images`} </Typography>
+								<AnimatedNumber value={products.reduce((a,p)=>a+p.images.length,0)} />
+							</Box>
+							<PhotoLibraryIcon className="text-[#564F47]!" fontSize="large"/>
+						</CardContent>
+					</Card>
+				</Masonry>
 
-					<Grid size={{ xs:12, md:4 }}>
-						<Card className="rounded-2xl shadow-md bg-[#564F4712]!">
-							<CardContent className="flex items-center justify-between">
-								<Box>
-									<Typography className="text-[#564F47]! text-sm"> {`Total Images`} </Typography>
-									<Typography variant="h4" className="text-[#564F47]! font-bold"> {products.reduce((a,p)=>a+p.images.length,0)} </Typography>
-								</Box>
-								<PhotoLibraryIcon className="text-[#564F47]! opacity-60" fontSize="large"/>
-							</CardContent>
-						</Card>
-					</Grid>
-
-					<Grid size={{ xs:12, md:4 }}>
-						<Card className="rounded-2xl shadow-md bg-[#564F4712]! backdrop-blur-sm">
-							<CardContent className="flex flex-col gap-3">
-								<TextField size="small" placeholder="Search products..." value={search} onChange={(e)=>setSearch(e.target.value)} fullWidth InputProps={{ startAdornment:( <InputAdornment position="start"> <SearchIcon/> </InputAdornment> ) }} />
-								<TextField select size="small" label="Folder" value={activeFolder} onChange={(e)=>setActiveFolder(e.target.value)}>
-									<MenuItem value="all">{`All Folders`}</MenuItem>
-									{ folderOptions.map(folder => <MenuItem key={folder} value={folder}>{folder}</MenuItem> ) }
-								</TextField>
-								<Button variant="contained" onClick={resetStates}> {`Reset Filters`} </Button>
-							</CardContent>
-						</Card>
-					</Grid>
-				</Grid>
+				<Card className="rounded-2xl shadow-md bg-[#564F4712]! backdrop-blur-sm m-3!" elevation={5}>
+					<CardContent className="flex flex-col gap-3">
+						<TextField size="small" placeholder="Search products..." value={search} onChange={(e)=>setSearch(e.target.value)} fullWidth InputProps={{ startAdornment:( <InputAdornment position="start"> <SearchIcon/> </InputAdornment> ) }} />
+						<TextField select size="small" label="Folder" value={activeFolder} onChange={(e)=>setActiveFolder(e.target.value)}>
+							<MenuItem value="all">{`All Folders`}</MenuItem>
+							{ folderOptions.map(folder => <MenuItem key={folder} value={folder}>{folder}</MenuItem> ) }
+						</TextField>
+						<Button variant="contained" onClick={resetStates} startIcon={<RestartAltIcon />}> {`Reset Filters`} </Button>
+					</CardContent>
+				</Card>
 
 				{filteredProducts.length === 0 && ( 
 					<Box className="flex flex-col items-center justify-center py-24 text-center">
@@ -388,7 +399,11 @@ export default function Page() {
 				)}
 				
 				<Masonry columns={{ xs: 1, sm: 2, lg: 3, xl: 4 }} spacing={{ xs: 1, sm: 2, lg: 3, xl: 4 }} className={`m-0!`}>
-					{ filteredProducts.map(product=>( <AdminProductCard key={product.id} product={product} onEdit={()=>handleEditClick(product)} onDelete={()=>handleDeleteClick(product)} /> )) }
+					{
+						filteredProducts.map(product=>(
+							<AdminProductCard key={product.id} product={product} onEdit={()=>handleEditClick(product)} onDelete={()=>handleDeleteClick(product)} /> )
+						)
+					}
 				</Masonry>
 			</div>
 
