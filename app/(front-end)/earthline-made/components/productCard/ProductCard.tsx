@@ -50,11 +50,15 @@ export default function ProductCard({ product, pageReady, index }: { product: Pr
 
 	return (
 		<>
-			<Box ref={sectionRef} className="w-full flex flex-col md:flex-row items-center gap-5 mb-5" >
+			{/* <Box ref={sectionRef} className="w-full flex flex-col md:flex-row items-center gap-5 mb-5"> */}
+			<Box ref={sectionRef} className="w-full flex flex-col md:flex-row items-center gap-10 md:gap-16 mb-20 md:mb-24">
 				{/* IMAGE */}
 				<Box className={`w-full md:w-1/2 flex ${isReverse ? "md:order-2 justify-end" : "md:order-1 justify-start"}`} onClick={() => setOpen(true)}>
 					<div className="w-full h-[45vh] md:h-[65vh] lg:h-[75vh] flex items-center justify-center cursor-pointer">
-						<Image src={image} alt={product.product} width={1200} height={1200} className="w-full h-full object-cover transition-transform duration-500 hover:scale-[1.04]" />
+						<Image src={image} alt={product.product} width={1000} height={1200} className="w-full h-full object-cover transition-transform duration-500 hover:scale-[1.04]" />
+						{/* <div className="group w-full h-full overflow-hidden rounded-sm">
+							<Image src={image} alt={product.product} width={1200} height={1200} className="w-full h-full object-cover transition-all duration-700 ease-out group-hover:scale-110" />
+						</div> */}
 					</div>
 				</Box>
 				{/* TEXT */}
@@ -63,9 +67,9 @@ export default function ProductCard({ product, pageReady, index }: { product: Pr
 					{/* DESCRIPTION (2 LINES ONLY) */}
 					<div className="max-w-2xl text-[#564F47] text-sm md:text-base leading-relaxed">
 						<p className="line-clamp-2 pr-28"> {product.description} </p>
-						<span onClick={() => setOpen(true)} className="cursor-pointer flex items-center gap-1 font-medium text-[#564F47]">
+						<span onClick={() => setOpen(true)} className="cursor-pointer flex items-center gap-1 font-medium text-[#564F47] group">
 							{`Learn more`}
-							<ArrowRightAltIcon fontSize="large" className={`text-[#564F47]`} />
+							<ArrowRightAltIcon fontSize="large" className={`text-[#564F47] transition-transform duration-300 group-hover:translate-x-2`} />
 						</span>
 					</div>
 				</Box>

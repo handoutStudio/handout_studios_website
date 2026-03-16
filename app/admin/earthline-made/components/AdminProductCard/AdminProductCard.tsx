@@ -2,13 +2,14 @@
 
 import gsap from "gsap";
 import Image from "next/image";
-import { useState } from "react";
 import Card from "@mui/material/Card";
 import Modal from "@mui/material/Modal";
 import Button from "@mui/material/Button";
+import { useState, useEffect } from "react";
 import Tooltip from "@mui/material/Tooltip";
 import Divider from "@mui/material/Divider";
 import CardMedia from "@mui/material/CardMedia";
+import { useSearchParams } from "next/navigation";
 import Typography from "@mui/material/Typography";
 import CardHeader from "@mui/material/CardHeader";
 import IconButton from "@mui/material/IconButton";
@@ -28,11 +29,13 @@ type ProductType = { id: string; folder: string; product: string; description: s
 export default function AdminProductCard({ product, onEdit, onDelete }:{ product: ProductType; onEdit: ()=>void; onDelete: ()=>void; }) {
 
 	// New modal Setup
-	const [active, setActive] = useState(0)
-
+	const searchParams = useSearchParams();
+	const [active, setActive] = useState(0);
 	const [open, setOpen] = useState(false);
-
+	const highlightId = searchParams.get("product");
 	const images = Array.isArray(product.images) ? product.images : [];
+
+	useEffect(() => { highlightId === product.id && setTimeout(() => setOpen(true), 4000); }, [highlightId]);
 
 	return (
 		<>
