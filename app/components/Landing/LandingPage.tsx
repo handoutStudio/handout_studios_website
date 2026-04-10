@@ -23,15 +23,15 @@ export default function LandingPage() {
 			{
 				isMobile
 				?
-					<Image src={earthlineMadeLangingImageMobile} fill priority alt="background" className={styles.bgImage} />
+					<Image src={earthlineMadeLangingImageMobile} priority alt="background" className={styles.bgImage} />
 				:
 					isTablet
 					?
-						<Image src={earthlineMadeLangingImageTablet} fill priority alt="background" className={styles.bgImage} />
+						<Image src={earthlineMadeLangingImageTablet} priority alt="background" className={styles.bgImage} />
 					:
 						isDesktop
 						?
-							<Image src={earthlineMadeLangingImage} fill priority alt="background" className={styles.bgImage} />
+							<Image src={earthlineMadeLangingImage} priority alt="background" className={styles.bgImage} />
 						:
 							null
 			}

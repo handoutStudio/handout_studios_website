@@ -73,10 +73,10 @@ export function Loading( { setIsLoading }: any ) {
 			{/* FLIP CONTAINER */}
 			<div ref={flipRef} className="relative w-52 h-52" style={{ transformStyle: "preserve-3d" }}>
 				<div className="absolute inset-0 flex items-center justify-center" style={{ backfaceVisibility: "hidden" }}>
-					<Image src={handoutLogo} alt="handout studios" fill className="object-contain" />
+					<Image src={handoutLogo} alt="handout studios" priority className="object-contain" />
 				</div>
 				<div className="absolute inset-0 flex items-center justify-center" style={{ backfaceVisibility: "hidden", transform: "rotateY(180deg)" }}>
-					<Image src={earthlineLogo} alt="earthline made" fill className="object-contain rounded-full" />
+					<Image src={earthlineLogo} alt="earthline made" priority className="object-contain rounded-full" />
 				</div>
 			</div>
 		</div>

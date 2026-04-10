@@ -381,7 +381,7 @@ export default function Page() {
 
 				<Card className="rounded-2xl shadow-md bg-[#564F4712]! backdrop-blur-sm m-3!" elevation={5}>
 					<CardContent className="flex flex-col gap-3">
-						<TextField size="small" placeholder="Search products..." value={search} onChange={(e)=>setSearch(e.target.value)} fullWidth InputProps={{ startAdornment:( <InputAdornment position="start"> <SearchIcon/> </InputAdornment> ) }} />
+						<TextField size="small" placeholder="Search products..." value={search} onChange={(e)=>setSearch(e.target.value)} fullWidth slotProps={{ input: { startAdornment: ( <InputAdornment position="start"> <SearchIcon /> </InputAdornment> ) } }} />
 						<TextField select size="small" label="Folder" value={activeFolder} onChange={(e)=>setActiveFolder(e.target.value)}>
 							<MenuItem value="all">{`All Folders`}</MenuItem>
 							{ folderOptions.map(folder => <MenuItem key={folder} value={folder}>{folder}</MenuItem> ) }

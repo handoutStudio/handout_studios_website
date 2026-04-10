@@ -1,8 +1,18 @@
 'use client';
 
-import React, { useState } from 'react';
-import { Box, SpeedDial, SpeedDialAction, Avatar, Backdrop } from '@mui/material';
-import { FileCopyRounded, SaveRounded, PrintRounded, ShareRounded, MenuRounded } from '@mui/icons-material';
+import { useState } from 'react';
+import Box from '@mui/material/Box';
+import Avatar from '@mui/material/Avatar';
+import ToolTip from '@mui/material/Tooltip';
+import Backdrop from '@mui/material/Backdrop';
+import SpeedDial from '@mui/material/SpeedDial';
+import MenuRounded from '@mui/icons-material/MenuRounded';
+import SaveRounded from '@mui/icons-material/SaveRounded';
+import ShareRounded from '@mui/icons-material/ShareRounded';
+import PrintRounded from '@mui/icons-material/PrintRounded';
+import SpeedDialAction from '@mui/material/SpeedDialAction';
+import FileCopyRounded from '@mui/icons-material/FileCopyRounded';
+
 
 export default function NestedSpeedDial() {
   // States for the parent and nested SpeedDials
@@ -26,68 +36,38 @@ export default function NestedSpeedDial() {
       <Backdrop open={parentOpen} onClick={handleParentClose} />
 
       {/* Parent SpeedDial */}
-      <SpeedDial
-        ariaLabel="Parent SpeedDial"
-        sx={{ position: 'absolute', bottom: 16, right: 16 }}
-        icon={<MenuRounded />}
-        onClose={handleParentClose}
-        onOpen={handleParentOpen}
-        open={parentOpen}
-        direction="up" // Opens from bottom to top
-      >
+      <SpeedDial ariaLabel="Parent SpeedDial" sx={{ position: 'absolute', bottom: 16, right: 16 }} icon={<MenuRounded />} onClose={handleParentClose} onOpen={handleParentOpen} open={parentOpen} direction="up">
         {/* Actions for Parent SpeedDial */}
-        <SpeedDialAction
-          icon={<FileCopyRounded />}
-          tooltipTitle="Copy"
-          onClick={() => alert('Copy clicked!')}
-        />
-        <SpeedDialAction
-          icon={<SaveRounded />}
-          tooltipTitle="Save"
-          onClick={() => alert('Save clicked!')}
-        />
-        <SpeedDialAction
-          icon={<PrintRounded />}
-          tooltipTitle="Print"
-          onClick={() => alert('Print clicked!')}
-        />
-
+        <ToolTip title="Copy">
+          <SpeedDialAction icon={<FileCopyRounded />} onClick={() => alert('Copy clicked!')} />
+        </ToolTip>
+        <ToolTip title="Save">
+          <SpeedDialAction icon={<SaveRounded />} onClick={() => alert('Save clicked!')} />
+        </ToolTip>
+        <ToolTip title="Print">
+          <SpeedDialAction icon={<PrintRounded />} onClick={() => alert('Print clicked!')} />
+        </ToolTip>
         {/* Nested SpeedDial trigger */}
-        <SpeedDialAction
-          icon={<ShareRounded />}
-          tooltipTitle="More Options"
-          onMouseEnter={handleNestedOpen} // Opens the nested SpeedDial
-          onClick={handleNestedOpen} // Opens the nested SpeedDial
-        />
+        <ToolTip title="More Options">
+          <SpeedDialAction icon={<ShareRounded />} onMouseEnter={handleNestedOpen} onClick={handleNestedOpen} />
+        </ToolTip>
       </SpeedDial>
 
       {/* Nested SpeedDial */}
-      {nestedOpen && (
-        <SpeedDial
-          ariaLabel="Nested SpeedDial"
-          sx={{ position: 'absolute', bottom: 120, right: 100 }}
-          icon={<Avatar>+</Avatar>} // Icon for nested SpeedDial
-          onClose={handleNestedClose}
-          open={nestedOpen}
-          direction="left" // Opens from right to left
-        >
-          <SpeedDialAction
-            icon={<FileCopyRounded />}
-            tooltipTitle="Nested Copy"
-            onClick={() => alert('Nested Copy clicked!')}
-          />
-          <SpeedDialAction
-            icon={<SaveRounded />}
-            tooltipTitle="Nested Save"
-            onClick={() => alert('Nested Save clicked!')}
-          />
-          <SpeedDialAction
-            icon={<PrintRounded />}
-            tooltipTitle="Nested Print"
-            onClick={() => alert('Nested Print clicked!')}
-          />
-        </SpeedDial>
-      )}
+      {
+        nestedOpen &&
+          <SpeedDial ariaLabel="Nested SpeedDial" sx={{ position: 'absolute', bottom: 120, right: 100 }} icon={<Avatar>+</Avatar>} onClose={handleNestedClose} open={nestedOpen} direction="left">
+            <ToolTip title="Nested Copy">
+              <SpeedDialAction icon={<FileCopyRounded />} onClick={() => alert('Nested Copy clicked!')} />
+            </ToolTip>
+            <ToolTip title="Nested Save">
+              <SpeedDialAction icon={<SaveRounded />} onClick={() => alert('Nested Save clicked!')} />
+            </ToolTip>
+            <ToolTip title="Nested Print">
+              <SpeedDialAction icon={<PrintRounded />} onClick={() => alert('Nested Print clicked!')} />
+            </ToolTip>
+          </SpeedDial>
+      }
     </Box>
   );
 }

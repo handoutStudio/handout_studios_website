@@ -186,7 +186,7 @@ export default function BrandPage() {
 						<div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-auto">
 							<div ref={earthRef} onMouseEnter={pauseOrbits} onMouseLeave={resumeOrbits} onClick={earthlineMadePage} className="relative flex flex-col items-center cursor-pointer">
 								<div className="relative w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-28 lg:h-28 rounded-full overflow-hidden shadow-xl">
-									<Image src={earthlineLogo} alt="Earthline Made" fill className="object-cover" />
+									<Image src={earthlineLogo} alt="Earthline Made" fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover" />
 								</div>
 								<div className="mt-2 text-xs uppercase text-[#7A0007]"> {`by Handout Studios`} </div>
 							</div>
@@ -195,7 +195,7 @@ export default function BrandPage() {
 
 					{/* SUN */}
 					<div className="relative z-10 w-28 h-28 sm:w-36 sm:h-36 md:w-48 md:h-48 lg:w-64 lg:h-64 rounded-full bg-white shadow-2xl flex items-center justify-center cursor-pointer" onClick={() => router.push("/")}>
-						<Image src={handoutLogo} alt="Handout Studios" fill className="object-contain p-3" />
+						<Image src={handoutLogo} alt="Handout Studios" priority fill sizes="(max-width: 768px) 100vw, 50vw" className="object-contain p-3" />
 					</div>
 
 				</div>

@@ -105,7 +105,15 @@ export default function Page() {
 								<Box component={motion.div} initial={{ opacity:0, y:-40 }} animate={{ opacity:1, y:0 }} exit={{ opacity:0, y:-40 }} transition={{ duration:.25 }} className="fixed top-7 md:top-10 lg:top-14 left-1/2 -translate-x-1/2 z-40 shadow-xl rounded-xl p-4 flex flex-col gap-3 w-[95%] md:w-auto max-w-190" sx={{ backgroundColor:"#564F47", backdropFilter:"blur(12px)", border:"1px solid rgba(0,0,0,0.08)" }}>
 									{/* PRIMARY FILTER CONTROLS */}
 									<Box className="flex flex-col md:flex-row gap-3 items-stretch md:items-center">
-										<TextField size="small" placeholder="Search..." value={search} onChange={(e)=>setSearch(e.target.value)} fullWidth sx={{ backgroundColor:"#fff", borderRadius:"6px", minWidth:{ md:220 } }} InputProps={{ startAdornment:( <InputAdornment position="start"> <SearchIcon/> </InputAdornment> ) }} />
+										<TextField
+											size="small"
+											placeholder="Search..."
+											value={search}
+											onChange={(e)=>setSearch(e.target.value)}
+											fullWidth sx={{ backgroundColor:"#fff", borderRadius:"6px", minWidth:{ md:220 } }}
+											// InputProps={{ startAdornment:( <InputAdornment position="start"> <SearchIcon/> </InputAdornment> ) }} 
+											slotProps={{ input: { startAdornment: ( <InputAdornment position="start"> <SearchIcon /> </InputAdornment> ) } }}
+										/>
 										<TextField select size="small" value={activeFolder} onChange={(e)=>setActiveFolder(e.target.value)} fullWidth sx={{ backgroundColor:"#fff", borderRadius:"6px", minWidth:{ md:180 } }}>
 											<MenuItem value="all"> {`All Products`} </MenuItem>
 											{ folders.slice(1).map(folder=> <MenuItem key={folder} value={folder}> {folder} </MenuItem> ) }
@@ -121,7 +129,7 @@ export default function Page() {
 						}
 					</AnimatePresence>
 					<Box className="w-full lg:w-auto rounded-lg px-5 py-3 flex flex-col md:flex-row md:items-center gap-4" sx={{ backgroundColor: "#564F47" }}>
-						<TextField size="small" placeholder="Search products..." value={search} onChange={(e)=>setSearch(e.target.value)} sx={{ backgroundColor: "#EDE8E4", borderRadius: "6px", width: { xs: "100%", md: 320 } }} InputProps={{ startAdornment: ( <InputAdornment position="start"> <SearchIcon/> </InputAdornment> ) }} />
+						<TextField size="small" placeholder="Search products..." value={search} onChange={(e)=>setSearch(e.target.value)} sx={{ backgroundColor: "#EDE8E4", borderRadius: "6px", width: { xs: "100%", md: 320 } }} slotProps={{ input: { startAdornment: ( <InputAdornment position="start"> <SearchIcon /> </InputAdornment> ) } }} />
 						<TextField select size="small" value={activeFolder} onChange={(e)=>setActiveFolder(e.target.value)} sx={{ backgroundColor: "#EDE8E4", borderRadius: "6px", minWidth: 200 }}>
 							<MenuItem value="all">{`All Products`}</MenuItem>
 							{ folders.slice(1).map(folder=> <MenuItem key={`folder-${folder}`} value={folder}> {folder} </MenuItem> )}
