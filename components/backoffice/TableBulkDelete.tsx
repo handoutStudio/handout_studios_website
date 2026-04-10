@@ -158,7 +158,7 @@ export default function TableBulkDelete({rows, tableTitle}: any) {
 						<TableHead>
 							<TableRow>
 								<TableCell padding="checkbox">
-									<Checkbox color="primary" indeterminate={selected.length > 0 && selected.length < rows.length} checked={rows.length > 0 && selected.length === rows.length} onChange={handleSelectAllClick} inputProps={{ 'aria-label': 'select all desserts' }} />
+									<Checkbox color="primary" indeterminate={selected.length > 0 && selected.length < rows.length} checked={rows.length > 0 && selected.length === rows.length} onChange={handleSelectAllClick} slotProps={{ input: { 'aria-label': 'select all desserts' } }} />
 								</TableCell>
 								{
 									headCells.map((headCell) => (
@@ -179,7 +179,7 @@ export default function TableBulkDelete({rows, tableTitle}: any) {
 									const labelId = `enhanced-table-checkbox-${index}`;
 									return (
 										<TableRow hover onClick={(event) => handleClick(event, Number(row.id))} role="checkbox" aria-checked={isItemSelected} tabIndex={-1} key={row.id} selected={isItemSelected} sx={{ cursor: 'pointer' }}>
-											<TableCell padding="checkbox"> <Checkbox color="primary" checked={isItemSelected} inputProps={{ 'aria-labelledby': labelId }} /> </TableCell>
+											<TableCell padding="checkbox"> <Checkbox color="primary" checked={isItemSelected} slotProps={{ input: { 'aria-labelledby': 'labelId' } }} /> </TableCell>
 											<TableCell component="th" id={labelId} scope="row" padding="none"> { row.title } </TableCell>
 											<TableCell align="right">{row.calories}</TableCell>
 											<TableCell align="right">{row.fat}</TableCell>
@@ -195,7 +195,7 @@ export default function TableBulkDelete({rows, tableTitle}: any) {
 				</TableContainer>
 				<TablePagination rowsPerPageOptions={[5, 10, 25, 50, 75, 100]} component="div" count={rows.length} rowsPerPage={rowsPerPage} page={page} onPageChange={handleChangePage} onRowsPerPageChange={handleChangeRowsPerPage} />
 			</Paper>
-			<Snackbar TransitionComponent={Slide} open={getSnackbarState} autoHideDuration={6000} onClose={() => setSnackbarState(!getSnackbarState)} anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}>
+			<Snackbar slots={{ transition: Slide }} open={getSnackbarState} autoHideDuration={6000} onClose={() => setSnackbarState(!getSnackbarState)} anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}>
 				<Alert onClose={() => setSnackbarState(!getSnackbarState)} severity='error' variant='filled' className={`w-full`}>
 					Please Select row/s to Delete...!
 				</Alert>

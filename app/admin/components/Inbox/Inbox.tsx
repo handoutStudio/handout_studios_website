@@ -171,8 +171,8 @@ export default function Inbox({ messages, loading, refreshMessages }: InboxProps
 	return (
 		<div className={`bg-[#564F4712]! text-[#564F47]!`}>
 			{/* HEADER */}
-			<Stack direction="row" justifyContent="space-between" alignItems="center" mb={3} spacing={2} p={2}>
-				<TextField size="small" placeholder="Search messages..." value={generalSearch} onChange={(e) => setGeneralSearch(e.target.value)} sx={{ width: "100%", borderRadius: 2 }} InputProps={{ startAdornment: ( <InputAdornment position="start"> <SearchIcon /> </InputAdornment> ) }} />
+			<Stack component="div" direction="row" spacing={2} sx={{ justifyContent: "space-between", alignItems: "center", mb: 3, p: 2 }}>
+				<TextField size="small" placeholder="Search messages..." value={generalSearch} onChange={(e) => setGeneralSearch(e.target.value)} sx={{ width: "100%", borderRadius: 2 }} slotProps={{ input: { startAdornment: ( <InputAdornment position="start"> <SearchIcon /> </InputAdornment> ) } }} />
 				<Tooltip title="More Actions" arrow>
 					<IconButton onClick={openMenu}> <MoreVertIcon sx={{ color: "#564F47" }} /> </IconButton>
 				</Tooltip>
@@ -227,7 +227,7 @@ export default function Inbox({ messages, loading, refreshMessages }: InboxProps
 											<TableCell padding="checkbox" onClick={(e) => e.stopPropagation()} className={`sticky! left-0! z-3! ${msg.brand === "EARTHLINE_MADE" ? "bg-[#564F47]!" : "bg-[#7A0007]!"}`}>
 												<Checkbox checked={selected.includes(msg.id)} onChange={() => handleSelect(msg.id)} className={`text-[#EDE8E4]!`} />
 											</TableCell>
-											<Tooltip placement="right" title={ <Typography fontWeight={600}> {`Message: ${msg.message}`} </Typography> } arrow followCursor>
+											<Tooltip placement="right" title={ <Typography sx={{ fontWeight: 600 }}> {`Message: ${msg.message}`} </Typography> } arrow followCursor>
 												<TableCell onClick={() => handleRowClick(msg)} className={`text-[#564F47]! ${isMobile ? "text-[12px]!" : ""}`}> {msg.name} </TableCell>
 											</Tooltip>
 											<TableCell onClick={() => handleRowClick(msg)} className={`text-[#564F47]! ${isMobile ? "text-[12px]!" : ""}`}> {msg.email} </TableCell>
@@ -236,7 +236,7 @@ export default function Inbox({ messages, loading, refreshMessages }: InboxProps
 												<Chip label={msg.isRead ? "Closed" : "Open"} size="small" className={`${msg.isRead ? msg.brand === "EARTHLINE_MADE" ? "bg-[#EDE8E4]! text-[#564F47]!" : "bg-[#EDE8E4]! text-[#7A0007]!" : msg.brand === "EARTHLINE_MADE" ? "bg-[#564F47]! text-[#EDE8E4]!" : "bg-[#7A0007]! text-[#EDE8E4]!"} text-[2D333A]! ${isMobile ? "text-[12px]!" : ""}`} />
 											</TableCell>
 											<TableCell align="center" onClick={(e) => e.stopPropagation()}>
-												<Stack direction="row" spacing={1} justifyContent="center">
+												<Stack direction="row" spacing={1} sx={{ justifyContent: "center" }}>
 													<Tooltip title={ msg.isRead ? "Mark Unread" : "Mark Read" }>
 														<IconButton size="small" onClick={() => msg.isRead ? markAsUnread([msg.id]) : markAsRead([msg.id]) } className={`bg-[#EDE8E4]! text-[#564F47]! hover:bg-[#564F47]! hover:text-[#EDE8E4]!`}> { msg.isRead ? <MarkEmailUnreadIcon fontSize="small" /> : <MarkEmailReadIcon fontSize="small" /> } </IconButton>
 													</Tooltip>

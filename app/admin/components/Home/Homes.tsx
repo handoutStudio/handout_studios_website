@@ -108,11 +108,11 @@ export default function Homes() {
 
 			{/* HEADER */}
 			<div className="flex flex-col lg:flex-row lg:justify-between lg:items-center gap-4 mb-6 mt-2">
-				<Typography variant="h4" fontWeight={700} className="text-xl sm:text-2xl lg:text-3xl"> {`Admin Dashboard`} </Typography>
+				<Typography variant="h4" component="h1" sx={{ fontWeight: 700 }} className="text-xl sm:text-2xl lg:text-3xl"> {`Admin Dashboard`} </Typography>
 
 				{/* QUICK ACTIONS */}
 				<div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
-					<Typography variant="h6" fontWeight={600} className="text-sm sm:text-base whitespace-nowrap"> {`Quick Actions`} </Typography>
+					<Typography variant="h6" component="h2" sx={{ fontWeight: 600 }} className="text-sm sm:text-base whitespace-nowrap"> {`Quick Actions`} </Typography>
 					<ButtonGroup variant="text" size="small" sx={{ backgroundColor: "#EDE8E4 !important", borderRadius: "10px", overflow: "hidden", flexWrap: "wrap", "& .MuiButtonGroup-grouped": { borderColor: "#564F47 !important", }, }}>
 						<Button sx={{ color: "#564F47 !important", backgroundColor: "transparent !important", fontWeight: 500, letterSpacing: ".04em", transition: "all .25s ease", fontSize: { xs: "12px", sm: "13px", md: "14px" }, px: { xs: 1.2, sm: 2 }, "&:hover": { backgroundColor: "#564F47 !important", color: "#EDE8E4 !important", }, }} startIcon={<Inventory2Icon fontSize="small" />} onClick={() => router.push("/admin/earthline-made/products")} > {`Manage Products`} </Button>
 						<Button sx={{ color: "#564F47 !important", backgroundColor: "transparent !important", fontWeight: 500, letterSpacing: ".04em", transition: "all .25s ease", fontSize: { xs: "12px", sm: "13px", md: "14px" }, px: { xs: 1.2, sm: 2 }, "&:hover": { backgroundColor: "#564F47 !important", color: "#EDE8E4 !important", }, }} startIcon={<SlideshowIcon fontSize="small" />} onClick={() => router.push("/admin/earthline-made/slideshow")}> {`Presentation`} </Button>
@@ -175,7 +175,7 @@ export default function Homes() {
 													<ListItemAvatar>
 														<Avatar variant="square" src={p.images?.[0]?.secure_url} sx={{ width:{xs:32,sm:36}, height:{xs:32,sm:36}, borderRadius:1 }} />
 													</ListItemAvatar>
-													<ListItemText primary={p.product} secondary={p.folder} primaryTypographyProps={{ fontWeight:600, fontSize:{xs:"13px",sm:"14px"} }} secondaryTypographyProps={{ fontSize:{xs:"11px",sm:"12px"}, color:"#564F47", className:"recent-folder-text" }} />
+													<ListItemText primary={p.product} secondary={p.folder} slotProps={{ primary: { sx: { fontWeight: 600, fontSize: { xs: "13px", sm: "14px" } } }, secondary: { sx: { fontSize: { xs: "11px", sm: "12px" }, color: "#564F47", }, className: "recent-folder-text", } }} />
 												</ListItemButton>
 											</Tooltip>
 										</ListItem>

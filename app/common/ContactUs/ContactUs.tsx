@@ -92,7 +92,7 @@ export default function ContactUsPage({ brand }: ContactUsPageProps) {
             <Box sx={{ minHeight: "100vh", backgroundColor: "background.default", display: "flex", alignItems: "center", justifyContent: "center", px: { xs: 2, sm: 4, md: 6 }, py: { xs: 6, md: 8 }, }}>
                 <Card elevation={0} sx={{ width: "100%", maxWidth: 600, borderRadius: 4, backdropFilter: "blur(12px)", backgroundColor: brand === "EARTHLINE_MADE" ? "rgba(255,255,255,0.7)" : "rgba(255,255,255,0.08)", boxShadow: brand === "EARTHLINE_MADE" ? "0 20px 60px rgba(0,0,0,0.1)" : "0 20px 60px rgba(0,0,0,0.4)", p: { xs: 1, sm: 2 }, }}>
                     <CardContent>
-                        <Typography variant={isMobile ? "h4" : "h3"} fontWeight={700} gutterBottom> {`Let's Talk.`} </Typography>
+                        <Typography variant={isMobile ? "h4" : "h3"} sx={{ fontWeight: 600 }} gutterBottom> {`Let's Talk.`} </Typography>
 
                         <Typography variant="body1" sx={{ mb: 4, opacity: 0.8 }}> {`Tell us what's on your mind.`} </Typography>
 

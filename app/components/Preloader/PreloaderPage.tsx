@@ -29,15 +29,12 @@ export default function PreloaderPage({words, caller}: PreloaderPageProps) {
 
 	const slideUp = { initial: { top: 0 }, exit: { top: "-100vh", transition: {duration: 0.8, ease: [0.76, 0, 0.24, 1] as Easing, delay: 0.2} } }
 
+	if (dimension.width === 0) return null;
+
 	return (
-		<motion.div variants={slideUp} initial="initial" exit="exit" className={`${caller === "earthline-made" ? styles.introductionE : caller === "handout-studios" ? styles.introductionH : ""}`}>
-			{
-				dimension.width > 0 &&
-				<>
-					<motion.p variants={opacity} initial="initial" animate="enter"><span></span>{words[index]}</motion.p>
-					<svg> <motion.path variants={curve} initial="initial" exit="exit"></motion.path> </svg>
-				</>
-			}
+		<motion.div variants={slideUp} initial="initial" exit="exit" style={{ position: "fixed", inset: 0 }} className={`${caller === "earthline-made" ? styles.introductionE : caller === "handout-studios" ? styles.introductionH : ""}`}>
+			<motion.p variants={opacity} initial="initial" animate="enter"><span></span>{words[index]}</motion.p>
+			<svg> <motion.path variants={curve} initial="initial" exit="exit"></motion.path> </svg>
 		</motion.div>
 	)
 }

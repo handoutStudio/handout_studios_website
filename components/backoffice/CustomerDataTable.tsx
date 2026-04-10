@@ -185,9 +185,9 @@ export default function CustomerDataTable() {
 						<ImageList variant="masonry" className='w-50 h-50' cols={getCols} gap={18}>
 							{
 								data.map((item: any, index: number) => (
-									<ImageListItem key={index} className={`!bg-white rounded-lg`}>
-										<Image className={`rounded-lg flex flex-col justify-center items-center p-5`} src={`${item.photo !== '' ? item.photo : logo.src}`} alt={item.name} loading='eager' width={getWidth} height={getHeight} />
-										<ImageListItemBar className={`rounded-b-lg`} title={<span className={`!text-sm`}>{ item.name }</span>} subtitle={<span className={`!text-xs`}>{ 'orders : '+ item.totalSpends }</span>} actionIcon={ <IconButton sx={{ color: 'rgba(255, 255, 255, 0.54)' }} aria-label={`info about ${item.title}`} > <InfoRounded /> </IconButton> } />
+									<ImageListItem key={index} className={`bg-white! rounded-lg`}>
+										<Image className={`rounded-lg flex flex-col justify-center items-center p-5`} src={`${item.photo !== '' ? item.photo : logo.src}`} alt={item.name} priority width={getWidth} height={getHeight} />
+										<ImageListItemBar className={`rounded-b-lg`} title={<span className={`text-sm!`}>{ item.name }</span>} subtitle={<span className={`text-xs!`}>{ 'orders : '+ item.totalSpends }</span>} actionIcon={ <IconButton sx={{ color: 'rgba(255, 255, 255, 0.54)' }} aria-label={`info about ${item.title}`} > <InfoRounded /> </IconButton> } />
 									</ImageListItem>
 								))
 							}

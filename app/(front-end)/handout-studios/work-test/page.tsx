@@ -85,7 +85,7 @@ export default function Page() {
 			<div className={styles.carousel} ref={carouselRef}>
 				{ pictures.map((picture, i) =>
 					<div key={i} ref={el => { if (el) imagesRef.current[i] = el }} className={styles.carouselImage}>
-						<Image src={picture} alt="img" fill />
+						<Image src={picture} alt="img" fill sizes="(max-width: 768px) 100vw, 50vw" />
 					</div>
 				) }
 			</div>

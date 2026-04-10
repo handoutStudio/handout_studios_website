@@ -36,7 +36,7 @@ export default function BottomBarMobile({drawerBleeding, StyledBox, Puller, useP
 							<div key={index} className={`${pathName === items.path ? 'dark:text-white text-[#7c0104] bg-white dark:bg-[#AF0106]' : 'text-white' } flex flex-col justify-center items-center gap-2`}>
 								{
 									items[Object.keys(items)[0]].map((item: any, indexx: number) => (
-										<Tooltip key={indexx} title={item.name} placement="right" TransitionComponent={Zoom} followCursor>
+										<Tooltip key={indexx} title={item.name} placement="right" slots={{ transition: Zoom }} followCursor>
 											<Link href={item.path}>
 												<div className={`${pathName === item.path ? 'dark:text-white text-[#7c0104] bg-white dark:bg-[#AF0106]' : 'text-white' } flex flex-col items-center p-2 elevate-1 rounded-lg`}>
 													{
@@ -45,24 +45,24 @@ export default function BottomBarMobile({drawerBleeding, StyledBox, Puller, useP
 															(
 																<>
 																	<Typography variant="subtitle1" gutterBottom>
-																		<Accordion className={`w-full !bg-transparent z-0 !text-white`} square expanded={openSubCatalogue} onChange={() => setOpenSubCatalogue(!openSubCatalogue)} elevation={0}>
+																		<Accordion className={`w-full bg-transparent! z-0 text-white!`} square expanded={openSubCatalogue} onChange={() => setOpenSubCatalogue(!openSubCatalogue)} elevation={0}>
 																				<AccordionSummary expandIcon={<ExpandMoreRounded className={`text-white`} />}>
 																					<div className={`flex flex-col justify-center items-center gap-2 w-full`}>
-																						<Avatar alt="Remy Sharp" className={`!bg-transparent !text-white w-10 h-10`}>
+																						<Avatar alt="Remy Sharp" className={`bg-transparent! text-white! w-10 h-10`}>
 																							<IconButton sx={{ p: '10px' }} aria-label={item.name}>
 																								{ item.icon }
 																							</IconButton>
 																						</Avatar>
-																						<Typography className={`!text-white`} variant="subtitle1"> {item.name} </Typography>
+																						<Typography className={`text-white!`} variant="subtitle1"> {item.name} </Typography>
 																					</div>
 																				</AccordionSummary>
 																				<Box className={`${openSubCatalogue ? '' : 'hidden invisible'}`} key={indexx} sx={{ borderColor: 'white', borderWidth: '1px', borderStyle: 'solid', borderRadius: 1, p: 1 }}>
 																				{
-																					item.subList.map((subItem: any, indexx: number) => (																						
-																						<Tooltip title={subItem.name} placement="right" TransitionComponent={Zoom} followCursor key={indexx}>
+																					item.subList.map((subItem: any, indexx: number) => (
+																						<Tooltip title={subItem.name} placement="right" slots={{ transition: Zoom }} followCursor key={indexx}>
 																							<Link href={subItem.path}>
 																								<div className={`${pathName === subItem.path ? 'dark:text-white text-[#7c0104] bg-white dark:bg-[#AF0106]' : 'text-white' } flex flex-col justify-center items-center gap-2 w-full rounded-lg`} key={indexx}>
-																									<Avatar alt="Remy Sharp" className={`!bg-transparent !text-white w-10 h-10`}>
+																									<Avatar alt="Remy Sharp" className={`bg-transparent! text-white! w-10 h-10`}>
 																										<IconButton sx={{ p: '10px' }} aria-label={subItem.name}>
 																											{ subItem.icon }
 																										</IconButton>

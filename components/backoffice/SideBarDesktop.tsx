@@ -27,7 +27,7 @@ export default function SideBarDesktop({open, openSubCatalogue, handleDrawerClos
 								<Typography className={`!text-white text-sm`} variant={'h5'} component={'h5'}>Handout Studios</Typography>
 							</div>
 						</button>
-						<Tooltip title={ open === false ? "Expand" : "Collapse" } placement="right" TransitionComponent={Zoom} followCursor>
+						<Tooltip title={ open === false ? "Expand" : "Collapse" } placement="right" slots={{ transition: Zoom }} followCursor>
 							<IconButton onClick={handleDrawerClose}>
 								{ open === false ? <ChevronRight className={`text-white`} /> : <ChevronLeft className={`text-white`} /> }
 							</IconButton>
@@ -40,7 +40,7 @@ export default function SideBarDesktop({open, openSubCatalogue, handleDrawerClos
 							{
 								items[Object.keys(items)[0]].map((item: any, indexx: number) =>
 									<List key={indexx}>
-										<Tooltip title={item.name} placement="right" TransitionComponent={Zoom} followCursor>
+										<Tooltip title={item.name} placement="right" slots={{ transition: Zoom }} followCursor>
 											<Link href={item.path}>
 												<ListItem key={index} disablePadding sx={{ display: 'block' }} className={`${pathName === item.path ? 'dark:text-white text-[#7c0104] bg-white dark:bg-[#AF0106]' : 'text-white' }`}>
 													<ListItemButton onClick={ item.openFunction } sx={{ minHeight: 48, justifyContent: open ? 'initial' : 'center', px: 2.5 }}>
@@ -57,7 +57,7 @@ export default function SideBarDesktop({open, openSubCatalogue, handleDrawerClos
 																<List component="div" disablePadding>
 																	{
 																		item.subList.map((subItem: any, indexx: number) =>
-																			<Tooltip title={subItem.name} placement="right" TransitionComponent={Zoom} followCursor key={indexx}>
+																			<Tooltip title={subItem.name} placement="right" slots={{ transition: Zoom }} followCursor key={indexx}>
 																				<Link href={subItem.path}>
 																					<ListItem key={index} disablePadding sx={{ display: 'block' }} className={`${pathName === subItem.path ? 'dark:text-white text-[#7c0104] bg-white dark:bg-[#AF0106]' : 'text-white' }`}>
 																						<ListItemButton sx={{ pl: 4 }}>
